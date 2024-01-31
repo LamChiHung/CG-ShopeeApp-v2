@@ -1,0 +1,25 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: helvetica, Arial, Helvetica, sans-serif;
+}
+
+:root {
+  --shope-color: #ee4d2d;
+  /* --shope-color: #9e4be7; */
+}
+
+.login-footer {
+  height: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dbdbdb;
+}
+
+.login-footer-text {
+  text-align: center;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.65);
+}

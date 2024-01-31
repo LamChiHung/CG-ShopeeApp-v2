@@ -1,0 +1,81 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: helvetica, Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --shope-color: #ee4d2d;
+}
+
+.header {
+    width: 100vw;
+    height: 84px;
+    display: flex;
+    justify-content: center;
+}
+
+.header-bg {
+    width: 100vw;
+    height: 84px;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    background-color: #fff;
+    border-bottom: 1px solid #dbdbdb;
+    /*top: 0;*/
+    /*left: 0;*/
+}
+
+.header-container {
+    max-width: 1200px;
+    width: 90%;
+    display: flex;
+}
+
+.header-container-left {
+    flex: 1;
+    align-items: center;
+    display: flex;
+}
+
+.header-container-left-logo {
+    width: 150px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.header-with-search__shopee-logo {
+    transform: translateY(-8px);
+    fill: var(--shope-color);
+}
+
+.header-container-left-text {
+    font-size: 1.5rem;
+}
+
+.header-container-right {
+    flex: 1;
+    align-items: center;
+    display: flex;
+    justify-content: end;
+}
+
+.header-container-right-notify {
+    display: flex;
+    margin-right: 20px;
+}
+
+.header-container-right-info {
+    display: flex;
+}
+
+.header-container-right-info-ava {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.header-container-right-info-name {
+}

@@ -1,0 +1,344 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: helvetica, Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --shope-color: #ee4d2d;
+    /* --shope-color: #9e4be7; */
+}
+
+.signup-container-content-item-2 {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.signup-container-content-item-2-form {
+    width: 400px;
+    height: 482px;
+    background-color: #fff;
+    border-radius: 1%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 140px;
+    right: 100px;
+}
+
+.signup-container-content-item-2-form-header {
+    height: 80px;
+    display: flex;
+    padding: 22px 30px;
+    justify-content: space-between;
+}
+
+.signup-container-content-item-2-form-header-item1 {
+    flex: 1;
+    font-size: 1.25rem;
+    text-align: left;
+    line-height: 59px;
+}
+
+.signup-container-content-item-2-form-header-item2 {
+    flex: 2;
+    display: flex;
+    align-items: center;
+}
+
+.signup-container-content-item-2-form-header-item2-QRtext {
+    flex: 3;
+    color: #ffc209;
+    font-weight: bold;
+    padding: 10px 10px;
+    background-color: #fefaec;
+    border: 2px solid #ffbf00;
+    line-height: 18px;
+}
+
+.signup-container-content-item-2-form-header-item2-QRicon {
+    flex: 1;
+    background-image: url('/img/QR-icon.png');
+    background-size: contain;
+    background-position-x: right;
+    background-position-y: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    margin-left: 8px;
+}
+
+.signup-container-content-item-2-form-header-item2-QRicon:hover {
+    cursor: pointer;
+}
+
+.signup-container-content-item-2-form-body {
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-container-content-item-2-form-body-item-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 230px;
+    padding: 0px 30px;
+    position: relative;
+}
+
+.signup-container-content-item-2-form-body-item-1-inputEmail {
+    height: 40px;
+    border: 1px solid #ccc;
+    padding: 12px;
+}
+
+.signup-container-content-item-2-form-body-item-1-inputEmail::placeholder {
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+.invalidEmail-announce {
+    position: absolute;
+    top: 40px;
+    font-size: 0.75rem;
+    color: red;
+    display: none;
+}
+
+.invalidPassword-announce {
+    position: absolute;
+    top: 105px;
+    font-size: 0.75rem;
+    color: red;
+    display: none;
+}
+
+.invalidRegexPassword-announce {
+    position: absolute;
+    top: 105px;
+    font-size: 0.75rem;
+    color: red;
+    display: none;
+}
+
+.invalidCorrectPassword-announce {
+    position: absolute;
+    top: 167px;
+    font-size: 0.75rem;
+    color: red;
+    display: none;
+}
+
+.signup-container-content-item-2-form-body-item-1-passwordBox {
+    display: flex;
+    border: 1px solid #ccc;
+    align-items: center;
+}
+
+.signup-container-content-item-2-form-body-item-1-inputPassword {
+    height: 40px;
+    border: none;
+    padding: 12px;
+    flex: 1;
+
+}
+
+.signup-container-content-item-2-form-body-item-1-inputPassword::placeholder {
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+.signup-container-content-item-2-form-body-item-1-inputPassword-eyeIcon {
+    width: 40px;
+    height: 40px;
+    background-image: url('/img/close-eye.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.signup-container-content-item-2-form-body-item-1-inputPassword-openEyeIcon {
+    width: 40px;
+    height: 40px;
+    background-image: url("/img/open-eye.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    display: none;
+}
+
+.signup-container-content-item-2-form-body-item-1-inputPassword-eyeIcon:hover {
+    cursor: pointer;
+}
+
+.signup-container-content-item-2-form-body-item-1-inputCorrectPassword {
+    height: 40px;
+    border: none;
+    padding: 12px;
+    flex: 1;
+    align-items: center;
+}
+
+.signup-container-content-item-2-form-body-item-1-inputCorrectPassword::placeholder {
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+.signup-container-content-item-2-form-body-item-1-inputCorrectPassword-wrongIcon {
+    width: 30px;
+    height: 30px;
+    background-image: url('/img/wrong.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.signup-container-content-item-2-form-body-item-1-inputCorrectPassword-checkIcon {
+    width: 30px;
+    height: 30px;
+    background-image: url('/img/check.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    display: none;
+}
+
+.signup-container-content-item-2-form-body-item-1-submitsignup {
+    height: 40px;
+    background-color: var(--shope-color);
+    border: none;
+    color: #fff;
+}
+
+.signup-container-content-item-2-form-body-item-1-submitsignup:hover {
+    opacity: 0.9;
+}
+
+.signup-container-content-item-2-form-body-item-1-submitsignup:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.signup-container-content-item-2-form-body-item-2 {
+    flex: 1;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-container-content-item-2-form-body-item-2-top {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.signup-container-content-item-2-form-body-item-2-middle {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.signup-container-content-item-2-form-body-item-2-bottom {
+    flex: 1;
+    display: flex;
+}
+
+.signup-container-content-item-2-form-body-item-2-top-item {
+    font-size: 0.75rem;
+    text-decoration: none;
+    /* color: #0f75ba; */
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.signup-container-content-item-2-form-body-item-2-top-item-link {
+    text-decoration: none;
+    color: var(--shope-color);
+}
+
+.signup-container-content-item-2-form-body-item-2-middle-side {
+    flex: 1;
+    height: 1px;
+    background-color: #dbdbdb;
+}
+
+.signup-container-content-item-2-form-body-item-2-middle-center {
+    font-size: 0.75rem;
+    padding: 0 16px;
+    color: #dbdbdb;
+}
+
+.signup-container-content-item-2-form-body-item-2-bottom-signupByFB {
+    flex: 1;
+    display: flex;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    padding: 8px 8px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+}
+
+.signup-container-content-item-2-form-body-item-2-bottom-signupByGG {
+    flex: 1;
+    display: flex;
+    margin-left: 5px;
+    border: 1px solid #ccc;
+    padding: 8px 8px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+}
+
+.signup-container-content-item-2-form-body-item-2-bottom-signupByFB:hover,
+.signup-container-content-item-2-form-body-item-2-bottom-signupByGG:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.signup-container-content-item-2-form-body-item-2-bottom-signupByFB-icon {
+    height: 24px;
+    width: 24px;
+    background-image: url('/img/facebook-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.signup-container-content-item-2-form-body-item-2-bottom-signupByGG-icon {
+    height: 24px;
+    width: 24px;
+    background-image: url('/img/google-icon.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.signup-container-content-item-2-form-footer {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-container-content-item-2-form-footer-text {
+    font-size: 0.875rem;
+    color: #ccc;
+}
+
+.signup-container-content-item-2-form-footer-text-registerLink {
+    font-size: 0.875rem;
+    text-decoration: none;
+    color: var(--shope-color);
+}

@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: helvetica, Arial, Helvetica, sans-serif;
+}
+:root {
+  --shope-color: #ee4d2d;
+  /* --shope-color: #9e4be7; */
+}
+
+.seller-register-container {
+  width: 100%;
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.seller-register-container-img{
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.seller-register-container-text {
+  color: var(--shope-color);
+  margin-bottom: 20px;
+}
+
+.seller-register-container-submit {
+  padding: 5px;
+  line-height: 40px;
+  height: 50px;
+  background-color: var(--shope-color);
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 20px;
+}

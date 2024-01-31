@@ -1,0 +1,218 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --shopee-color: #ee4d2d;
+}
+
+.home-header {
+    height: 120px;
+    width: 100vw;
+    font-size: 0.875rem;
+    color: #fff;
+
+}
+
+.home-header-bg {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 120px;
+    background-color: var(--shopee-color);
+    position: fixed;
+}
+
+.home-header-bg-container {
+    max-width: 1200px;
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-header-bg-container-top {
+    flex: 1;
+    display: flex;
+    font-size: 0.813rem;
+}
+
+.home-header-bg-container-top-left {
+    display: flex;
+    flex: 1;
+}
+
+.home-header-bg-container-top-left-container {
+    display: flex;
+    align-items: center;
+}
+
+.home-header-bg-container-top-left-container-item {
+    margin-right: 10px;
+    display: flex;
+}
+
+.seperate-line {
+    height: 0.875rem;
+    border: 1px solid #fff;
+    opacity: 0.3;
+}
+
+.home-header-bg-container-top-left-container-item-child {
+    margin: 2px;
+}
+
+.home-header-bg-container-top-right {
+    flex: 1;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.home-header-bg-container-top-right-container {
+    display: flex;
+    align-items: center;
+}
+
+.home-header-bg-container-top-right-container-item {
+    display: flex;
+    margin-left: 10px;
+}
+
+.home-header-bg-container-top-right-container-item:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.home-header-bg-container-top-right-container-item-child {
+    margin-right: 2px;
+}
+
+.home-header-bg-container-bot {
+    flex: 3;
+    display: flex;
+}
+
+.home-header-bg-container-bot-left {
+    width: 200px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.home-header-bg-container-bot-left-item {
+    width: 162px;
+    height: 50px;
+}
+
+.home-header-bg-container-bot-left-item:hover {
+    cursor: pointer;
+}
+
+.icon-shopee-logo {
+    fill: #fff;
+}
+
+.home-header-bg-container-bot-middle {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.home-header-bg-container-bot-middle-container {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 0px 5px;
+    border-radius: 3px;
+}
+
+.home-header-bg-container-bot-middle-container-input {
+    height: 100%;
+    flex: 1;
+    border: none;
+}
+
+.home-header-bg-container-bot-middle-container-input:focus-visible {
+    border: none;
+}
+
+.home-header-bg-container-bot-middle-container-button {
+    width: 60px;
+    height: 34px;
+    background-color: var(--shopee-color);
+    border: none;
+    border-radius: 2px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-header-bg-container-bot-right {
+    position: relative;
+    width: 140px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-header-bg-container-bot-right-item {
+    width: 26px;
+    height: 26px;
+    background-image: url(../img/shopee_cart-removebg-preview.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.home-header-bg-container-bot-right-quantity {
+    background-color: #fff;
+    color: var(--shopee-color);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    position: relative;
+    top: -10px;
+    left: -5px;
+}
+
+.home-header-bg-container-bot-right-item:hover {
+    cursor: pointer;
+}
+
+.home-header-bg-container-bot-right-popup {
+    width: 450px;
+    height: 250px;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid var(--shopee-color);
+    top: 70px;
+    right: 50px;
+    display: none;
+    animation: appearance 0.2s linear;
+    z-index: 1;
+}
+
+.home-header-bg-container-bot-right-item:hover
+~ .home-header-bg-container-bot-right-popup {
+    display: block;
+}
+
+@keyframes appearance {
+    0% {
+        opacity: 0;
+        height: 0px;
+    }
+    100% {
+        opacity: 1;
+        height: 250px;
+    }
+}
