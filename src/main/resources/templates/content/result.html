@@ -1,4 +1,4 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
 >
@@ -6,183 +6,21 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet"
+          th:href="@{css/header.css}">
+    <link rel="stylesheet"
           th:href="@{/css/themify-icons/themify-icons.css}">
     <link rel="stylesheet"
-          th:href="@{/css/header.css}">
+          th:href="@{css/result.css}">
     <link rel="stylesheet"
-          th:href="@{/css/footer.css}">
-    <link rel="stylesheet"
-          th:href="@{/css/home.css}">
+          th:href="@{css/nav-search.css}">
 </head>
 <body>
 <header th:replace="common/header :: header">
 </header>
-<div>
-    <div class="banner">
-        <div class="banner-sliderContain">
-            <!-- Radio group -->
-
-            <input class="radio" type="radio"
-                   name="radio" id="radio1"
-                   checked/>
-            <input class="radio" type="radio"
-                   name="radio" id="radio2"/>
-            <input class="radio" type="radio"
-                   name="radio" id="radio3"/>
-            <input class="radio" type="radio"
-                   name="radio" id="radio4"/>
-
-            <!-- End Radio group -->
-
-            <!-- Img -->
-            <div class="banner-sliderContain-group">
-                <div class="banner-img banner-img1"></div>
-                <div class="banner-img banner-img2"></div>
-                <div class="banner-img banner-img3"></div>
-                <div class="banner-img banner-img4"></div>
-            </div>
-            <!-- End img -->
-
-            <!-- Manual Radio Button -->
-            <div class="manual-radio-buttonGroup">
-                <label
-                        for="radio1"
-                        class="manual-radio-button manual-radio-button1"
-                ></label>
-                <label
-                        for="radio2"
-                        class="manual-radio-button manual-radio-button2"
-                ></label>
-                <label
-                        for="radio3"
-                        class="manual-radio-button manual-radio-button3"
-                ></label>
-                <label
-                        for="radio4"
-                        class="manual-radio-button manual-radio-button4"
-                ></label>
-            </div>
-        </div>
-    </div>
-
-    <div class="content">
-        <!-- Category -->
-        <div class="body-category">
-            <div class="body-category-row1">
-                <p class="body-category-row1-text">
-                    DANH MỤC</p>
-            </div>
-            <div class="body-category-row2">
-                <div class="body-category-row2-item">
-                    <div
-                            class="body-category-row2-item-img body-category-row2-item-img-1"
-                    ></div>
-                    <div
-                            class="body-category-row2-item-text body-category-row2-item-text-1"
-                    >
-                        Thời Trang Nam
-                    </div>
-                </div>
-                <div class="body-category-row2-item">
-                    <div
-                            class="body-category-row2-item-img body-category-row2-item-img-2"
-                    ></div>
-                    <div
-                            class="body-category-row2-item-text body-category-row2-item-text-2"
-                    >
-                        Điện Thoại
-                    </div>
-                </div>
-                <div class="body-category-row2-item">
-                    <div
-                            class="body-category-row2-item-img body-category-row2-item-img-3"
-                    ></div>
-                    <div
-                            class="body-category-row2-item-text body-category-row2-item-text-3"
-                    >
-                        Thời Trang Nữ
-                    </div>
-                </div>
-                <div class="body-category-row2-item">
-                    <div
-                            class="body-category-row2-item-img body-category-row2-item-img-4"
-                    ></div>
-                    <div
-                            class="body-category-row2-item-text body-category-row2-item-text-4"
-                    >
-                        Laptop
-                    </div>
-                </div>
-                <div class="body-category-row2-item">
-                    <div
-                            class="body-category-row2-item-img body-category-row2-item-img-5"
-                    ></div>
-                    <div
-                            class="body-category-row2-item-text body-category-row2-item-text-5"
-                    >
-                        Máy Ảnh
-                    </div>
-                </div>
-                <div class="body-category-row2-item">
-                    <div
-                            class="body-category-row2-item-img body-category-row2-item-img-6"
-                    ></div>
-                    <div
-                            class="body-category-row2-item-text body-category-row2-item-text-6"
-                    >
-                        Đồng Hồ
-                    </div>
-                </div>
-                <div class="body-category-row2-item">
-                    <div
-                            class="body-category-row2-item-img body-category-row2-item-img-7"
-                    ></div>
-                    <div
-                            class="body-category-row2-item-text body-category-row2-item-text-7"
-                    >
-                        Giày Nam
-                    </div>
-                </div>
-                <div class="body-category-row2-item">
-                    <div
-                            class="body-category-row2-item-img body-category-row2-item-img-8"
-                    ></div>
-                    <div
-                            class="body-category-row2-item-text body-category-row2-item-text-8"
-                    >
-                        Thể Thao
-                    </div>
-                </div>
-                <div class="body-category-row2-item">
-                    <div
-                            class="body-category-row2-item-img body-category-row2-item-img-9"
-                    ></div>
-                    <div
-                            class="body-category-row2-item-text body-category-row2-item-text-9"
-                    >
-                        Túi Ví Nữ
-                    </div>
-                </div>
-                <div class="body-category-row2-item">
-                    <div
-                            class="body-category-row2-item-img body-category-row2-item-img-10"
-                    ></div>
-                    <div
-                            class="body-category-row2-item-text body-category-row2-item-text-10"
-                    >
-                        Giày Nữ
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Category -->
-
-        <!-- Product Title -->
-        <div class="body-productTitle">
-            <p>SẢN PHẨM</p>
-        </div>
-        <!-- End Product Title -->
-
+<div class="content">
+    <nav th:replace="common/nav-search :: nav">
+    </nav>
+    <div class="content-container">
         <!-- Product Container -->
         <div class="body-productContainer">
             <a href=""
@@ -315,13 +153,7 @@
             </a>
         </div>
         <!-- End Product Container -->
-        <a class="body-loadMore" href="">Xem
-            thêm</a>
     </div>
-    <script th:src="@{/js/home.js}"></script>
 </div>
-
-<footer th:replace="common/footer :: footer">
-</footer>
 </body>
 </html>

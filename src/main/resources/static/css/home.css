@@ -220,7 +220,7 @@
 
 .body-productContainer-product {
     width: 200px;
-    height: 304px;
+    height: 340px;
     padding: 5px;
     background-color: #fff;
     display: flex;
@@ -277,19 +277,43 @@
     padding: 5px;
     display: flex;
     color: var(--shope-color);
-    justify-content: space-between;
+    /*justify-content: space-between;*/
 }
 
 .body-productContainer-product-unitPrice-origin {
     color: #ccc;
     text-decoration: line-through;
+    margin-right: 3px;
 }
 
-.body-productContainer-product-unitPrice-sold {
+.body-productContainer-product-info {
+    display: flex;
+    height: 25px;
+    padding: 5px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.body-productContainer-product-info-star {
     display: flex;
 }
 
-.body-productContainer-product-unitPrice-sold-child {
+.yellow-star, .grey-star {
+    display: flex;
+    width: 10px;
+    height: 10px;
+}
+
+.yellow-star-sgv, .grey-star-sgv {
+    width: 10px;
+    height: 10px;
+}
+
+.body-productContainer-product-info-sold {
+    display: flex;
+}
+
+.body-productContainer-product-info-sold-child {
     margin-right: 3px;
     font-size: 0.75rem;
     color: rgba(0, 0, 0, .54118);

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+    <link rel="stylesheet"
+          th:href="@{css/error.css}"/>
+</head>
+<body>
+<div class="error-container">
+    <img
+            class="error-cotainer-img"
+            th:src="@{img/shopee-500.PNG}"
+            alt=""
+    />
+    <h2 class="error-cotainer-h2">500</h2>
+    <p class="error-cotainer-p">It looks like
+        something is wrong</p>
+    <a class="error-cotainer-a" href="/home">Trở
+        về trang chủ</a>
+</div>
+</body>
+</html>
+
