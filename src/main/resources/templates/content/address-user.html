@@ -1,0 +1,233 @@
+<!DOCTYPE html >
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="/css/address-user.css">
+    <link rel="stylesheet"
+          href="/css/address-form.css">
+    <link rel="stylesheet"
+          href="/css/header.css">
+    <link rel="stylesheet"
+          href="/css/nav-user.css">
+    <link rel="stylesheet"
+          href="/css/themify-icons/themify-icons.css">
+</head>
+<body>
+<header th:replace="common/header :: header">
+</header>
+<div class="person-body">
+    <nav th:replace="common/nav-user :: nav">
+
+    </nav>
+    <div class="person-body-container">
+        <div class="person-body-container-content">
+            <div class="person-body-container-content-top">
+                <div class="person-body-container-content-top-left">
+                    <h1 class="person-body-container-content-top-title">
+                        Địa chỉ của tôi
+                    </h1>
+                    <div class="person-body-container-content-top-content">
+                        Quản lý địa chỉ nhận hàng
+                    </div>
+                </div>
+                <div class="person-body-container-content-top-right">
+                    <button class="person-body-container-content-top-right-button">
+                        <span class="ti-plus"></span>
+                        <span>Thêm địa chỉ mới</span>
+                    </button>
+                </div>
+
+            </div>
+            <div class="person-body-container-content-bottom">
+                <div class="person-body-container-content-bottom-group">
+                    <div class="person-body-container-content-bottom-group-line">
+                        <div class="person-body-container-content-bottom-group-line-left">
+                            <div class="person-body-container-content-bottom-group-line-left-name">
+                                Lâm Chí Hùng
+                            </div>
+                            <div class="person-body-container-content-bottom-group-line-left-line">
+
+                            </div>
+                            <div class="person-body-container-content-bottom-group-line-left-phone">
+                                0931176000
+                            </div>
+                        </div>
+                        <div class="person-body-container-content-bottom-group-line-right">
+                            <div class="person-body-container-content-bottom-group-line-right-item">
+                                Cập nhật
+                            </div>
+                            <div class="person-body-container-content-bottom-group-line-right-item">
+                                Xóa
+                            </div>
+                        </div>
+                    </div>
+                    <div class="person-body-container-content-bottom-group-line">
+                        <div class="person-body-container-content-bottom-group-line-left">
+                            <div class="person-body-container-content-bottom-group-line-left-phone">
+                                78/19 Tân Hòa Đông
+                            </div>
+                        </div>
+                        <div class="person-body-container-content-bottom-group-line-right">
+                            <button disabled="disabled"
+                                    class="person-body-container-content-bottom-group-line-right-item default-set">
+                                Đang làm mặc định
+                            </button>
+                        </div>
+                    </div>
+                    <div class="person-body-container-content-bottom-group-line">
+                        <div class="person-body-container-content-bottom-group-line-left">
+                            <div class="person-body-container-content-bottom-group-line-left-phone">
+                                <span>Phường 14</span>
+                                <span>, </span>
+                                <span>Quận 6</span>
+                                <span>, </span>
+                                <span>Thành phố Hồ Chí Minh</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="person-body-container-content-bottom-group">
+                    <div class="person-body-container-content-bottom-group-line">
+                        <div class="person-body-container-content-bottom-group-line-left">
+                            <div class="person-body-container-content-bottom-group-line-left-name">
+                                Lâm Chí Hùng
+                            </div>
+                            <div class="person-body-container-content-bottom-group-line-left-line">
+
+                            </div>
+                            <div class="person-body-container-content-bottom-group-line-left-phone">
+                                0931176000
+                            </div>
+                        </div>
+                        <div class="person-body-container-content-bottom-group-line-right">
+                            <div class="person-body-container-content-bottom-group-line-right-item">
+                                Cập nhật
+                            </div>
+                            <div class="person-body-container-content-bottom-group-line-right-item">
+                                Xóa
+                            </div>
+                        </div>
+                    </div>
+                    <div class="person-body-container-content-bottom-group-line">
+                        <div class="person-body-container-content-bottom-group-line-left">
+                            <div class="person-body-container-content-bottom-group-line-left-phone">
+                                78/19 Tân Hòa Đông
+                            </div>
+                        </div>
+                        <div class="person-body-container-content-bottom-group-line-right">
+                            <div class="person-body-container-content-bottom-group-line-right-item default-set">
+                                Thiết lập mặc định
+                            </div>
+                        </div>
+                    </div>
+                    <div class="person-body-container-content-bottom-group-line">
+                        <div class="person-body-container-content-bottom-group-line-left">
+                            <div class="person-body-container-content-bottom-group-line-left-phone">
+                                <span>Phường 14</span>
+                                <span>, </span>
+                                <span>Quận 6</span>
+                                <span>, </span>
+                                <span>Thành phố Hồ Chí Minh</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--form-->
+<div class="address-form-container">
+    <form id="addForm"
+          class="address-form-container-form">
+        <div class="address-form-container-form-header">
+            <p>Thêm địa chỉ mới</p>
+        </div>
+        <div class="address-form-container-form-body">
+            <div class="address-form-container-form-body-line">
+                <div class="address-form-container-form-body-line-item">
+                    <p>Họ và tên người nhận (Không
+                        dấu)</p>
+                    <input id="name" type="text"
+                           placeholder="Ví dụ: Nguyen Van A"/>
+                </div>
+                <div class="address-form-container-form-body-line-item">
+                    <p>Số điện thoại</p>
+                    <input id="phone" type="text"
+                           placeholder="Ví dụ: 09xxxxxxxx"/>
+                </div>
+            </div>
+            <div class="address-form-container-form-body-line">
+                <div class="address-form-container-form-body-line-item">
+                    <p>Tỉnh/Thành</p>
+                    <select name="city" id="city">
+                        <option value="hcm">Thành
+                            phố Hồ Chí Minh
+                        </option>
+                    </select>
+                </div>
+                <div class="address-form-container-form-body-line-item">
+                    <p>Quận/Huyện</p>
+                    <select name="district"
+                            id="district">
+                        <option value="1">Quận 1
+                        </option>
+                        <option value="2">Quận 2
+                        </option>
+                        <option value="3">Quận 3
+                        </option>
+                        <option value="4">Quận 4
+                        </option>
+                        <option value="5">Quận 5
+                        </option>
+                    </select>
+                </div>
+                <div class="address-form-container-form-body-line-item">
+                    <p>Phường/Xã</p>
+                    <select name="ward" id="ward">
+                        <option value="1">Phường
+                            1
+                        </option>
+                        <option value="2">Phường
+                            2
+                        </option>
+                        <option value="3">Phường
+                            3
+                        </option>
+                        <option value="4">Phường
+                            4
+                        </option>
+                        <option value="5">Phường
+                            5
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="address-form-container-form-body-line">
+                <div class="address-form-container-form-body-line-item full-width">
+                    <p>Số nhà, Tên đường</p>
+                    <input class="address-form-container-form-body-line-item-address"
+                           type="text"
+                           placeholder="Ví dụ: 21K Nguyễn Văn Trỗi"/>
+                </div>
+            </div>
+            <div class="address-form-container-form-footer">
+                <div id="closeAdd"
+                     class="address-form-container-form-footer-button back">
+                    Trở lại
+                </div>
+                <button class="address-form-container-form-footer-button submit"
+                        type="submit">Hoàn thành
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/js/address-user.js"></script>
+</body>
+</html>

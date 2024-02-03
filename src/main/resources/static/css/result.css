@@ -19,6 +19,80 @@
     max-width: 1100px;
 }
 
+.content-container-sort {
+    max-width: 1200px;
+    height: 50px;
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*background-color: rgba(0, 0, 0, 0.08);*/
+    /*padding: 4px;*/
+    /*border: 1px solid #000;*/
+    /*margin-top: 10px;*/
+    font-size: 0.875rem;
+    /*justify-content: space-between;*/
+}
+
+.content-container-sort-bg {
+    width: 90%;
+    max-width: 1100px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: #ebebeb;
+    padding: 4px;
+    border: 1px solid #dbdbdb;
+    /*margin-top: 10px;*/
+    position: fixed;
+    font-size: 0.875rem;
+    justify-content: space-between;
+}
+
+.content-container-sort-left {
+    display: flex;
+    align-items: center;
+}
+
+.content-container-sort-page {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.content-container-sort-page-total {
+    margin-right: 5px;
+}
+
+.content-container-sort-page-button {
+    width: 34px;
+    height: 34px;
+    text-align: center;
+    line-height: 34px;
+    background-color: #ffffff;
+    border: 1px solid #dbdbdb;
+}
+
+.content-container-sort-page-button:hover {
+    cursor: pointer;
+    background-color: var(--shope-color);
+    color: #fff;
+}
+
+.content-container-sort-item {
+    margin-left: 10px;
+    min-width: 100px;
+    height: 34px;
+    /*border: 1px solid var(--shope-color);*/
+    padding: 0px 4px;
+    text-align: center;
+    line-height: 34px;
+    background-color: #fff;
+}
+
+.content-container-sort-item:hover {
+    cursor: pointer;
+    background-color: var(--shope-color);
+    color: #fff;
+}
 
 .body-productContainer {
     min-height: 304px;
@@ -54,7 +128,7 @@
 
 .body-productContainer-product-group:hover {
     transform: translateY(-5px);
-    cursor: pointer;
+    cursor: default;
     border: 3px solid var(--shope-color);
 }
 
@@ -127,4 +201,37 @@
     margin-right: 3px;
     font-size: 0.75rem;
     color: rgba(0, 0, 0, .54118);
+}
+
+.body-productContainer-product-button {
+    display: flex;
+    font-size: 0.75rem;
+    justify-content: space-between;
+}
+
+.body-productContainer-product-button-add {
+    height: 35px;
+    flex: 1;
+    margin: 0px 5px;
+    background-color: rgba(255, 87, 34, 0.1);
+    border: 1px solid var(--shope-color);
+    color: var(--shope-color);
+    text-align: center;
+    line-height: 35px;
+}
+
+.body-productContainer-product-button-add:hover, .body-productContainer-product-button-buy:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.body-productContainer-product-button-buy {
+    height: 35px;
+    flex: 1;
+    margin: 0px 5px;
+    background-color: var(--shope-color);
+    border: 1px solid var(--shope-color);
+    color: #ffffff;
+    text-align: center;
+    line-height: 35px;
 }
