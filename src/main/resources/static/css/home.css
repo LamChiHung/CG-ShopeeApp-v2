@@ -244,7 +244,7 @@
 
 .body-productContainer-product-group:hover {
     transform: translateY(-5px);
-    cursor: pointer;
+    cursor: default;
     border: 3px solid var(--shope-color);
 }
 
@@ -334,4 +334,37 @@
 .body-loadMore:hover {
     cursor: pointer;
     opacity: 0.9;
+}
+
+.body-productContainer-product-button {
+    display: flex;
+    font-size: 0.75rem;
+    justify-content: space-between;
+}
+
+.body-productContainer-product-button-add {
+    height: 35px;
+    flex: 1;
+    margin: 0px 5px;
+    background-color: rgba(255, 87, 34, 0.1);
+    border: 1px solid var(--shope-color);
+    color: var(--shope-color);
+    text-align: center;
+    line-height: 35px;
+}
+
+.body-productContainer-product-button-add:hover, .body-productContainer-product-button-buy:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.body-productContainer-product-button-buy {
+    height: 35px;
+    flex: 1;
+    margin: 0px 5px;
+    background-color: var(--shope-color);
+    border: 1px solid var(--shope-color);
+    color: #ffffff;
+    text-align: center;
+    line-height: 35px;
 }

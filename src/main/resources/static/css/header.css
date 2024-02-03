@@ -154,6 +154,11 @@
     align-items: center;
 }
 
+.home-header-bg-container-bot-middle-container-button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
 .home-header-bg-container-bot-right {
     position: relative;
     width: 140px;
@@ -211,9 +216,11 @@
     0% {
         opacity: 0;
         height: 0px;
+        width: 0px;
     }
     100% {
         opacity: 1;
         height: 250px;
+        width: 450px;
     }
 }

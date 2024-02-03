@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --shopee-color: #ee4d2d;
+}
+
+.address-form-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.address-form-container-form {
+    display: none;
+    flex-direction: column;
+    width: 500px;
+    border: 1px solid var(--shopee-color);
+    padding: 20px;
+    background-color: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.address-form-container-form-header {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.address-form-container-form-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.address-form-container-form-body-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.address-form-container-form-body-line-item {
+}
+
+.address-form-container-form-body-line-item p {
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.4);
+    background-color: #fff;
+    transform: translate(15px, 6px);
+    width: fit-content;
+}
+
+.address-form-container-form-body-line-item input {
+    width: 210px;
+    height: 38px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.address-form-container-form-body-line-item-address {
+    width: 100% !important;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.address-form-container-form-body-line-item select {
+    min-width: 110px;
+    height: 38px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.address-form-container-form-footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: end;
+}
+
+.address-form-container-form-footer-button {
+    margin-left: 10px;
+    width: 140px;
+    height: 37px;
+    border: none;
+}
+
+.address-form-container-form-footer-button:hover {
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+.address-form-container-form-footer-button.back {
+    background-color: rgba(0, 0, 0, 0.03);
+    line-height: 37px;
+    text-align: center;
+}
+
+.address-form-container-form-footer-button.back:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.address-form-container-form-footer-button.submit {
+    background-color: var(--shopee-color);
+    color: #fff;
+}

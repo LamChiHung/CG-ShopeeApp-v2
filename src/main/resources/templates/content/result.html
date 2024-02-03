@@ -6,13 +6,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet"
-          th:href="@{css/header.css}">
+          href="/css/header.css">
     <link rel="stylesheet"
-          th:href="@{/css/themify-icons/themify-icons.css}">
+          href="/css/themify-icons/themify-icons.css">
     <link rel="stylesheet"
-          th:href="@{css/result.css}">
+          href="/css/result.css">
     <link rel="stylesheet"
-          th:href="@{css/nav-search.css}">
+          href="/css/nav-search.css">
 </head>
 <body>
 <header th:replace="common/header :: header">
@@ -21,6 +21,39 @@
     <nav th:replace="common/nav-search :: nav">
     </nav>
     <div class="content-container">
+        <div class="content-container-sort">
+            <div class="content-container-sort-bg">
+                <div class="content-container-sort-left">
+                    <p>Sắp xếp theo: </p>
+                    <div class="content-container-sort-item">
+                        Mới nhất
+                    </div>
+                    <div class="content-container-sort-item">
+                        Bán chạy
+                    </div>
+                    <div class="content-container-sort-item">
+                        Đánh giá cao
+                    </div>
+                    <div class="content-container-sort-item">
+                        Giá từ thấp đến cao
+                    </div>
+                    <div class="content-container-sort-item">
+                        Giá từ cao đến thấp
+                    </div>
+                </div>
+                <div class="content-container-sort-page">
+                    <span class="content-container-sort-page-current">1</span>
+                    <span>/</span>
+                    <span class="content-container-sort-page-total">4</span>
+                    <div class="content-container-sort-page-button">
+                        <
+                    </div>
+                    <div class="content-container-sort-page-button">
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Product Container -->
         <div class="body-productContainer">
             <a href=""
@@ -147,6 +180,15 @@
                             <p class="body-productContainer-product-info-sold-child">
                                 Đã bán</p>
                             <span class="body-productContainer-product-info-sold-child">100</span>
+                        </div>
+                    </div>
+                    <div class="body-productContainer-product-button">
+                        <div class="body-productContainer-product-button-add">
+                            <span>Thêm vào</span>
+                            <span class="ti-shopping-cart-full"></span>
+                        </div>
+                        <div class="body-productContainer-product-button-buy">
+                            Mua ngay
                         </div>
                     </div>
                 </div>
