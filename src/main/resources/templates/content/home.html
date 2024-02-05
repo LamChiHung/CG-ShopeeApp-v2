@@ -6,13 +6,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet"
-          th:href="@{/css/themify-icons/themify-icons.css}">
+          href="/css/themify-icons/themify-icons.css">
     <link rel="stylesheet"
-          th:href="@{/css/header.css}">
+          href="/css/header.css">
     <link rel="stylesheet"
-          th:href="@{/css/footer.css}">
+          href="/css/footer.css">
     <link rel="stylesheet"
-          th:href="@{/css/home.css}">
+          href="/css/home.css">
 </head>
 <body>
 <header th:replace="common/header :: header">
@@ -311,6 +311,15 @@
                             <span class="body-productContainer-product-info-sold-child">100</span>
                         </div>
                     </div>
+                    <div class="body-productContainer-product-button">
+                        <div class="body-productContainer-product-button-add">
+                            <span>Thêm vào</span>
+                            <span class="ti-shopping-cart-full"></span>
+                        </div>
+                        <div class="body-productContainer-product-button-buy">
+                            Mua ngay
+                        </div>
+                    </div>
                 </div>
             </a>
         </div>
@@ -318,7 +327,7 @@
         <a class="body-loadMore" href="">Xem
             thêm</a>
     </div>
-    <script th:src="@{/js/home.js}"></script>
+    <script src="/js/home.js"></script>
 </div>
 
 <footer th:replace="common/footer :: footer">

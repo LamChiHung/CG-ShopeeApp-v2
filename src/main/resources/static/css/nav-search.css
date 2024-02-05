@@ -72,7 +72,28 @@
     background-color: var(--shope-color);
 }
 
+.star-group {
+    display: flex;
+}
+
 .nav-bg-item-text:hover {
     color: var(--shope-color);
     cursor: pointer;
+}
+
+input:checked + label {
+    color: var(--shope-color);
+}
+
+.submit-button {
+    width: 80px;
+    height: 34px;
+    background-color: var(--shope-color);
+    color: #ffffff;
+    border: none;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+    opacity: 0.8;
 }

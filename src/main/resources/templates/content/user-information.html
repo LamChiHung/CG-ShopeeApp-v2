@@ -4,12 +4,12 @@
 >
 <head>
     <title>Title</title>
-    <link rel="stylesheet" th:href="@{css/user-information.css}">
-    <link rel="stylesheet" th:href="@{css/header.css}">
-    <link rel="stylesheet" th:href="@{css/nav-user.css}">
-    <link rel="stylesheet"
-          th:href="@{/css/themify-icons/themify-icons.css}">
+    <link rel="stylesheet" href="/css/user-information.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/nav-user.css">
+    <link rel="stylesheet" th:href="@{/css/themify-icons/themify-icons.css}">
     <link rel="stylesheet" th:href="@{css/change-password-form.css}">
+
 </head>
 <body>
 <header th:replace="common/header :: header">
@@ -85,7 +85,7 @@
                             <div
                                     class="person-body-container-content-bottom-left-row-value-radioGroup"
                             >
-                                <input type="radio" name="gender" id="nam" value="nam"
+                                <input type="radio" name="gender" id="nam" value="nam">
 
 
                                 <label for="nam">Nam</label>
@@ -93,7 +93,7 @@
                             <div
                                     class="person-body-container-content-bottom-left-row-value-radioGroup"
                             >
-                                <input type="radio" name="gender" id="nu" value="nu"
+                                <input type="radio" name="gender" id="nu" value="nu">
 
 
                                 <label for="nu">Nữ</label>
@@ -101,8 +101,7 @@
                             <div
                                     class="person-body-container-content-bottom-left-row-value-radioGroup"
                             >
-                                <input type="radio" name="gender" id="khac" value="khac"
-
+                                <input type="radio" name="gender" id="khac" value="khac">
                                 <label for="khac">Khác</label>
                             </div>
                         </div>
@@ -119,7 +118,7 @@
                             <div
                                     class="person-body-container-content-bottom-left-row-value-dayOfBirth"
                             >
-                                <input name="dayOfBirth" type="date" value="${user.getDateOfBirth()}" />
+                                <input name="dayOfBirth" type="date" value="${user.getDateOfBirth()}"/>
                             </div>
                             <div
                                     class="person-body-container-content-bottom-left-row-value-selectGroup"
@@ -167,8 +166,11 @@
                                     name="profile_pic"
                                     accept=".jpg, .jpeg, .png"
                             />
-                            <label class="person-body-container-content-bottom-right-mid-form-choose-picture" for="profile_pic" >Chọn ảnh</label>
-                            <button class="person-body-container-content-bottom-right-mid-form-choose-picture" type="submit">Lưu ảnh</button>
+                            <label class="person-body-container-content-bottom-right-mid-form-choose-picture"
+                                   for="profile_pic">Chọn ảnh</label>
+                            <button class="person-body-container-content-bottom-right-mid-form-choose-picture"
+                                    type="submit">Lưu ảnh
+                            </button>
                         </form>
                     </div>
                     <div class="person-body-container-content-bottom-right-bottom">
@@ -180,17 +182,17 @@
     </div>
 </div>
 <div class="changeForm-container">
-<form th:replace="common/change-password-form :: form" class="form-changePassword" method="post" action="/user">
-    <input style="display: none" name="action" value="changePassword">
-    <label>Mật khẩu cũ: <br><input type="password" name="oldPW"></label>
-    <label>Mật khẩu mới: <br><input type="password" name="newPW"></label>
-    <label>Nhập lại mật khẩu mới: <br><input type="password" name="newAgainPW"></label>
+    <form th:replace="common/change-password-form :: form" class="form-changePassword" method="post" action="/user">
+        <input style="display: none" name="action" value="changePassword">
+        <label>Mật khẩu cũ: <br><input type="password" name="oldPW"></label>
+        <label>Mật khẩu mới: <br><input type="password" name="newPW"></label>
+        <label>Nhập lại mật khẩu mới: <br><input type="password" name="newAgainPW"></label>
 
-    <button class="formChange-submit" type="submit">Lưu</button>
-    <span class="ti-close"></span>
-</form>
+        <button class="formChange-submit" type="submit">Lưu</button>
+        <span class="ti-close"></span>
+    </form>
 </div>
-<script th:src="@{js/user-information.js}"></script>
-<script th:src="@{js/change-password-form.js}"></script>
+<script src="/js/user-information.js"></script>
+<script src="/js/change-password-form.js"></script>
 </body>
 </html>
