@@ -3,7 +3,7 @@ let cancelButton = document.querySelector(".addProduct-container-form-buttonGrou
 let submitButton = document.querySelector(".addProduct-container-form-buttonGroup-save");
 let form = document.querySelector(".addProduct-container");
 let addProductButton = document.querySelector(".product-container-buttonContainer-addButton");
-let editProductButton = document.querySelectorAll(".product-container-row2-item-information-edit");
+
 
 function closeForm() {
     form.style.display = "none";
@@ -13,14 +13,13 @@ function openAddProductForm() {
     form.style.display = "flex";
     let a = document.querySelector("#a-form");
     a.value = "add";
-
 }
 
 closeButton.addEventListener("click", closeForm);
 cancelButton.addEventListener("click", closeForm);
-
 addProductButton.addEventListener("click", openAddProductForm);
 
+let editProductButton = document.querySelectorAll(".product-container-row2-item-information-edit");
 editProductButton.forEach(element => {
     element.addEventListener("click", function(event){
         form.style.display = "flex";

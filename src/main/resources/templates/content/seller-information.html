@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+          content="ie=edge">
+    <title>Title</title>
+    <link rel="stylesheet"
+          th:href="@{css/product-management.css}">
+    <link rel="stylesheet"
+          th:href="@{css/header-seller.css}">
+    <link rel="stylesheet"
+          th:href="@{/css/themify-icons/themify-icons.css}">
+    <link rel="stylesheet"
+          th:href="@{css/nav-seller.css}">
+    <link rel="stylesheet" href="/css/seller-information.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+</head>
+<body>
+<header th:replace="common/header-seller :: header"></header>
+
+<div class="content">
+    <nav class="nav" th:replace="common/nav-seller :: nav"></nav>
+    <div class="product-body">
+        <div class="information-container">
+            <h1 class="header-seller-info">Thông tin cửa hàng</h1>
+            <div class="row space-position space-top">
+                <div class="col-3 d-flex justify-content-end">
+                    <h3>Tên cửa hàng :</h3>
+                </div>
+                <div class="col-9">
+                    <h3>Tên shop ở đây</h3>
+                </div>
+            </div>
+            <div class="row space-position">
+                <div class="col-3 d-flex justify-content-end align-items-center">
+                    <h3>Logo của cửa hàng :</h3>
+                </div>
+                <div class="col-9">
+                    <div class="image-user"></div>
+                </div>
+            </div>
+            <div class="row space-position">
+                <div class="col-3 d-flex justify-content-end">
+                    <h3>Địa chỉ cửa hàng :</h3>
+                </div>
+                <div class="col-9">
+                    <h3 class="word-wrap"> Địa chỉ cụ thể </h3>
+                </div>
+            </div>
+            <div class="row space-position">
+                <div class="col-3 d-flex justify-content-end">
+                    <h3>Số điện thoại :</h3>
+                </div>
+                <div class="col-9">
+                    <h3 class="word-wrap"> 000000000xxx </h3>
+                </div>
+            </div>
+            <div class="row space-position">
+                <div class="col-3 d-flex justify-content-end">
+                    <h3>Link Facebook</h3>
+                </div>
+                <div class="col-9">
+                    <h3 class="word-wrap"> link </h3>
+                </div>
+            </div>
+            <div class="row space-position">
+                <div class="col-3 d-flex justify-content-end"></div>
+                <div class="col-9">
+                    <button style="padding: 1rem 1rem" class="changeInfo">Thay đổi thông tin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Đổ data tại đây-->
+<div style="display: none">
+    <div class="product-body">
+        <div class="information-container">
+            <h1 class="header-seller-info">Thông tin cửa hàng</h1>
+            <div class="row space-position space-top">
+                <div class="col-3 d-flex justify-content-end">
+                    <h3>Tên cửa hàng :</h3>
+                </div>
+                <div class="col-9">
+                    <h3>Tên shop ở đây</h3>
+                </div>
+            </div>
+            <div class="row space-position">
+                <div class="col-3 d-flex justify-content-end align-items-center">
+                    <h3>Logo của cửa hàng :</h3>
+                </div>
+                <div class="col-9">
+                    <div class="image-user"></div>
+                </div>
+            </div>
+            <div class="row space-position">
+                <div class="col-3 d-flex justify-content-end">
+                    <h3>Địa chỉ cửa hàng :</h3>
+                </div>
+                <div class="col-9">
+                    <h3 class="word-wrap"> Địa chỉ cụ thể </h3>
+                </div>
+            </div>
+            <div class="row space-position">
+                <div class="col-3 d-flex justify-content-end">
+                    <h3>Số điện thoại :</h3>
+                </div>
+                <div class="col-9">
+                    <h3 class="word-wrap"> 000000000xxx </h3>
+                </div>
+            </div>
+            <div class="row space-position">
+                <div class="col-3 d-flex justify-content-end">
+                    <h3>Link Facebook</h3>
+                </div>
+                <div class="col-9">
+                    <h3 class="word-wrap"> link </h3>
+                </div>
+            </div>
+            <div class="row space-position">
+                <div class="col-3 d-flex justify-content-end"></div>
+                <div class="col-9">
+                    <button style="padding: 1rem 1rem" class="changeInfo">Thay đổi thông tin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Form thay đổi thông tin -->
+<div class="overlay"></div>
+<div class="form-container" id="formContainer">
+    <form style="height: 25rem; width: 25rem ">
+        <div class="mb-3">
+            <label class="form-label">Tên cửa hàng</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Địa chỉ cửa hàng</label>
+            <input type="text" class="form-control ">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Số điện thoại</label>
+            <input type="text" class="form-control ">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Link facebook </label>
+            <input type="text" class="form-control ">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script th:src="@{js/seller-information.js}"></script>
+</body>
+</html>
