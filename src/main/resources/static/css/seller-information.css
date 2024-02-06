@@ -1,0 +1,65 @@
+
+.information-container{
+    min-height: 15rem;
+    max-height: 42rem;
+    width: 90%;
+    max-width: 75rem;
+    padding: 20px 0px;
+    background-color: white;
+    margin-top: 1rem
+}
+
+
+.space-position{
+    margin: 1rem 1rem 1rem 1rem;
+}
+.flex{
+    display: flex;
+}
+.logo-seller{
+    background-color: black;
+    width: 5rem;
+    height: 5rem ;
+}
+
+.word-wrap {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.image-user{
+    width: 8rem;
+    height: 8rem;
+    background-color: #0f75ba;
+}
+
+/* CSS để làm mờ khung toàn trang web */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: none;
+}
+
+/* CSS để căn giữa form */
+.form-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 2rem;
+    z-index: 10000;
+    display: none;
+}
+.header-seller-info{
+    background-color: #ee4d2d;
+    color: white; margin: 1rem 0rem ;
+    padding: 1rem 1rem;
+}
+.space-top{
+    margin-top: 2rem
+}
