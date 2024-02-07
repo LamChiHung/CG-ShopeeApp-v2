@@ -32,4 +32,9 @@ public class NewAccount {
         accountRoleRepo.save(accountRole);
     }
 
+    public void print() {
+        Account account = accountRepo.findById("lamchihung24@gmail.com").orElse(null);
+        System.out.println(account.getAuthorities().toString());
+    }
+
 }
