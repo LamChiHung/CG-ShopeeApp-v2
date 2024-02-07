@@ -80,6 +80,7 @@
 .home-header-bg-container-top-right-container-item {
     display: flex;
     margin-left: 10px;
+
 }
 
 .home-header-bg-container-top-right-container-item:hover {
@@ -89,6 +90,8 @@
 
 .home-header-bg-container-top-right-container-item-child {
     margin-right: 2px;
+    color: #fff;
+    text-decoration: none;
 }
 
 .home-header-bg-container-bot {

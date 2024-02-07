@@ -14,6 +14,7 @@ public class HomeController {
     @RequestMapping(value = {"/", "/home"})
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView("content/home");
+        newAccount.print();
         return modelAndView;
     }
 

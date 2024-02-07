@@ -16,6 +16,7 @@
           href="/css/themify-icons/themify-icons.css">
     <link rel="stylesheet"
           href="/css/nav-seller.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 <header th:replace="common/header-seller :: header">
@@ -66,32 +67,40 @@
                 </button>
             </div>
 
-            <div class="product-container-row2">
-                <!-- Sản phẩm -->
-                <div class="product-container-row2-item">
-                    <div class="product-container-row2-item-information">
+            <div
+                    class="product-container-row2">
+                <!--Bắt đầu sản phẩm-->
+                <div th:each="product : ${products}"
+                     class="product-container-row2-item">
+                    <div th:text="${product.getId()}"
+                         class="product-container-row2-item-information">
                         1
                     </div>
                     <div class="product-container-row2-item-information">
                         <img
                                 class="product-container-row2-item-information-img"
-                                src="${product.getUrl()}"
+                                th:src="${product.getImg()}"
                                 alt="product-avatar"
                         />
                     </div>
-                    <div class="product-container-row2-item-information">
+                    <div th:text="${product.getName()}"
+                         class="product-container-row2-item-information">
                         Điện thoại IP 14 Promax
                     </div>
-                    <div class="product-container-row2-item-information">
+                    <div th:text="${product.getCategory().getName()}"
+                         class="product-container-row2-item-information">
                         Điện thoại
                     </div>
-                    <div class="product-container-row2-item-information">
+                    <div th:text="${product.getOriginPrice()}"
+                         class="product-container-row2-item-information">
                         14.000.000
                     </div>
-                    <div class="product-container-row2-item-information">
+                    <div th:text="${product.getSellPrice()}"
+                         class="product-container-row2-item-information">
                         10.000.000
                     </div>
-                    <div class="product-container-row2-item-information">
+                    <div th:text="${product.getQuantity()}"
+                         class="product-container-row2-item-information">
                         200
                     </div>
                     <div class="product-container-row2-item-information">
@@ -99,15 +108,14 @@
                         <a id="deleteLink"
                            class="ti-trash product-container-row2-item-information-delete"
                            href=""></a>
-                        <form action="/product"
-                              method="post">
+                        <form th:action="@{/seller/delete/product/{id}(id=${product.getId()})}"
+                              method="GET">
                             <input type="hidden"
                                    name="a"
                                    value="delete">
                             <input type="hidden"
                                    name="productId"
                                    value="${product.getId()}">
-
                             <div id="confirmationPopup"
                                  class="popup">
                                 <div class="popup-content">
@@ -130,14 +138,15 @@
                         </form>
                     </div>
                 </div>
-                <!-- Kết thúc sản phẩm -->
+                <!--Kết thúc sản phẩm-->
             </div>
         </div>
     </div>
 </div>
 <!-- Form thêm sản phẩm -->
 <div class="addProduct-container">
-    <form method="post" action="/product"
+    <form th:object="${product}" method="post"
+          action="/seller/product"
           class="addProduct-container-form">
         <input type="hidden" name="a"
                value="update"
@@ -145,7 +154,7 @@
         <input type="text" name="a" id="a-form"
                hidden/>
         <input type="text" name="product-id"
-               value="${product.getId()}"
+               th:field="*{id}"
                id="product-id-form" hidden/>
         <div class="addProduct-container-form-cancel">
             <span class="ti-close addProduct-container-form-cancel-button"></span>
@@ -156,6 +165,7 @@
             >Tên sản phẩm*</label
             >
             <input
+                    th:field="*{name}"
                     class="addProduct-container-form-item-input"
                     type="text"
                     name="product-name"
@@ -169,12 +179,16 @@
                     for="category-form"
             >Phân loại*</label
             >
-            <select name="category"
+            <select
+                    name="category"
                     id="category-form"
-                    accept-charset="UTF-8">
-
+                    th:field="*{category}"
+            >
+                <option th:each="categorie : ${categories}"
+                        th:value="${categorie.id}"
+                        th:text="${categorie.name}">
+                </option>
             </select>
-
         </div>
         <div class="addProduct-container-form-item">
             <label
@@ -182,6 +196,7 @@
                     for="product-originPrice-form"
             >Giá gốc* (VNĐ)</label>
             <input
+                    th:field="*{originPrice}"
                     class="addProduct-container-form-item-input"
                     type="text"
                     name="product-originPrice"
@@ -196,6 +211,7 @@
             >Giá bán* (VNĐ)</label
             >
             <input
+                    th:field="*{sellPrice}"
                     class="addProduct-container-form-item-input"
                     type="text"
                     name="product-sellPrice"
@@ -210,6 +226,7 @@
             >Số lượng*</label
             >
             <input
+                    th:field="*{quantity}"
                     class="addProduct-container-form-item-input"
                     type="text"
                     name="product-quantity"
@@ -224,6 +241,7 @@
             >Link ảnh sản phẩm*</label
             >
             <input
+                    th:field="*{img}"
                     class="addProduct-container-form-item-input"
                     type="url"
                     name="product-urlAvatar"
@@ -251,6 +269,26 @@
 </div>
 
 <script src="/js/product-management.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".ti-pencil").click(function () {
+            let productId = this.parentElement.parentElement.children[0].textContent;
+            $.ajax({
+                type: "GET",
+                url: `http://localhost:8080/api/product/${productId}`,
+                success: function (data) {
+                    $("#product-id-form").val(data.id);
+                    $("#product-name-form").val(data.name);
+                    $("#category-form").val(data.category.id);
+                    $("#product-originPrice-form").val(data.originPrice);
+                    $("#product-sellPrice-form").val(data.sellPrice);
+                    $("#product-quantity-form").val(data.quantity);
+                    $("#product-urlAvatar-form").val(data.img);
+                }
+            })
+        })
+    })
+</script>
 </body>
 </html>
 

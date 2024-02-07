@@ -52,6 +52,7 @@ public class SecurityConfig {
                                 .requestMatchers("/home").permitAll()
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("https://**").permitAll()
+                                .requestMatchers("/api/**").permitAll()
                 )
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
