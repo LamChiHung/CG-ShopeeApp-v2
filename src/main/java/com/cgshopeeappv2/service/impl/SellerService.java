@@ -1,7 +1,8 @@
-package com.cgshopeeappv2.service;
+package com.cgshopeeappv2.service.impl;
 
 import com.cgshopeeappv2.entity.Seller;
 import com.cgshopeeappv2.repository.ISellerRepo;
+import com.cgshopeeappv2.service.ISellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +11,11 @@ public class SellerService implements ISellerService {
     @Autowired
     private ISellerRepo iSellerRepo;
 
+
+
     @Override
     public void save(Seller seller) {
-        iSellerRepo.save(seller);
+        this.iSellerRepo.save(seller);
     }
 
     @Override

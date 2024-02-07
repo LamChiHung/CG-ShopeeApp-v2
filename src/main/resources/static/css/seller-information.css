@@ -63,3 +63,7 @@
 .space-top{
     margin-top: 2rem
 }
+.submit-and-cancel-button{
+    display: flex;
+    justify-content: space-evenly;
+}
