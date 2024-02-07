@@ -1,6 +1,9 @@
 <!DOCTYPE html >
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport"
@@ -83,19 +86,35 @@
                                     class="home-header-bg-container-top-right-container-item-child ti-angle-down"
                             ></span>
                         </div>
-                        <div class="home-header-bg-container-top-right-container-item">
-                            <p
-                                    class="home-header-bg-container-top-right-container-item-child"
+                        <div
+                                class="home-header-bg-container-top-right-container-item">
+                            <a sec:authorize="not isAuthenticated()"
+                               th:href="@{/register}"
+                               class="home-header-bg-container-top-right-container-item-child"
                             >
                                 Đăng ký
-                            </p>
+                            </a>
+                            <a sec:authorize="isAuthenticated()"
+                               th:href="@{/user/information}"
+                               sec:authentication="name"
+                               class="home-header-bg-container-top-right-container-item-child"
+                            >
+
+                            </a>
                         </div>
                         <div class="home-header-bg-container-top-right-container-item">
-                            <p
-                                    class="home-header-bg-container-top-right-container-item-child"
+                            <a sec:authorize="not isAuthenticated()"
+                               th:href="@{/login}"
+                               class="home-header-bg-container-top-right-container-item-child"
                             >
                                 Đăng nhập
-                            </p>
+                            </a>
+                            <a sec:authorize="  isAuthenticated()"
+                               th:href="@{/logout}"
+                               class="home-header-bg-container-top-right-container-item-child"
+                            >
+                                Đăng xuất
+                            </a>
                         </div>
                     </div>
                 </div>

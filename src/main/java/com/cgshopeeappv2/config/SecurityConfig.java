@@ -54,10 +54,15 @@ public class SecurityConfig {
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("https://**").permitAll()
 
+
                                 .requestMatchers("/history").permitAll()
                                 .requestMatchers("/bill").permitAll()
                                 .requestMatchers("/information").permitAll()
                                 .requestMatchers("/change-information").permitAll()
+
+
+                                .requestMatchers("/api/**").permitAll()
+
                 )
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests

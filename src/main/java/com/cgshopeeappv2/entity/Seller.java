@@ -37,8 +37,4 @@ public class Seller {
     private String vertical_axis;
     private String phoneNumber;
     private String linkFacebook;
-
-
-
-
 }

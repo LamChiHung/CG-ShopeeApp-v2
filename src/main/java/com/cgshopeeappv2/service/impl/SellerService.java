@@ -11,8 +11,10 @@ public class SellerService implements ISellerService {
     @Autowired
     private ISellerRepo iSellerRepo;
 
-
-
+    @Override
+    public Seller getByAccountUsername(String username) {
+        return null;
+    }
     @Override
     public void save(Seller seller) {
         this.iSellerRepo.save(seller);

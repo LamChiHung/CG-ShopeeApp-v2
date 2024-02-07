@@ -17,6 +17,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.cgshopeeappv2.entity.Category;
+import com.cgshopeeappv2.entity.Product;
+import com.cgshopeeappv2.entity.Seller;
+import com.cgshopeeappv2.service.ICategoryService;
+import com.cgshopeeappv2.service.IProductService;
+import com.cgshopeeappv2.service.ISellerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("")
@@ -26,15 +46,51 @@ public class SellerController {
     @Autowired
     private ISellerRepo iSellerRepo;
 
-    @RequestMapping("/product")
-    public ModelAndView product() {
+    IProductService productService;
+    @Autowired
+    ISellerService sellerService;
+    @Autowired
+    ICategoryService categoryService;
+
+    @GetMapping("/product")
+    public ModelAndView product(@AuthenticationPrincipal Account account) {
+        String username = account.getUsername();
+        Seller seller = sellerService.getByAccountUsername(username);
+        List <Product> products = productService.getAllBySellerId(seller.getId());
         ModelAndView modelAndView = new ModelAndView("content/product-management");
+        modelAndView.addObject("products", products);
+        Product product = new Product();
+        modelAndView.addObject("product", product);
+        List <Category> categories = categoryService.getAll();
+        modelAndView.addObject("categories", categories);
         return modelAndView;
+    }
+
+    @PostMapping("/product")
+    public String product(
+            RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal Account account,
+            @Validated @ModelAttribute("product") Product product, BindingResult bindingResult) {
+        productService.save(product, account);
+        redirectAttributes.addFlashAttribute("message", "Lưu sản phẩm thành công");
+        return "redirect:/seller/product";
+    }
+
+    @GetMapping("/delete/product/{id}")
+    public String delete(
+            @PathVariable("id") Integer id,
+            @AuthenticationPrincipal Account account,
+            RedirectAttributes redirectAttributes
+    ) {
+        productService.delete(id);
+        redirectAttributes.addFlashAttribute("message", "Xóa sản phẩm thành công");
+        return "redirect:/seller/product";
     }
 
     @RequestMapping("/register")
     public ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView("content/seller-register-form");
+
         return modelAndView;
     }
 
@@ -44,10 +100,10 @@ public class SellerController {
         return modelAndView;
     }
 
-    Account account = new Account("lamchihung24@gmail.com", "");
+//    Account account = new Account("lamchihung24@gmail.com","");
 
     @RequestMapping("/information")
-    public ModelAndView information(Model model) {
+    public ModelAndView information(Model model,@AuthenticationPrincipal Account account ) {
         model.addAttribute("seller", iSellerService.getSellerByAccount_username(account.getUsername()));
         ModelAndView modelAndView = new ModelAndView("content/seller-information");
         return modelAndView;
