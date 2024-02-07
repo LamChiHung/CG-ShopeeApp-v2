@@ -2,7 +2,6 @@ package com.cgshopeeappv2.controller;
 
 import com.cgshopeeappv2.entity.Account;
 import com.cgshopeeappv2.entity.Seller;
-import com.cgshopeeappv2.repository.ISellerRepo;
 import com.cgshopeeappv2.service.ISellerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +43,6 @@ public class SellerController {
     @Autowired
     private ISellerService iSellerService;
     @Autowired
-    private ISellerRepo iSellerRepo;
-
     IProductService productService;
     @Autowired
     ISellerService sellerService;
