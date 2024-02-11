@@ -9,10 +9,22 @@ import org.springframework.stereotype.Service;
 @Service
 public class SellerService implements ISellerService {
     @Autowired
-    SellerRepo sellerRepo;
+    private SellerRepo sellerRepo;
+
+    @Override
+    public void save(Seller seller) {
+        sellerRepo.save(seller);
+    }
+
+    @Override
+    public Seller getSellerByAccount_username(String account) {
+        return sellerRepo.findSellerByAccount_Username(account);
+    }
 
     @Override
     public Seller getByAccountUsername(String username) {
         return sellerRepo.findByAccount_Username(username);
     }
+
+
 }

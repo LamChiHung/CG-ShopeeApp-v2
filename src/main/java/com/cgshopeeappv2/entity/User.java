@@ -9,18 +9,14 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "user")
 public class User {
     @Id
@@ -31,16 +27,17 @@ public class User {
     @Length(min = 2, max = 100, message = "Tên dài 2-100 ký tự")
     private String name;
 
-    @Size(min = 0, max = 2, message = "Giới tính không phù hợp")
-    private Integer gender;
+    private String gender;
 
     @Past
-    private LocalDateTime dateOfBirdth;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dateOfBirth;
 
     private String img;
 
     @OneToOne
     @JoinColumn(name = "account_username", referencedColumnName = "username")
     private Account account;
+
 
 }

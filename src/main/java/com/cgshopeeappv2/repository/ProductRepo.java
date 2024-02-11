@@ -23,4 +23,11 @@ public interface ProductRepo extends JpaRepository <Product, Integer> {
             "    ELSE 3\n" +
             "END, p.sellNumber")
     Page <Product> findTrendbyName(String name1, String name2, Pageable pageable);
+
+    @Query("SELECT p FROM Product p " +
+            "WHERE p.name LIKE CONCAT('%',:keyword,'%')" +
+            "AND p.sellPrice between :from AND :to " +
+            "AND p.category.id IN :categories AND p.star >= :star "
+    )
+    Page <Product> findBySearch(String keyword, List <Integer> categories, Integer from, Integer to, Integer star, Pageable pageable);
 }

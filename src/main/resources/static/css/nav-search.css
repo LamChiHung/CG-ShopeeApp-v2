@@ -183,3 +183,14 @@ input:checked + label {
     background-color: var(--shope-color);
     color: #fff;
 }
+
+.content-container-sort-item-keyword-text {
+    margin-left: 5px;
+    color: var(--shope-color);
+    font-weight: bold;
+}
+
+.nav-bg-item-header-money {
+    color: var(--shope-color);
+    font-size: 0.875rem;
+}

@@ -42,6 +42,7 @@ public class SecurityConfig {
 //                                .requestMatchers("/login").permitAll())
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
+                                .requestMatchers("/**").permitAll()
                                 .requestMatchers("/css/**").permitAll()
                                 .requestMatchers("/js/**").permitAll()
                                 .requestMatchers("/img/**").permitAll()
@@ -52,6 +53,13 @@ public class SecurityConfig {
                                 .requestMatchers("/home").permitAll()
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("https://**").permitAll()
+                                .requestMatchers("/history").permitAll()
+                                .requestMatchers("/bill").permitAll()
+                                .requestMatchers("/information").permitAll()
+                                .requestMatchers("/change-information").permitAll()
+                                .requestMatchers("/user/change-information").permitAll()
+                                .requestMatchers("/user/update-address").permitAll()
+                                .requestMatchers("/user/delete-address").permitAll()
                                 .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/discovery").permitAll()
                                 .requestMatchers("/search").permitAll()
@@ -73,7 +81,8 @@ public class SecurityConfig {
                                 .invalidateHttpSession(false)
                                 .logoutUrl("/logout")
                                 .logoutSuccessUrl("/home"))
-                .rememberMe((remember) -> {
+                .rememberMe((remember) ->
+                {
 
                 });
         return http.build();

@@ -15,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -59,7 +60,10 @@ public class HomeController {
             @CookieValue(name = "search", defaultValue = "") String search,
             HttpServletResponse response,
             @PageableDefault(10) Pageable pageable,
-            HttpServletRequest request
+            HttpServletRequest request,
+            @RequestParam(name = "category", defaultValue = "") String category,
+            @RequestParam(name = "from", defaultValue = "0") Integer from,
+            @RequestParam(name = "to", defaultValue = "2000000000") Integer to
     ) {
         String trend1;
         String trend2;
@@ -67,10 +71,16 @@ public class HomeController {
         String[] searchs = search.split("\\.");
         trend1 = searchs[0];
         trend2 = searchs[1];
+        List <Category> categoryList = categoryService.getAll();
         Page <Product> products = productService.findTrendByName(trend1, trend2, pageable);
         ModelAndView modelAndView = new ModelAndView("content/result");
         modelAndView.addObject("products", products);
+        modelAndView.addObject("categoryList", categoryList);
         modelAndView.addObject("page", pageable);
+        modelAndView.addObject("action", "discovery");
+        modelAndView.addObject("category", category);
+        modelAndView.addObject("to", to);
+        modelAndView.addObject("from", from);
 
 //        Lấy đường dẫn hiện tại để set vào url chuyển page
         String url = request.getRequestURI();

@@ -20,4 +20,6 @@ public interface IProductService {
     Product getById(Integer id);
 
     Page <Product> findTrendByName(String name1, String name2, Pageable pageable);
+
+    Page <Product> search(String keyword, String categories, Integer from, Integer to, Integer star, String sort, Integer page);
 }

@@ -31,3 +31,68 @@ closeAdd.addEventListener("click", function (e) {
     let addForm = document.getElementById("addForm");
     addForm.style.display = "none";
 })
+
+
+document.addEventListener('DOMContentLoaded', function () {
+let buttons = document.querySelectorAll('.button-update-address-user');
+let form = document.querySelector(".address-form-update-container");
+let formUpdate = document.querySelector('.address-update-form-container-form')
+buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+        form.style.display = 'block';
+        formUpdate.style.display = 'block';
+        let id = this.getAttribute('data-id');
+        let name = this.getAttribute('data-name');
+        let phone = this.getAttribute('data-phone');
+        let city = this.getAttribute('data-city');
+        let ward = this.getAttribute('data-ward');
+        let district = this.getAttribute('data-district');
+        let Ip = this.getAttribute('data-IP')
+        let apartment_number = this.getAttribute('data-apartment');
+        document.getElementById('IP').value = Ip;
+        document.getElementById('id').value = id;
+        document.getElementById('name').value = name;
+        document.getElementById('phone').value = phone;
+        document.getElementById('city').value = city;
+        document.getElementById('ward').value = ward;
+        document.getElementById('district').value = district;
+        document.getElementById('apartment-number').value = apartment_number;
+        document.getElementById('id-delete').value = id
+    });
+});
+});
+
+
+let overlay = document.querySelector('.overlay-address')
+let form_delete = document.querySelector('.form-delete')
+let cancel = document.getElementById('cancel-button-form-delete');
+var buttonDeletes = document.querySelectorAll('.btn-delete ');
+buttonDeletes.forEach(function (button) {
+    button.addEventListener('click', function () {
+        let addressButton = button.parentNode.parentNode;
+        document.getElementById('id-delete').value = this.getAttribute('data-id-delete');
+        addressButton.addEventListener('click', function () {
+            overlay.style.display = 'block';
+            form_delete.style.display = 'block';
+            console.log('aaa')
+        })
+        cancel.addEventListener('click', function () {
+            form_delete.style.display = 'none';
+            overlay.style.display = 'none';
+            event.preventDefault()
+            console.log('a')
+        })
+        overlay.addEventListener('click', function () {
+            form_delete.style.display = 'none';
+            overlay.style.display = 'none';
+            event.preventDefault()
+            console.log('b')
+        });
+
+    })
+});
+
+
+
+
+

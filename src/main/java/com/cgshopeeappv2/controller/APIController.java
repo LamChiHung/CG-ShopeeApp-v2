@@ -2,7 +2,7 @@ package com.cgshopeeappv2.controller;
 
 
 import com.cgshopeeappv2.entity.Product;
-import com.cgshopeeappv2.service.implement.ProductService;
+import com.cgshopeeappv2.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,7 @@ import java.net.URI;
 @RequestMapping("/api")
 public class APIController {
     @Autowired
-    ProductService productService;
-
+    IProductService productService;
 
     public ResponseEntity <Void> redirect() {
         return ResponseEntity.status(HttpStatus.FOUND)
