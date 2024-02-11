@@ -284,6 +284,13 @@
     color: #ccc;
     text-decoration: line-through;
     margin-right: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.body-productContainer-product-unitPrice-sell {
+    display: flex;
+    align-items: center;
 }
 
 .body-productContainer-product-info {
@@ -296,6 +303,11 @@
 
 .body-productContainer-product-info-star {
     display: flex;
+}
+
+.body-productContainer-product-info-star-child {
+    font-size: 0.75rem;
+    color: var(--shope-color);
 }
 
 .yellow-star, .grey-star {
@@ -312,6 +324,7 @@
 .body-productContainer-product-info-sold {
     display: flex;
 }
+
 
 .body-productContainer-product-info-sold-child {
     margin-right: 3px;

@@ -7,6 +7,7 @@ import com.cgshopeeappv2.repository.ProductRepo;
 import com.cgshopeeappv2.repository.SellerRepo;
 import com.cgshopeeappv2.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class ProductService implements IProductService {
             String username = account.getUsername();
             Seller seller = sellerRepo.findByAccount_Username(username);
             product.setSeller(seller);
-            product.setStar(5);
+            product.setStar(5F);
             productRepo.saveAndFlush(product);
         } else {
             Product product1 = productRepo.findById(product.getId()).orElse(null);
@@ -44,7 +45,7 @@ public class ProductService implements IProductService {
     }
 
 
-    public void getAll(Pageable page) {
+    public void getAllByPage(Pageable page) {
         productRepo.findAll(page);
     }
 
@@ -55,5 +56,10 @@ public class ProductService implements IProductService {
     @Override
     public Product getById(Integer id) {
         return productRepo.findById(id).orElse(null);
+    }
+
+    @Override
+    public Page <Product> findTrendByName(String name1, String name2, Pageable pageable) {
+        return productRepo.findTrendbyName(name1, name2, pageable);
     }
 }

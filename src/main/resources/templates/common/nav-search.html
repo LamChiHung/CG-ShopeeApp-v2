@@ -12,12 +12,14 @@
             <p class="nav-bg-item-header">
                 DANH MỤC
             </p>
-            <input required
-                   id="thoitrangnam"
-                   value="1"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
+            <input hidden="hidden" type="text"
+                   name="keyword" id="keyword">
+            <input
+                    id="thoitrangnam"
+                    value="1"
+                    class="checkbox"
+                    type="checkbox"
+                    name="category">
             <label for="thoitrangnam"
                    class="nav-bg-item-text">
                 Thời trang nam
@@ -117,7 +119,8 @@
             <p class="nav-bg-item-header">
                 KHOẢNG GIÁ
             </p>
-            <input class="input-money" type="text"
+            <input th:value="${search.from}"
+                   class="input-money" type="text"
                    name="from"
                    id="from"
                    placeholder="TỪ (vnđ)">
@@ -133,6 +136,7 @@
             <div class="star-group">
                 <input type="radio"
                        name="star"
+                       value="5"
                        id="5star">
                 <label for="5star"
                        class="body-productContainer-product-info-star">
@@ -242,6 +246,7 @@
             <div class="star-group">
                 <input type="radio"
                        name="star"
+                       value="4"
                        id="4star">
                 <label for="4star"
                        class="body-productContainer-product-info-star">
@@ -351,6 +356,7 @@
             <div class="star-group">
                 <input type="radio"
                        name="star"
+                       value="3"
                        id="3star">
                 <label for="3star"
                        class="body-productContainer-product-info-star">
@@ -460,6 +466,7 @@
             <div class="star-group">
                 <input type="radio"
                        name="star"
+                       value="2"
                        id="2star">
                 <label for="2star"
                        class="body-productContainer-product-info-star">
@@ -569,6 +576,7 @@
             <div class="star-group">
                 <input type="radio"
                        name="star"
+                       value="1"
                        id="1star">
                 <label for="1star"
                        class="body-productContainer-product-info-star">
@@ -674,6 +682,80 @@
                             </span>
                     <span>trở lên</span>
                 </label>
+            </div>
+        </div>
+        <div class="content-container-sort">
+            <div class="content-container-sort-bg">
+                <div class="content-container-sort-left">
+                    <p>Sắp xếp theo: </p>
+                    <input type="radio"
+                           name="sort"
+                           value="sold"
+                           hidden="hidden"
+                           id="sold">
+                    <label
+                            for="sold"
+                            class="content-container-sort-item">
+                        Bán chạy
+                    </label>
+                    <input type="radio"
+                           name="sort"
+                           value="star"
+                           hidden="hidden"
+                           id="star">
+                    <label
+                            for="star"
+                            class="content-container-sort-item">
+                        Đánh giá cao
+                    </label>
+                    <input type="radio"
+                           name="sort"
+                           value="asc"
+                           hidden="hidden"
+                           id="asc">
+                    <label
+                            for="asc"
+                            class="content-container-sort-item">
+                        Giá từ thấp đến cao
+                    </label>
+                    <input type="radio"
+                           name="sort"
+                           value="desc"
+                           hidden="hidden"
+                           id="desc">
+                    <label
+                            for="desc"
+                            class="content-container-sort-item">
+                        Giá từ cao đến thấp
+                    </label>
+                </div>
+                <div class="content-container-sort-page">
+                    <span th:text="${page.getPageNumber() + 1}"
+                          class="content-container-sort-page-current">1</span>
+                    <span>/</span>
+                    <span th:text="${products.totalPages}"
+                          class="content-container-sort-page-total">4</span>
+                    <div
+                            th:if="${not page.hasPrevious()}"
+                            class="content-container-sort-page-button-disable">
+                        <
+                    </div>
+                    <a th:if="${products.hasPrevious()}"
+                       th:href="${url.toString() + '?page=' + (page.getPageNumber()-1)}"
+                       class="content-container-sort-page-button">
+                        <
+                    </a>
+                    <a th:if="${products.hasNext()}"
+                       th:href="${url.toString() + '?page=' + (page.getPageNumber()+1)}"
+                       class="content-container-sort-page-button">
+                        >
+                    </a>
+                    <div
+                            th:if="${not products.hasNext()}"
+                            class="content-container-sort-page-button-disable">
+                        >
+                    </div>
+                </div>
             </div>
         </div>
         <button class="submit-button"

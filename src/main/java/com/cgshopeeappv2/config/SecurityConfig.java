@@ -53,6 +53,8 @@ public class SecurityConfig {
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("https://**").permitAll()
                                 .requestMatchers("/api/**").permitAll()
+                                .requestMatchers("/discovery").permitAll()
+                                .requestMatchers("/search").permitAll()
                 )
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
