@@ -59,8 +59,9 @@ public class SecurityConfig {
                                 .requestMatchers("/bill").permitAll()
                                 .requestMatchers("/information").permitAll()
                                 .requestMatchers("/change-information").permitAll()
-
-
+                                .requestMatchers("/user/change-information").permitAll()
+                                .requestMatchers("/user/update-address").permitAll()
+                                .requestMatchers("/user/delete-address").permitAll()
                                 .requestMatchers("/api/**").permitAll()
 
                 )

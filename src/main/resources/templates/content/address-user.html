@@ -14,13 +14,15 @@
           href="/css/nav-user.css">
     <link rel="stylesheet"
           href="/css/themify-icons/themify-icons.css">
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
+    <!--          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
+
 </head>
 <body>
 <header th:replace="common/header :: header">
 </header>
 <div class="person-body">
     <nav th:replace="common/nav-user :: nav">
-
     </nav>
     <div class="person-body-container">
         <div class="person-body-container-content">
@@ -41,33 +43,42 @@
                 </div>
 
             </div>
-            <div class="person-body-container-content-bottom">
+
+            <div class="person-body-container-content-bottom" th:each="a : ${list_address_user}">
                 <div class="person-body-container-content-bottom-group">
                     <div class="person-body-container-content-bottom-group-line">
                         <div class="person-body-container-content-bottom-group-line-left">
-                            <div class="person-body-container-content-bottom-group-line-left-name">
-                                Lâm Chí Hùng
+                            <div hidden="hidden"></div>
+                            <div class="person-body-container-content-bottom-group-line-left-name"
+                                 th:value="*{a.name}" th:text="*{a.name}">
                             </div>
                             <div class="person-body-container-content-bottom-group-line-left-line">
 
                             </div>
-                            <div class="person-body-container-content-bottom-group-line-left-phone">
-                                0931176000
+                            <div class="person-body-container-content-bottom-group-line-left-phone"
+                                 th:text="*{a.phone_number}">
                             </div>
                         </div>
                         <div class="person-body-container-content-bottom-group-line-right">
                             <div class="person-body-container-content-bottom-group-line-right-item">
-                                Cập nhật
+                                <button class="button-update-address-user btn btn-update"
+                                        th:attr="
+                                        data-IP=${a.IP.id},
+                                        data-name=${a.name},
+                                        data-id=${a.id},
+                                        data-phone=*{a.phone_number},data-city=*{a.city},data-ward=*{a.ward},data-district=*{a.district},data-apartment=*{a.apartment_number}"
+                                        th:id="'button-update-address-user-' + ${a.id}">Cập nhật
+                                </button>
                             </div>
                             <div class="person-body-container-content-bottom-group-line-right-item">
-                                Xóa
+                                <button class="btn-delete"  th:attr="data-id-delete=${a.id}"th:id="'delete-address'+${a.id}">Xóa</button>
                             </div>
                         </div>
                     </div>
                     <div class="person-body-container-content-bottom-group-line">
                         <div class="person-body-container-content-bottom-group-line-left">
-                            <div class="person-body-container-content-bottom-group-line-left-phone">
-                                78/19 Tân Hòa Đông
+                            <div class="person-body-container-content-bottom-group-line-left-phone"
+                                 th:text="*{a.apartment_number}">
                             </div>
                         </div>
                         <div class="person-body-container-content-bottom-group-line-right">
@@ -80,61 +91,193 @@
                     <div class="person-body-container-content-bottom-group-line">
                         <div class="person-body-container-content-bottom-group-line-left">
                             <div class="person-body-container-content-bottom-group-line-left-phone">
-                                <span>Phường 14</span>
+                                <!--                                <span th:text="*{a.ward}">-->
+                                <span th:if="*{a.ward =='1'}">Phường 1</span>
+                                <span th:if="*{a.ward =='2'}">Phường 2</span>
+                                <span th:if="*{a.ward =='3'}">Phường 3</span>
+                                <span th:if="*{a.ward =='4'}">Phường 4</span>
+                                <span th:if="*{a.ward =='5'}">Phường 5</span>
+                                <span th:if="*{a.ward =='6'}">Phường 6</span>
+                                <span th:if="*{a.ward =='7'}">Phường 7</span>
+                                <span th:if="*{a.ward =='8'}">Phường 8</span>
+                                <span th:if="*{a.ward =='9'}">Phường 9</span>
+                                <span th:if="*{a.ward =='10'}">Phường 10</span>
+                                <!--                                </span>-->
                                 <span>, </span>
-                                <span>Quận 6</span>
+                                <span th:if="*{a.district == '1'}">Quận 1</span>
+                                <span th:if="*{a.district == '2'}">Quận 2</span>
+                                <span th:if="*{a.district == '3'}">Quận 3</span>
+                                <span th:if="*{a.district == '4'}">Quận 4</span>
+                                <span th:if="*{a.district == '5'}">Quận 5</span>
+                                <span th:if="*{a.district == '6'}">Quận 6</span>
+                                <span th:if="*{a.district == '7'}">Quận 7</span>
+                                <span th:if="*{a.district == '8'}">Quận 8</span>
+                                <span th:if="*{a.district == '9'}">Quận 9</span>
+                                <span th:if="*{a.district == '10'}">Quận 10</span>
+                                <span th:if="*{a.district == '11'}">Quận 11</span>
+                                <span th:if="*{a.district == '12'}">Quận 12</span>
                                 <span>, </span>
-                                <span>Thành phố Hồ Chí Minh</span>
+                                <span th:if="*{a.city == 'hcm'}">Thành phố Hồ Chí Minh</span>
+                                <span th:if="*{a.city == 'hn'}">Thành phố Hà Nội</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="person-body-container-content-bottom-group">
-                    <div class="person-body-container-content-bottom-group-line">
-                        <div class="person-body-container-content-bottom-group-line-left">
-                            <div class="person-body-container-content-bottom-group-line-left-name">
-                                Lâm Chí Hùng
-                            </div>
-                            <div class="person-body-container-content-bottom-group-line-left-line">
 
+
+                <!--cập nhật dữ liệu-->
+
+                <div class="address-form-update-container">
+                    <form id="updateForm" th:action="@{/user/update-address}"
+                          class="address-update-form-container-form" method="post">
+                        <div class="address-form-container-form-header"></div>
+
+                        <div class="address-form-container-form-body">
+
+                            <div class="address-form-container-form-body-line">
+                                <div class="address-form-container-form-body-line-item">
+                                    <p>Họ và tên người nhận (Không
+                                        dấu)</p>
+                                    <input type="text" placeholder="Ví dụ: Nguyen Van A" name="name" id="name"
+                                    />
+                                    <input type="text" name="id" id="id" hidden="hidden">
+                                    <input type="text" name="IP" id="IP" hidden="hidden">
+                                </div>
+                                <div class="address-form-container-form-body-line-item">
+                                    <p>Số điện thoại</p>
+                                    <input type="text"
+                                           placeholder="Ví dụ: 09xxxxxxxx" name="phone_number" id="phone"
+                                    />
+                                </div>
                             </div>
-                            <div class="person-body-container-content-bottom-group-line-left-phone">
-                                0931176000
+                            <div class="address-form-container-form-body-line">
+                                <div class="address-form-container-form-body-line-item">
+                                    <p>Tỉnh/Thành</p>
+                                    <select name="city" id="city">
+                                        <option value="hcm">Thành
+                                            phố Hồ Chí Minh
+                                        </option>
+                                        <option value="hn">Thành
+                                            phố Hồ Hà Nội
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="address-form-container-form-body-line-item">
+                                    <p>Quận/Huyện</p>
+                                    <select name="district" id="district">
+                                        <option value="1">Quận 1
+                                        </option>
+                                        <option value="2">Quận 2
+                                        </option>
+                                        <option value="3">Quận 3
+                                        </option>
+                                        <option value="4">Quận 4
+                                        </option>
+                                        <option value="5">Quận 5
+                                        </option>
+                                        <option value="6">Quận 6
+                                        </option>
+                                        <option value="7">Quận 7
+                                        </option>
+                                        <option value="8">Quận 8
+                                        </option>
+                                        <option value="9">Quận 9
+                                        </option>
+                                        <option value="10">Quận 10
+                                        </option>
+                                        <option value="11">Quận 11
+                                        </option>
+                                        <option value="12">Quận 12
+                                        </option>
+
+                                    </select>
+                                </div>
+                                <div class="address-form-container-form-body-line-item">
+                                    <p>Phường/Xã</p>
+                                    <select name="ward" id="ward">
+                                        <option value="1">Phường
+                                            1
+                                        </option>
+                                        <option value="2">Phường
+                                            2
+                                        </option>
+                                        <option value="3">Phường
+                                            3
+                                        </option>
+                                        <option value="4">Phường
+                                            4
+                                        </option>
+                                        <option value="5">Phường
+                                            5
+                                        </option>
+                                        <option value="6">Phường
+                                            6
+                                        </option>
+                                        <option value="7">Phường
+                                            7
+                                        </option>
+                                        <option value="8">Phường
+                                            8
+                                        </option>
+                                        <option value="9">Phường
+                                            9
+                                        </option>
+                                        <option value="10">Phường
+                                            10
+                                        </option>
+                                        <option value="11">Phường
+                                            11
+                                        </option>
+                                        <option value="12">Phường
+                                            12
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="address-form-container-form-body-line">
+                                <div class="address-form-container-form-body-line-item full-width">
+                                    <p>Số nhà, Tên đường</p>
+                                    <input class="address-form-container-form-body-line-item-address"
+                                           id="apartment-number"
+                                           type="text"
+                                           placeholder="Ví dụ: 21K Nguyễn Văn Trỗi" name="apartment_number"/>
+                                </div>
+                            </div>
+                            <div class="address-form-container-form-footer">
+                                <button id="address-cancel-button"
+                                        class="address-form-container-form-footer-button back">
+                                    Trở lại
+                                </button>
+                                <button class="address-form-container-form-footer-button submit"
+                                        type="submit">Hoàn thành
+                                </button>
                             </div>
                         </div>
-                        <div class="person-body-container-content-bottom-group-line-right">
-                            <div class="person-body-container-content-bottom-group-line-right-item">
-                                Cập nhật
-                            </div>
-                            <div class="person-body-container-content-bottom-group-line-right-item">
-                                Xóa
-                            </div>
-                        </div>
-                    </div>
-                    <div class="person-body-container-content-bottom-group-line">
-                        <div class="person-body-container-content-bottom-group-line-left">
-                            <div class="person-body-container-content-bottom-group-line-left-phone">
-                                78/19 Tân Hòa Đông
-                            </div>
-                        </div>
-                        <div class="person-body-container-content-bottom-group-line-right">
-                            <div class="person-body-container-content-bottom-group-line-right-item default-set">
-                                Thiết lập mặc định
-                            </div>
-                        </div>
-                    </div>
-                    <div class="person-body-container-content-bottom-group-line">
-                        <div class="person-body-container-content-bottom-group-line-left">
-                            <div class="person-body-container-content-bottom-group-line-left-phone">
-                                <span>Phường 14</span>
-                                <span>, </span>
-                                <span>Quận 6</span>
-                                <span>, </span>
-                                <span>Thành phố Hồ Chí Minh</span>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
+
+                <!--hết form cập nhật-->
+
+
+                <!--Xóa địa chỉ-->
+                <div class="overlay-address"></div>
+                <div class="form-delete form-delete-container" id="form-delete-address">
+                    <h3 class="text-content-form-delete">Bạn có chắc muốn xóa địa chỉ này không</h3>
+                    <form style="height: 20rem; width: 40rem " th:action="@{/user/delete-address}" method="post">
+
+                            <input name="id" id="id-delete" hidden="hidden"/>
+
+                        <div class="delete-form">
+                            <button type="submit" class="submit-button btn btn-success ">Xác nhận</button>
+                            <button type="button" style="background-color: red" id="cancel-button-form-delete" class="cancel-button btn btn-danger">Hủy</button>
+                        </div>
+
+
+                    </form>
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -143,37 +286,41 @@
 <!--form-->
 <div class="address-form-container">
     <form id="addForm"
-          class="address-form-container-form">
+          class="address-form-container-form" th:action="@{/user/create-address}" method="post"
+          th:object="${address_user}">
         <div class="address-form-container-form-header">
             <p>Thêm địa chỉ mới</p>
         </div>
+        <input hidden="hidden" name="IP" th:value="*{id}">
         <div class="address-form-container-form-body">
             <div class="address-form-container-form-body-line">
                 <div class="address-form-container-form-body-line-item">
                     <p>Họ và tên người nhận (Không
                         dấu)</p>
-                    <input id="name" type="text"
-                           placeholder="Ví dụ: Nguyen Van A"/>
+                    <input type="text" placeholder="Ví dụ: Nguyen Van A" name="name"/>
                 </div>
                 <div class="address-form-container-form-body-line-item">
                     <p>Số điện thoại</p>
-                    <input id="phone" type="text"
-                           placeholder="Ví dụ: 09xxxxxxxx"/>
+                    <input type="text"
+                           placeholder="Ví dụ: 09xxxxxxxx" name="phone_number"/>
                 </div>
             </div>
             <div class="address-form-container-form-body-line">
                 <div class="address-form-container-form-body-line-item">
                     <p>Tỉnh/Thành</p>
-                    <select name="city" id="city">
+                    <select name="city">
                         <option value="hcm">Thành
                             phố Hồ Chí Minh
+                        </option>
+                        <option value="hn">Thành
+                            phố Hồ Hà Nội
                         </option>
                     </select>
                 </div>
                 <div class="address-form-container-form-body-line-item">
                     <p>Quận/Huyện</p>
                     <select name="district"
-                            id="district">
+                    >
                         <option value="1">Quận 1
                         </option>
                         <option value="2">Quận 2
@@ -184,11 +331,25 @@
                         </option>
                         <option value="5">Quận 5
                         </option>
+                        <option value="6">Quận 6
+                        </option>
+                        <option value="7">Quận 7
+                        </option>
+                        <option value="8">Quận 8
+                        </option>
+                        <option value="9">Quận 9
+                        </option>
+                        <option value="10">Quận 10
+                        </option>
+                        <option value="11">Quận 11
+                        </option>
+                        <option value="12">Quận 12
+                        </option>
                     </select>
                 </div>
                 <div class="address-form-container-form-body-line-item">
                     <p>Phường/Xã</p>
-                    <select name="ward" id="ward">
+                    <select name="ward">
                         <option value="1">Phường
                             1
                         </option>
@@ -204,6 +365,28 @@
                         <option value="5">Phường
                             5
                         </option>
+                        <option value="6">Phường
+                            6
+                        </option>
+                        <option value="7">Phường
+                            7
+                        </option>
+                        <option value="8">Phường
+                            8
+                        </option>
+                        <option value="9">Phường
+                            9
+                        </option>
+                        <option value="10">Phường
+                            10
+                        </option>
+                        <option value="11">Phường
+                            11
+                        </option>
+                        <option value="12">Phường
+                            12
+                        </option>
+
                     </select>
                 </div>
             </div>
@@ -212,7 +395,7 @@
                     <p>Số nhà, Tên đường</p>
                     <input class="address-form-container-form-body-line-item-address"
                            type="text"
-                           placeholder="Ví dụ: 21K Nguyễn Văn Trỗi"/>
+                           placeholder="Ví dụ: 21K Nguyễn Văn Trỗi" name="apartment_number"/>
                 </div>
             </div>
             <div class="address-form-container-form-footer">
@@ -228,6 +411,7 @@
     </form>
 </div>
 
-<script src="/js/address-user.js"></script>
+
+<script th:src="@{/js/address-user.js}"></script>
 </body>
 </html>

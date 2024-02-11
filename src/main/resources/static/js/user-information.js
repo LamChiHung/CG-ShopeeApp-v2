@@ -35,3 +35,16 @@ closeFromPW.onclick = function (e) {
     document.querySelector('.person-body').style.pointerEvents = 'auto';
 }
 
+
+var userGenderInput = document.getElementById('gender-user-information');
+var value = userGenderInput.value;
+
+var radioButtons = document.getElementsByName('gender');
+for (var i = 0; i < radioButtons.length; i++) {
+    if (radioButtons[i].value === value) {
+        radioButtons[i].checked = true;
+        break;
+    }
+}
+
+
