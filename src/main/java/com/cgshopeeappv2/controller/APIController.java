@@ -20,7 +20,6 @@ public class APIController {
     @Autowired
     ProductService productService;
 
-
     public ResponseEntity <Void> redirect() {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .location(URI.create("https://api.nextbillion.io/distancematrix/json?origins=34.05456317,-118.31528428&destinations=33.96763110,-118.23215346&mode=car&key=b98e9dd2f9414231bae19340b76feff0&avoid=highway"))

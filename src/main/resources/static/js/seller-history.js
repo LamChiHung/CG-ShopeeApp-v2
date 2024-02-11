@@ -24,8 +24,5 @@ deleteHistory.forEach(function (button){
             overlay.style.display = 'none';
             console.log('b')
         });
-
-
-
     })
 })

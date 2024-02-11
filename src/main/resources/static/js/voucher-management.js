@@ -54,11 +54,11 @@ deleteVoucher.forEach(function (button) {
 
         cancelButton.addEventListener('click', function () {
             formContainer.style.display = 'none';
-            overlay.style.display = 'none';
+            overlay2.style.display = 'none';
         })
         overlay2.addEventListener('click', function () {
             formContainer.style.display = 'none';
-            overlay.style.display = 'none';
+            overlay2.style.display = 'none';
             console.log('b')
         });
 
