@@ -97,7 +97,7 @@
                             </a>
                             <a sec:authorize="isAuthenticated()"
                                th:href="@{/user/information}"
-                               sec:authentication="name"
+                               th:text="${session.user.name}"
                                class="home-header-bg-container-top-right-container-item-child"
                             >
 

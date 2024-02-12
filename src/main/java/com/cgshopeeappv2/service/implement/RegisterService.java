@@ -43,8 +43,6 @@ public class RegisterService implements IRegisterService {
         user.setName("Anonymous");
         user.setAccount(account);
         userRepo.save(user);
-
-
     }
 
     public Account findById(String username) {
