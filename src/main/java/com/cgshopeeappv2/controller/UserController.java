@@ -101,4 +101,15 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("redirect:/user/address");
         return modelAndView;
     }
+
+    @PostMapping("/change-default-address")
+    public ModelAndView changeDefault(@RequestParam("id") int id, @AuthenticationPrincipal Account account, Model model) {
+        User user = iUserService.getUserByAccount(account.getUsername());
+        UserAddress userAddress = iAddressUserService.findById(id);
+        userAddress.setDefault_address("true");
+        iAddressUserService.save(userAddress);
+        iAddressUserService.changeDefaultAddress(id, user.getId());
+        ModelAndView modelAndView = new ModelAndView("redirect:/user/address");
+        return modelAndView;
+    }
 }

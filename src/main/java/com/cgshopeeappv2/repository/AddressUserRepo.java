@@ -12,5 +12,9 @@ public interface AddressUserRepo extends JpaRepository<UserAddress, Integer> {
 
     void deleteById(int id);
 
+    UserAddress findById (int id);
+
+    List<UserAddress> findAllByIdNotAndIP_Id (int id, int IP);
+
 }
 

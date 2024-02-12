@@ -74,23 +74,31 @@ buttonDeletes.forEach(function (button) {
         addressButton.addEventListener('click', function () {
             overlay.style.display = 'block';
             form_delete.style.display = 'block';
-            console.log('aaa')
         })
         cancel.addEventListener('click', function () {
             form_delete.style.display = 'none';
             overlay.style.display = 'none';
             event.preventDefault()
-            console.log('a')
         })
         overlay.addEventListener('click', function () {
             form_delete.style.display = 'none';
             overlay.style.display = 'none';
             event.preventDefault()
-            console.log('b')
         });
-
     })
 });
+
+let buttonChangeAddress= document.querySelectorAll('.change-default-address');
+let buttonDefaultAddress = document.querySelectorAll('.button-default-address');
+buttonChangeAddress.forEach('button',function (){
+    button.addEventListener('click',function (){
+        buttonDefaultAddress.forEach(function(button) {
+            button.addEventListener('click', function() {
+                document.getElementById('change-default-address').value = 'false';
+            });
+        });
+    })
+})
 
 
 
