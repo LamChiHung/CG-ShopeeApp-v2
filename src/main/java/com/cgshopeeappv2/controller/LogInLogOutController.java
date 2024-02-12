@@ -1,6 +1,9 @@
 package com.cgshopeeappv2.controller;
 
 import com.cgshopeeappv2.dto.RegisterObject;
+import com.cgshopeeappv2.entity.Account;
+import com.cgshopeeappv2.service.IRegisterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("")
 public class LogInLogOutController {
+    @Autowired
+    IRegisterService registerService;
+
+
     @GetMapping("/login")
     public ModelAndView logIn(@RequestParam(value = "message", defaultValue = "") String message) {
         ModelAndView modelAndView = new ModelAndView("content/signin-form");
@@ -35,14 +42,22 @@ public class LogInLogOutController {
     ) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("message", "Dữ liệu không hợp lệ.");
-            return "redirect:/logup";
+            return "redirect:/register";
         } else {
             if (! registerObject.getPassword().equals(registerObject.getCorrectPassword())) {
                 redirectAttributes.addFlashAttribute("message", "Xác nhận password không hợp lệ.");
-                return "redirect:/logup";
+                return "redirect:/register";
             } else {
-                redirectAttributes.addFlashAttribute("message", "Đăng ký thành công, vui lòng đăng nhập để tiếp tục.");
-                return "redirect:/login";
+                Account account = registerService.findById(registerObject.getUsername());
+                if (account == null) {
+                    registerService.createNewUserAccount(registerObject.getUsername(), registerObject.getPassword());
+                    redirectAttributes.addFlashAttribute("message", "Đăng ký thành công, vui lòng đăng nhập để tiếp tục.");
+                    return "redirect:/login";
+                } else {
+                    redirectAttributes.addFlashAttribute("message", "Tài khoản đã được sử dụng.");
+                    return "redirect:/register";
+                }
+
             }
         }
     }

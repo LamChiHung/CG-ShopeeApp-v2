@@ -74,8 +74,9 @@
             </div>
             <div
                     class="body-category-row2">
-                <div th:each="category : ${categories}"
-                     class="body-category-row2-item">
+                <a th:href="@{/search(category=${category.getId()})}"
+                   th:each="category : ${categories}"
+                   class="body-category-row2-item">
                     <img alt="avatar"
                          th:src="${category.img}"
                          class="body-category-row2-item-img body-category-row2-item-img-1"
@@ -85,7 +86,7 @@
                     >
                         Thời Trang Nam
                     </div>
-                </div>
+                </a>
             </div>
         </div>
         <!-- End Category -->

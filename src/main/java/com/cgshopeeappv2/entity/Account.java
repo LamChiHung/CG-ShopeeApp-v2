@@ -53,7 +53,7 @@ public class Account implements UserDetails {
     public Account(String username, String password) {
         this.username = username;
         this.password = new BCryptPasswordEncoder().encode(password);
-        this.enabled = false;
+        this.enabled = true;
         this.accountNonLocked = true;
         this.accountNonExpired = true;
         this.credentialsNonExpired = true;
