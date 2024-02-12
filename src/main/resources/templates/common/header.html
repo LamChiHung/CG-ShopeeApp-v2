@@ -21,9 +21,10 @@
             <div class="home-header-bg-container-top">
                 <div class="home-header-bg-container-top-left">
                     <div class="home-header-bg-container-top-left-container">
-                        <div class="home-header-bg-container-top-left-container-item">
+                        <a th:href="@{/seller/product}"
+                           class="header-link home-header-bg-container-top-left-container-item">
                             Kênh người bán
-                        </div>
+                        </a>
                         <div
                                 class="home-header-bg-container-top-left-container-item seperate-line"
                         ></div>
@@ -96,7 +97,7 @@
                             </a>
                             <a sec:authorize="isAuthenticated()"
                                th:href="@{/user/information}"
-                               sec:authentication="name"
+                               th:text="${session.user.name}"
                                class="home-header-bg-container-top-right-container-item-child"
                             >
 
@@ -121,7 +122,8 @@
             </div>
             <div class="home-header-bg-container-bot">
                 <div class="home-header-bg-container-bot-left">
-                    <div class="home-header-bg-container-bot-left-item">
+                    <a th:href="@{/home}"
+                       class="home-header-bg-container-bot-left-item">
                         <svg
                                 viewBox="0 0 192 65"
                                 class="shopee-svg-icon header-with-search__shopee-logo icon-shopee-logo"
@@ -132,14 +134,15 @@
                                 ></path>
                             </g>
                         </svg>
-                    </div>
+                    </a>
                 </div>
                 <div class="home-header-bg-container-bot-middle">
-                    <form class="home-header-bg-container-bot-middle-container">
+                    <form action="/search"
+                          class="home-header-bg-container-bot-middle-container">
                         <input
                                 class="home-header-bg-container-bot-middle-container-input"
                                 type="text"
-                                name="search"
+                                name="keyword"
                                 id="search"
                                 placeholder="Nhập tên sản phẩm cần tìm"
                         />

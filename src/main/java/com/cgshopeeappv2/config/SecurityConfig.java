@@ -1,5 +1,6 @@
 package com.cgshopeeappv2.config;
 
+import com.cgshopeeappv2.secure.CustomAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    CustomAuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -53,8 +57,6 @@ public class SecurityConfig {
                                 .requestMatchers("/home").permitAll()
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("https://**").permitAll()
-
-
                                 .requestMatchers("/history").permitAll()
                                 .requestMatchers("/bill").permitAll()
                                 .requestMatchers("/information").permitAll()
@@ -63,7 +65,8 @@ public class SecurityConfig {
                                 .requestMatchers("/user/update-address").permitAll()
                                 .requestMatchers("/user/delete-address").permitAll()
                                 .requestMatchers("/api/**").permitAll()
-
+                                .requestMatchers("/discovery").permitAll()
+                                .requestMatchers("/search").permitAll()
                 )
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
@@ -76,7 +79,8 @@ public class SecurityConfig {
                                 .loginPage("/login")
                                 .failureUrl("/login?error=true")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/home"))
+                                .successHandler(authenticationSuccessHandler)
+                )
                 .logout((logout) ->
                         logout.deleteCookies("remove")
                                 .invalidateHttpSession(false)

@@ -36,7 +36,8 @@ public class Product {
     private Integer quantity;
     @Max(5)
     @Min(0)
-    private Integer star;
+    private Float star;
+    private Integer sellNumber;
     @Length(min = 2, max = 500)
     private String img;
     @ManyToOne

@@ -4,11 +4,16 @@
 >
 <head>
     <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/user-information.css}">
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/css/nav-user.css}">
-    <link rel="stylesheet" th:href="@{/css/themify-icons/themify-icons.css}">
-    <link rel="stylesheet" th:href="@{css/change-password-form.css}">
+    <link rel="stylesheet"
+          href="/css/user-information.css">
+    <link rel="stylesheet"
+          href="/css/header.css">
+    <link rel="stylesheet"
+          href="/css/nav-user.css">
+    <link rel="stylesheet"
+          href="/css/themify-icons/themify-icons.css">
+    <link rel="stylesheet"
+          href="/css/change-password-form.css">
 
 </head>
 <body>
@@ -25,12 +30,18 @@
                     Hồ Sơ Của Tôi
                 </h1>
                 <div class="person-body-container-content-top-content">
-                    Quản lý thông tin hồ sơ để bảo mật tài khoản
+                    Quản lý thông tin hồ sơ để bảo
+                    mật tài khoản
                 </div>
             </div>
-            <div class="person-body-container-content-bottom" th:object="${user}">
-                <form th:action="@{/user/change-information}" method="post" class="person-body-container-content-bottom-left">
-                    <input style="display: none" name="action" value="saveChange">
+            <div class="person-body-container-content-bottom"
+                 th:object="${user}">
+                <form th:action="@{/user/change-information}"
+                      method="post"
+                      class="person-body-container-content-bottom-left">
+                    <input style="display: none"
+                           name="action"
+                           value="saveChange">
                     <div class="person-body-container-content-bottom-left-row">
                         <div
                                 class="person-body-container-content-bottom-left-row-label"
@@ -40,11 +51,14 @@
                         <div
                                 class="person-body-container-content-bottom-left-row-value"
                         >
-                         <input readonly class="person-body-container-content-bottom-left-row-value-input" th:field="*{account}">
+                            <input readonly
+                                   class="person-body-container-content-bottom-left-row-value-input"
+                                   th:field="*{account}">
                         </div>
                     </div>
                     <div>
-                        <input hidden="hidden" th:field="*{id}">
+                        <input hidden="hidden"
+                               th:field="*{id}">
                     </div>
                     <div class="person-body-container-content-bottom-left-row">
                         <div
@@ -73,7 +87,8 @@
                         <div
                                 class="person-body-container-content-bottom-left-row-value changePassword"
                         >
-                            Bấm vào đây để thay đổi mật khẩu
+                            Bấm vào đây để thay
+                            đổi mật khẩu
                         </div>
                     </div>
                     <div class="person-body-container-content-bottom-left-row">
@@ -83,18 +98,32 @@
                             Giới tính
                         </div>
                         <div class="person-body-container-content-bottom-left-row-value">
-                            <input id="gender-user-information" th:value="*{gender}" hidden="hidden">
+                            <input id="gender-user-information"
+                                   th:value="*{gender}"
+                                   hidden="hidden">
                             <div class="person-body-container-content-bottom-left-row-value-radioGroup">
-                                <input type="radio" name="gender" id="nam" value="nam" th:field="*{gender}">
+                                <input type="radio"
+                                       name="gender"
+                                       id="nam"
+                                       value="nam"
+                                       th:field="*{gender}">
                                 <label for="nam">Nam</label>
                             </div>
                             <div class="person-body-container-content-bottom-left-row-value-radioGroup">
-                                <input type="radio" name="gender" id="nu" value="nu" th:field="*{gender}">
+                                <input type="radio"
+                                       name="gender"
+                                       id="nu"
+                                       value="nu"
+                                       th:field="*{gender}">
                                 <label for="nu">Nữ</label>
                             </div>
                             <div class="person-body-container-content-bottom-left-row-value-radioGroup"
                             >
-                                <input type="radio" name="gender" id="khac" value="khac" th:field="*{gender}">
+                                <input type="radio"
+                                       name="gender"
+                                       id="khac"
+                                       value="khac"
+                                       th:field="*{gender}">
                                 <label for="khac">Khác</label>
                             </div>
                         </div>
@@ -109,9 +138,10 @@
                                 class="person-body-container-content-bottom-left-row-value"
                         >
                             <div class="person-body-container-content-bottom-left-row-value-dayOfBirth">
-                                <input id="date" name="dayOfBirth" type="date"  th:field="*{dateOfBirth}" />
-                                <input id="date-value"  th:value="*{dateOfBirth}" th:field="*{dateOfBirth}" readonly>
-
+                                <input id="date"
+                                       name="dayOfBirth"
+                                       type="date"
+                                       th:field="${user.dateOfBirth}"/>
                             </div>
                             <div
                                     class="person-body-container-content-bottom-left-row-value-selectGroup"
@@ -160,14 +190,17 @@
                                     accept=".jpg, .jpeg, .png"
                             />
                             <label class="person-body-container-content-bottom-right-mid-form-choose-picture"
-                                   for="profile_pic">Chọn ảnh</label>
+                                   for="profile_pic">Chọn
+                                ảnh</label>
                             <button class="person-body-container-content-bottom-right-mid-form-choose-picture"
-                                    type="submit">Lưu ảnh
+                                    type="submit">
+                                Lưu ảnh
                             </button>
                         </form>
                     </div>
                     <div class="person-body-container-content-bottom-right-bottom">
-                        <p>Định dạng:.JPEG, .PNG</p>
+                        <p>Định dạng:.JPEG,
+                            .PNG</p>
                     </div>
                 </div>
             </div>
@@ -175,13 +208,23 @@
     </div>
 </div>
 <div class="changeForm-container">
-    <form th:replace="common/change-password-form :: form" class="form-changePassword" method="post" action="/user">
-        <input style="display: none" name="action" value="changePassword">
-        <label>Mật khẩu cũ: <br><input type="password" name="oldPW"></label>
-        <label>Mật khẩu mới: <br><input type="password" name="newPW"></label>
-        <label>Nhập lại mật khẩu mới: <br><input type="password" name="newAgainPW"></label>
+    <form th:replace="common/change-password-form :: form"
+          class="form-changePassword"
+          method="post" action="/user">
+        <input style="display: none" name="action"
+               value="changePassword">
+        <label>Mật khẩu cũ: <br><input
+                type="password"
+                name="oldPW"></label>
+        <label>Mật khẩu mới: <br><input
+                type="password"
+                name="newPW"></label>
+        <label>Nhập lại mật khẩu mới: <br><input
+                type="password" name="newAgainPW"></label>
 
-        <button class="formChange-submit" type="submit">Lưu</button>
+        <button class="formChange-submit"
+                type="submit">Lưu
+        </button>
         <span class="ti-close"></span>
     </form>
 </div>

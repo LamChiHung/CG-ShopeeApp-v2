@@ -227,3 +227,8 @@
         width: 450px;
     }
 }
+
+.header-link {
+    color: #fff;
+    text-decoration: none;
+}
