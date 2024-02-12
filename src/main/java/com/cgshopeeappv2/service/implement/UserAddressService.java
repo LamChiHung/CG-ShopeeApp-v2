@@ -26,12 +26,26 @@ public class UserAddressService implements IAddressUserService {
     }
 
     @Override
-    public void deleteUserAddress (UserAddress userAddress) {
+    public void deleteUserAddress(UserAddress userAddress) {
         addressUserRepo.delete(userAddress);
     }
 
     @Override
     public void deleteById(int id) {
         addressUserRepo.deleteById(id);
+    }
+
+    @Override
+    public void changeDefaultAddress(int id, int IP) {
+        List<UserAddress> userAddressesList = addressUserRepo.findAllByIdNotAndIP_Id(id, IP);
+        for (UserAddress address : userAddressesList) {
+            address.setDefault_address("false");
+            save(address);
+        }
+    }
+
+    @Override
+    public UserAddress findById(int id) {
+        return addressUserRepo.findById(id);
     }
 }
