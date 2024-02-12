@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 @Data
 @Entity
@@ -34,6 +35,7 @@ public class UserAddress {
 
     private String ward;
 
-    private boolean default_address;
+    @ColumnDefault("false")
+    private String default_address;
 
 }

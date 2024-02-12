@@ -41,7 +41,6 @@
                         <span>Thêm địa chỉ mới</span>
                     </button>
                 </div>
-
             </div>
 
             <div class="person-body-container-content-bottom" th:each="a : ${list_address_user}">
@@ -71,7 +70,9 @@
                                 </button>
                             </div>
                             <div class="person-body-container-content-bottom-group-line-right-item">
-                                <button class="btn-delete"  th:attr="data-id-delete=${a.id}"th:id="'delete-address'+${a.id}">Xóa</button>
+                                <button class="btn-delete" th:attr="data-id-delete=${a.id}"
+                                        th:id="'delete-address'+${a.id}">Xóa
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -81,12 +82,26 @@
                                  th:text="*{a.apartment_number}">
                             </div>
                         </div>
-                        <div class="person-body-container-content-bottom-group-line-right">
-                            <button disabled="disabled"
-                                    class="person-body-container-content-bottom-group-line-right-item default-set">
-                                Đang làm mặc định
-                            </button>
+                        <div th:if="*{a.default_address=='true'}" class="button-default-address">
+                            <div class="person-body-container-content-bottom-group-line-right">
+                                <button disabled="disabled"
+                                        class="person-body-container-content-bottom-group-line-right-item default-set">
+                                    Đang làm mặc định
+                                </button>
+                            </div>
                         </div>
+                        <div th:if="*{a.default_address == 'false'}" class ="change-default-address" >
+                            <form th:action="@{/user/change-default-address}" method="post">
+                                <div class="person-body-container-content-bottom-group-line-right">
+                                    <div class="person-body-container-content-bottom-group-line-right-item default-set" >
+                                        <input hidden="hidden" name="id" th:value="*{a.id}">
+                                        <button type="submit" class="button-change-default-address" > Thiết lập mặc định</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
                     </div>
                     <div class="person-body-container-content-bottom-group-line">
                         <div class="person-body-container-content-bottom-group-line-left">
@@ -266,18 +281,16 @@
                     <h3 class="text-content-form-delete">Bạn có chắc muốn xóa địa chỉ này không</h3>
                     <form style="height: 20rem; width: 40rem " th:action="@{/user/delete-address}" method="post">
 
-                            <input name="id" id="id-delete" hidden="hidden"/>
+                        <input name="id" id="id-delete" hidden="hidden"/>
 
                         <div class="delete-form">
                             <button type="submit" class="submit-button btn btn-success ">Xác nhận</button>
-                            <button type="button" style="background-color: red" id="cancel-button-form-delete" class="cancel-button btn btn-danger">Hủy</button>
+                            <button type="button" style="background-color: red" id="cancel-button-form-delete"
+                                    class="cancel-button btn btn-danger">Hủy
+                            </button>
                         </div>
-
-
                     </form>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -292,6 +305,7 @@
             <p>Thêm địa chỉ mới</p>
         </div>
         <input hidden="hidden" name="IP" th:value="*{id}">
+        <input hidden="hidden" name="default_address" value="false" >
         <div class="address-form-container-form-body">
             <div class="address-form-container-form-body-line">
                 <div class="address-form-container-form-body-line-item">

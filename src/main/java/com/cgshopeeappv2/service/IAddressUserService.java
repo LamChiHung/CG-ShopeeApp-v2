@@ -13,4 +13,8 @@ public interface IAddressUserService {
     void deleteUserAddress(UserAddress userAddress);
 
     void deleteById(int id);
+
+   void changeDefaultAddress(int id,int IP);
+
+    UserAddress findById (int id);
 }

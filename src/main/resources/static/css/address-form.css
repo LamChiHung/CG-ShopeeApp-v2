@@ -190,3 +190,10 @@
 .text-content-form-delete{
     text-align: center;
 }
+
+.button-change-default-address{
+    outline: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
