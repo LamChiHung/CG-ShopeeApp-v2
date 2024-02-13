@@ -366,6 +366,7 @@
     color: var(--shope-color);
     text-align: center;
     line-height: 35px;
+    text-decoration: none;
 }
 
 .body-productContainer-product-button-add:hover, .body-productContainer-product-button-buy:hover {

@@ -1,11 +1,17 @@
 package com.cgshopeeappv2.controller;
 
 
+import com.cgshopeeappv2.entity.Account;
+import com.cgshopeeappv2.entity.CartItem;
 import com.cgshopeeappv2.entity.Product;
+import com.cgshopeeappv2.entity.User;
+import com.cgshopeeappv2.service.ICartItemService;
 import com.cgshopeeappv2.service.IProductService;
+import com.cgshopeeappv2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class APIController {
     @Autowired
     IProductService productService;
+    @Autowired
+    ICartItemService cartItemService;
+    @Autowired
+    IUserService userService;
+
 
     public ResponseEntity <Void> redirect() {
         return ResponseEntity.status(HttpStatus.FOUND)
@@ -41,5 +53,25 @@ public class APIController {
     public ResponseEntity <Product> getProduct(@PathVariable("id") Integer id) {
         Product product = productService.getById(id);
         return ResponseEntity.ok().body(product);
+    }
+
+    @GetMapping("/cart/add/{id}")
+    public ResponseEntity <List <CartItem>> addItem(
+            @PathVariable("id") Integer id,
+            @AuthenticationPrincipal Account account
+    ) {
+        User user = userService.getUserByAccount(account.getUsername());
+        cartItemService.save(user, id);
+        List <CartItem> cartItems = cartItemService.getByUser(user);
+        return ResponseEntity.ok().body(cartItems);
+    }
+
+    @GetMapping("/cart")
+    public ResponseEntity <List <CartItem>> showCartItem(
+            @AuthenticationPrincipal Account account
+    ) {
+        User user = userService.getUserByAccount(account.getUsername());
+        List <CartItem> cartItems = cartItemService.getByUser(user);
+        return ResponseEntity.ok().body(cartItems);
     }
 }

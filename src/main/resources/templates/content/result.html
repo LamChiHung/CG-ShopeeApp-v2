@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
@@ -105,10 +106,11 @@
                         </div>
                     </div>
                     <div class="body-productContainer-product-button">
-                        <div class="body-productContainer-product-button-add">
+                        <a th:href="@{/api/cart/add/{id}(id=${product.id})}"
+                           class="body-productContainer-product-button-add">
                             <span>Thêm vào</span>
                             <span class="ti-shopping-cart-full"></span>
-                        </div>
+                        </a>
                         <div class="body-productContainer-product-button-buy">
                             Mua ngay
                         </div>
@@ -120,5 +122,36 @@
     </div>
 </div>
 <script src="/js/nav-search.js"></script>
+<script sec:authorize="isAuthenticated()">
+    $(document).ready(
+        $(".body-productContainer-product-button-add").click(function (event) {
+            event.preventDefault();
+            console.log(this.href);
+            $.ajax(
+                {
+                    type: "GET",
+                    url: this.href,
+                    success: function (result) {
+                        console.log(result);
+                        $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                    }
+                }
+            )
+        })
+    );
+    $(document).ready(
+        $.ajax(
+            {
+                type: "GET",
+                url: '/api/cart',
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                }
+            }
+        )
+    )
+
+</script>
 </body>
 </html>

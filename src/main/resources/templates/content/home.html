@@ -1,6 +1,7 @@
 <!DOCTYPE html >
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
@@ -13,6 +14,7 @@
           href="/css/footer.css">
     <link rel="stylesheet"
           href="/css/home.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 <header th:replace="common/header :: header">
@@ -177,11 +179,13 @@
                                   class="body-productContainer-product-info-sold-child">100</span>
                         </div>
                     </div>
-                    <div class="body-productContainer-product-button">
-                        <div class="body-productContainer-product-button-add">
+                    <div
+                            class="body-productContainer-product-button">
+                        <a th:href="@{/api/cart/add/{id}(id=${product.id})}"
+                           class="body-productContainer-product-button-add">
                             <span>Thêm vào</span>
                             <span class="ti-shopping-cart-full"></span>
-                        </div>
+                        </a>
                         <div class="body-productContainer-product-button-buy">
                             Mua ngay
                         </div>
@@ -194,10 +198,53 @@
            href="/discovery">Xem
             thêm</a>
     </div>
-    <script src="/js/home.js"></script>
 </div>
 
 <footer th:replace="common/footer :: footer">
 </footer>
+<script src="/js/home.js"></script>
+<script sec:authorize="isAuthenticated()">
+    $(document).ready(
+        $(".body-productContainer-product-button-add").click(function (event) {
+            event.preventDefault();
+            console.log(this.href);
+            $.ajax(
+                {
+                    type: "GET",
+                    url: this.href,
+                    success: function (result) {
+                        console.log(result);
+                        $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                    }
+                }
+            )
+        })
+    );
+    $(document).ready(
+        $.ajax(
+            {
+                type: "GET",
+                url: '/api/cart',
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                }
+            }
+        )
+    )
+
+    function loadItem() {
+        $.ajax(
+            {
+                type: "GET",
+                url: '/api/cart',
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                }
+            }
+        )
+    }
+</script>
 </body>
 </html>
