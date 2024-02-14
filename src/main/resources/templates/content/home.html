@@ -1,6 +1,7 @@
 <!DOCTYPE html >
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
@@ -13,6 +14,7 @@
           href="/css/footer.css">
     <link rel="stylesheet"
           href="/css/home.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 <header th:replace="common/header :: header">
@@ -177,11 +179,13 @@
                                   class="body-productContainer-product-info-sold-child">100</span>
                         </div>
                     </div>
-                    <div class="body-productContainer-product-button">
-                        <div class="body-productContainer-product-button-add">
+                    <div
+                            class="body-productContainer-product-button">
+                        <a th:href="@{/api/cart/add/{id}(id=${product.id})}"
+                           class="body-productContainer-product-button-add">
                             <span>Thêm vào</span>
                             <span class="ti-shopping-cart-full"></span>
-                        </div>
+                        </a>
                         <div class="body-productContainer-product-button-buy">
                             Mua ngay
                         </div>
@@ -194,10 +198,80 @@
            href="/discovery">Xem
             thêm</a>
     </div>
-    <script src="/js/home.js"></script>
 </div>
 
 <footer th:replace="common/footer :: footer">
 </footer>
+<script src="/js/home.js"></script>
+<script sec:authorize="isAuthenticated()">
+    $(document).ready(
+        $(".body-productContainer-product-button-add")
+            .click(function (event) {
+                event.preventDefault();
+                console.log(this.href);
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: this.href,
+                        success: function (result) {
+                            console.log(result);
+                            $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                            $(".home-header-bg-container-bot-right-popup-container").empty();
+                            loadItem(result);
+                        }
+                    }
+                )
+            })
+    );
+    $(document).ready(
+        $.ajax(
+            {
+                type: "GET",
+                url: '/api/cart',
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                    loadItem(result);
+                }
+            }
+        )
+    );
+
+    function deleteItem(event) {
+        event.preventDefault();
+        console.log(event.target.href);
+        $.ajax(
+            {
+                type: "GET",
+                url: event.target.href,
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                    $(".home-header-bg-container-bot-right-popup-container").empty();
+                    loadItem(result);
+                }
+            }
+        )
+    }
+
+    function loadItem(result) {
+        for (let i = 0; i < result.length; i++) {
+            $(".home-header-bg-container-bot-right-popup-container").append(
+                `<div class=\"home-header-bg-container-bot-right-popup-item\">\n` +
+                `                              <img class=\"home-header-bg-container-bot-right-popup-item-img\"\n` +
+                `                                     src=${result[i].product.img}>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-name\">\n` +
+                `                                    <span>${result[i].product.name}</span>\n` +
+                `                                </div>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-price\">\n` +
+                `                                    <sub>đ</sub><span>${(result[i].product.sellPrice).toLocaleString('de-DE')}</span>\n` +
+                `                                </div>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-delete\">\n` +
+                `                                    <a onclick="deleteItem(event)" class=\"home-header-bg-container-bot-right-popup-item-delete-link\"  href=\"/api/cart/delete/${result[i].product.id}\">Xóa</a>\n` +
+                `                                </div>\n` +
+                `                           </div>`)
+        }
+    }
+</script>
 </body>
 </html>

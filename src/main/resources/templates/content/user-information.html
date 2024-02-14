@@ -1,6 +1,8 @@
 <!DOCTYPE html >
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+
 >
 <head>
     <title>Title</title>
@@ -14,6 +16,7 @@
           href="/css/themify-icons/themify-icons.css">
     <link rel="stylesheet"
           href="/css/change-password-form.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -230,5 +233,19 @@
 </div>
 <script th:src="@{/js/user-information.js}"></script>
 <script th:src="@{/js/change-password-form.js}"></script>
+<script sec:authorize="isAuthenticated()">
+    $(document).ready(
+        $.ajax(
+            {
+                type: "GET",
+                url: '/api/cart',
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                }
+            }
+        )
+    )
+</script>
 </body>
 </html>
