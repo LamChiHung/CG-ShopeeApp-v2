@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="person-body-container-content-top-right">
-                    <button class="person-body-container-content-top-right-button">
+                    <button id="add-address" class="person-body-container-content-top-right-button">
                         <span class="ti-plus"></span>
                         <span>Thêm địa chỉ mới</span>
                     </button>
@@ -65,7 +65,7 @@
                                         data-IP=${a.IP.id},
                                         data-name=${a.name},
                                         data-id=${a.id},
-                                        data-phone=*{a.phone_number},data-city=*{a.city},data-ward=*{a.ward},data-district=*{a.district},data-apartment=*{a.apartment_number}"
+                                        data-phone=*{a.phone_number},data-city=*{a.city},data-ward=*{a.ward},data-district=*{a.district.id_Coordinates},data-apartment=*{a.apartment_number}, data-default-address=*{a.default_address}"
                                         th:id="'button-update-address-user-' + ${a.id}">Cập nhật
                                 </button>
                             </div>
@@ -90,12 +90,14 @@
                                 </button>
                             </div>
                         </div>
-                        <div th:if="*{a.default_address == 'false'}" class ="change-default-address" >
+                        <div th:if="*{a.default_address == 'false'}" class="change-default-address">
                             <form th:action="@{/user/change-default-address}" method="post">
                                 <div class="person-body-container-content-bottom-group-line-right">
-                                    <div class="person-body-container-content-bottom-group-line-right-item default-set" >
+                                    <div class="person-body-container-content-bottom-group-line-right-item default-set">
                                         <input hidden="hidden" name="id" th:value="*{a.id}">
-                                        <button type="submit" class="button-change-default-address" > Thiết lập mặc định</button>
+                                        <button type="submit" class="button-change-default-address"> Thiết lập mặc
+                                            định
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -119,18 +121,18 @@
                                 <span th:if="*{a.ward =='10'}">Phường 10</span>
                                 <!--                                </span>-->
                                 <span>, </span>
-                                <span th:if="*{a.district == '1'}">Quận 1</span>
-                                <span th:if="*{a.district == '2'}">Quận 2</span>
-                                <span th:if="*{a.district == '3'}">Quận 3</span>
-                                <span th:if="*{a.district == '4'}">Quận 4</span>
-                                <span th:if="*{a.district == '5'}">Quận 5</span>
-                                <span th:if="*{a.district == '6'}">Quận 6</span>
-                                <span th:if="*{a.district == '7'}">Quận 7</span>
-                                <span th:if="*{a.district == '8'}">Quận 8</span>
-                                <span th:if="*{a.district == '9'}">Quận 9</span>
-                                <span th:if="*{a.district == '10'}">Quận 10</span>
-                                <span th:if="*{a.district == '11'}">Quận 11</span>
-                                <span th:if="*{a.district == '12'}">Quận 12</span>
+                                <span th:if="*{a.district.id_Coordinates == 1}">Quận 1</span>
+                                <span th:if="*{a.district.id_Coordinates == 2}">Quận 2</span>
+                                <span th:if="*{a.district.id_Coordinates == 3}">Quận 3</span>
+                                <span th:if="*{a.district.id_Coordinates == 4}">Quận 4</span>
+                                <span th:if="*{a.district.id_Coordinates == 5}">Quận 5</span>
+                                <span th:if="*{a.district.id_Coordinates == 6}">Quận 6</span>
+                                <span th:if="*{a.district.id_Coordinates == 7}">Quận 7</span>
+                                <span th:if="*{a.district.id_Coordinates == 8}">Quận 8</span>
+                                <span th:if="*{a.district.id_Coordinates == 9}">Quận 9</span>
+                                <span th:if="*{a.district.id_Coordinates == 10}">Quận 10</span>
+                                <span th:if="*{a.district.id_Coordinates == 11}">Quận 11</span>
+                                <span th:if="*{a.district.id_Coordinates == 12}">Quận 12</span>
                                 <span>, </span>
                                 <span th:if="*{a.city == 'hcm'}">Thành phố Hồ Chí Minh</span>
                                 <span th:if="*{a.city == 'hn'}">Thành phố Hà Nội</span>
@@ -157,6 +159,7 @@
                                     />
                                     <input type="text" name="id" id="id" hidden="hidden">
                                     <input type="text" name="IP" id="IP" hidden="hidden">
+                                    <input type="text" name="default_address" id="default_address" hidden="hidden">
                                 </div>
                                 <div class="address-form-container-form-body-line-item">
                                     <p>Số điện thoại</p>
@@ -179,7 +182,7 @@
                                 </div>
                                 <div class="address-form-container-form-body-line-item">
                                     <p>Quận/Huyện</p>
-                                    <select name="district" id="district">
+                                    <select name="district.id_Coordinates" id="district">
                                         <option value="1">Quận 1
                                         </option>
                                         <option value="2">Quận 2
@@ -204,7 +207,6 @@
                                         </option>
                                         <option value="12">Quận 12
                                         </option>
-
                                     </select>
                                 </div>
                                 <div class="address-form-container-form-body-line-item">
@@ -260,7 +262,7 @@
                                 </div>
                             </div>
                             <div class="address-form-container-form-footer">
-                                <button id="address-cancel-button"
+                                <button id="address-cancel-button" type="button"
                                         class="address-form-container-form-footer-button back">
                                     Trở lại
                                 </button>
@@ -305,7 +307,7 @@
             <p>Thêm địa chỉ mới</p>
         </div>
         <input hidden="hidden" name="IP" th:value="*{id}">
-        <input hidden="hidden" name="default_address" value="false" >
+        <input hidden="hidden" name="default_address" value="false">
         <div class="address-form-container-form-body">
             <div class="address-form-container-form-body-line">
                 <div class="address-form-container-form-body-line-item">
@@ -333,31 +335,31 @@
                 </div>
                 <div class="address-form-container-form-body-line-item">
                     <p>Quận/Huyện</p>
-                    <select name="district"
+                    <select name="district.id_Coordinates"
                     >
-                        <option value="1">Quận 1
+                        <option value=1>Quận 1
                         </option>
-                        <option value="2">Quận 2
+                        <option value=2>Quận 2
                         </option>
-                        <option value="3">Quận 3
+                        <option value=3>Quận 3
                         </option>
-                        <option value="4">Quận 4
+                        <option value=4>Quận 4
                         </option>
-                        <option value="5">Quận 5
+                        <option value=5>Quận 5
                         </option>
-                        <option value="6">Quận 6
+                        <option value=6>Quận 6
                         </option>
-                        <option value="7">Quận 7
+                        <option value=7>Quận 7
                         </option>
-                        <option value="8">Quận 8
+                        <option value=8>Quận 8
                         </option>
-                        <option value="9">Quận 9
+                        <option value=9>Quận 9
                         </option>
-                        <option value="10">Quận 10
+                        <option value=10>Quận 10
                         </option>
-                        <option value="11">Quận 11
+                        <option value=11>Quận 11
                         </option>
-                        <option value="12">Quận 12
+                        <option value=12>Quận 12
                         </option>
                     </select>
                 </div>
@@ -400,7 +402,6 @@
                         <option value="12">Phường
                             12
                         </option>
-
                     </select>
                 </div>
             </div>
