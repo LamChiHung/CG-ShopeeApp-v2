@@ -8,5 +8,7 @@ import java.util.List;
 public interface ICartItemService {
     void save(User user, Integer productId);
 
+    void delete(User user, Integer productId);
+
     List <CartItem> getByUser(User user);
 }

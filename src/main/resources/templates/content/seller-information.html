@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,16 +9,19 @@
           content="ie=edge">
     <title>Title</title>
     <link rel="stylesheet"
-          th:href="@{css/product-management.css}">
+          href="/css/product-management.css">
     <link rel="stylesheet"
-          th:href="@{css/header-seller.css}">
+          href="/css/header-seller.css">
     <link rel="stylesheet"
-          th:href="@{/css/themify-icons/themify-icons.css}">
+          href="/css/themify-icons/themify-icons.css">
     <link rel="stylesheet"
-          th:href="@{css/nav-seller.css}">
-    <link rel="stylesheet" href="/css/seller-information.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+          href="/css/nav-seller.css">
+    <link rel="stylesheet"
+          href="/css/seller-information.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+          crossorigin="anonymous">
 
 
 </head>
@@ -25,10 +29,13 @@
 <header th:replace="common/header-seller :: header"></header>
 
 <div class="content">
-    <nav class="nav" th:replace="common/nav-seller :: nav"></nav>
+    <nav class="nav"
+         th:replace="common/nav-seller :: nav"></nav>
     <div class="product-body">
-        <div class="information-container" th:object="${seller}">
-            <h1 class="header-seller-info">Thông tin cửa hàng</h1>
+        <div class="information-container"
+             th:object="${seller}">
+            <h1 class="header-seller-info">Thông
+                tin cửa hàng</h1>
             <div class="row space-position space-top">
                 <div class="col-3 d-flex justify-content-end">
                     <h3>Tên cửa hàng :</h3>
@@ -43,7 +50,8 @@
                     <h3>Logo của cửa hàng :</h3>
                 </div>
                 <div class="col-9">
-                    <div class="image-user" th:field="*{img}"></div>
+                    <div class="image-user"
+                         th:field="*{img}"></div>
                 </div>
             </div>
             <div class="row space-position">
@@ -51,7 +59,8 @@
                     <h3>Địa chỉ cửa hàng :</h3>
                 </div>
                 <div class="col-9">
-                    <h3 class="word-wrap" th:text="*{address}">
+                    <h3 class="word-wrap"
+                        th:text="*{address}">
                     </h3>
                 </div>
             </div>
@@ -60,7 +69,8 @@
                     <h3>Số điện thoại :</h3>
                 </div>
                 <div class="col-9">
-                    <h3 class="word-wrap" th:text="*{phoneNumber}"></h3>
+                    <h3 class="word-wrap"
+                        th:text="*{phoneNumber}"></h3>
                 </div>
             </div>
             <div class="row space-position">
@@ -68,13 +78,17 @@
                     <h3>Link Facebook</h3>
                 </div>
                 <div class="col-9">
-                    <h3 class="word-wrap" th:text="*{linkFacebook}"></h3>
+                    <h3 class="word-wrap"
+                        th:text="*{linkFacebook}"></h3>
                 </div>
             </div>
             <div class="row space-position">
                 <div class="col-3 d-flex justify-content-end"></div>
                 <div class="col-9">
-                    <button style="padding: 1rem 1rem" class="changeInfo" id="change-information">Thay đổi thông tin
+                    <button style="padding: 1rem 1rem"
+                            class="changeInfo"
+                            id="change-information">
+                        Thay đổi thông tin
                     </button>
                 </div>
             </div>
@@ -85,7 +99,8 @@
 <div style="display: none">
     <div class="product-body">
         <div class="information-container">
-            <h1 class="header-seller-info">Thông tin cửa hàng</h1>
+            <h1 class="header-seller-info">Thông
+                tin cửa hàng</h1>
             <div class="row space-position space-top">
                 <div class="col-3 d-flex justify-content-end">
                     <h3>Tên cửa hàng :</h3>
@@ -107,7 +122,8 @@
                     <h3>Địa chỉ cửa hàng :</h3>
                 </div>
                 <div class="col-9">
-                    <h3 class="word-wrap"> Địa chỉ cụ thể </h3>
+                    <h3 class="word-wrap"> Địa chỉ
+                        cụ thể </h3>
                 </div>
             </div>
             <div class="row space-position">
@@ -115,7 +131,8 @@
                     <h3>Số điện thoại :</h3>
                 </div>
                 <div class="col-9">
-                    <h3 class="word-wrap"> 000000000xxx </h3>
+                    <h3 class="word-wrap">
+                        000000000xxx </h3>
                 </div>
             </div>
             <div class="row space-position">
@@ -123,13 +140,17 @@
                     <h3>Link Facebook</h3>
                 </div>
                 <div class="col-9">
-                    <h3 class="word-wrap"> link </h3>
+                    <h3 class="word-wrap">
+                        link </h3>
                 </div>
             </div>
             <div class="row space-position">
                 <div class="col-3 d-flex justify-content-end"></div>
                 <div class="col-9">
-                    <button style="padding: 1rem 1rem" class="changeInfo">Thay đổi thông tin</button>
+                    <button style="padding: 1rem 1rem"
+                            class="changeInfo">
+                        Thay đổi thông tin
+                    </button>
                 </div>
             </div>
         </div>
@@ -139,34 +160,60 @@
 <!-- Form thay đổi thông tin -->
 <div class="overlay"></div>
 <div class="form-container" id="formContainer">
-    <form style="height: 25rem; width: 25rem " action="/change-information" method="post" th:object="${seller}">
+    <form style="height: 25rem; width: 25rem "
+          action="/change-information"
+          method="post" th:object="${seller}">
         <input hidden="hidden" th:field="*{id}">
-        <input hidden="hidden" th:field="*{account}">
+        <input hidden="hidden"
+               th:field="*{account}">
         <input hidden="hidden" th:field="*{img}">
-        <input hidden="hidden" th:field="*{horizontal_axis}">
-        <input hidden="hidden" th:field="*{vertical_axis}">
+        <input hidden="hidden"
+               th:field="*{horizontal_axis}">
+        <input hidden="hidden"
+               th:field="*{vertical_axis}">
         <input hidden="hidden" class="mb-3">
-        <label class="form-label">Tên cửa hàng</label>
-        <input type="text" class="form-control" id="name-seller-information" th:field="*{name}">
-        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        <label class="form-label">Tên cửa
+            hàng</label>
+        <input type="text" class="form-control"
+               id="name-seller-information"
+               th:field="*{name}">
+        <p th:if="${#fields.hasErrors('name')}"
+           th:errors="*{name}"></p>
         <div class="mb-3">
-            <label class="form-label">Địa chỉ cửa hàng</label>
-            <input type="text" class="form-control " id="address-seller-information" th:field="*{address}">
+            <label class="form-label">Địa chỉ cửa
+                hàng</label>
+            <input type="text"
+                   class="form-control "
+                   id="address-seller-information"
+                   th:field="*{address}">
         </div>
         <div class="mb-3">
-            <label class="form-label">Số điện thoại</label>
-            <input type="text" class="form-control " id="phone-number-seller-information" th:field="*{phoneNumber}">
+            <label class="form-label">Số điện
+                thoại</label>
+            <input type="text"
+                   class="form-control "
+                   id="phone-number-seller-information"
+                   th:field="*{phoneNumber}">
         </div>
         <div class="mb-3">
-            <label class="form-label">Link facebook </label>
-            <input type="text" class="form-control " th:field="*{linkFacebook}">
+            <label class="form-label">Link
+                facebook </label>
+            <input type="text"
+                   class="form-control "
+                   th:field="*{linkFacebook}">
         </div>
         <div class="submit-and-cancel-button">
-            <button type="submit" class="btn btn-primary">Xác nhận</button>
-            <button type="reset" id="cancel-form-information" class="btn btn-primary">Hủy</button>
+            <button type="submit"
+                    class="btn btn-primary">Xác
+                nhận
+            </button>
+            <button type="reset"
+                    id="cancel-form-information"
+                    class="btn btn-primary">Hủy
+            </button>
         </div>
     </form>
 </div>
-<script th:src="@{js/seller-information.js}"></script>
+<script src="/js/seller-information.js"></script>
 </body>
 </html>

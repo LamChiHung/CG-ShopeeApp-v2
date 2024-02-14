@@ -30,6 +30,14 @@ public class CartItemService implements ICartItemService {
     }
 
     @Override
+    public void delete(User user, Integer productId) {
+        CartItem cartItem = cartItemRepo.findByUserIdAndProductId(user.getId(), productId);
+        if (cartItem != null) {
+            cartItemRepo.delete(cartItem);
+        }
+    }
+
+    @Override
     public List <CartItem> getByUser(User user) {
         return cartItemRepo.findAllByUserId(user.getId());
     }

@@ -74,4 +74,15 @@ public class APIController {
         List <CartItem> cartItems = cartItemService.getByUser(user);
         return ResponseEntity.ok().body(cartItems);
     }
+
+    @GetMapping("/cart/delete/{id}")
+    public ResponseEntity <List <CartItem>> deleteItem(
+            @PathVariable("id") Integer id,
+            @AuthenticationPrincipal Account account
+    ) {
+        User user = userService.getUserByAccount(account.getUsername());
+        cartItemService.delete(user, id);
+        List <CartItem> cartItems = cartItemService.getByUser(user);
+        return ResponseEntity.ok().body(cartItems);
+    }
 }

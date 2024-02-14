@@ -1,9 +1,10 @@
-.bill-body{
+.bill-body {
     width: 100%;
     background-color: #f5f5f5;
     justify-content: center;
     display: flex;
 }
+
 /*.bill-container{*/
 /*    min-height: 15rem;*/
 /*    max-height: 42rem;*/
@@ -17,11 +18,12 @@
 .bill-container {
     min-height: 31.25rem;
     width: 100%;
-    max-width: 85rem;
+    max-width: 1100px;
     display: flex;
     flex-direction: column;
     padding: 20px 0px;
 }
+
 .bill-container-row1 {
     height: 3.438rem;
     width: 100%;
@@ -32,6 +34,7 @@
     font-size: 0.875rem;
     margin-bottom: 20px;
 }
+
 .bill-container-row1-item {
     line-height: 2.188rem;
     width: 20rem;
@@ -50,6 +53,7 @@
     padding: 5px 5px;
     background-color: #fff;
 }
+
 .form-submit-bill-container {
     position: fixed;
     top: 50%;
@@ -60,6 +64,7 @@
     z-index: 10000;
     height: 20rem;
 }
+
 .form-submit-bill {
     position: fixed;
     top: 50%;
@@ -70,6 +75,7 @@
     z-index: 10000;
     display: none;
 }
+
 .overlay-bill-2 {
     position: fixed;
     top: 0;
@@ -80,6 +86,7 @@
     z-index: 9999;
     display: none;
 }
+
 .bill-form {
     width: auto;
     margin-top: 3rem;
@@ -97,13 +104,15 @@
     border: 1px;
     font-size: 20px;
 }
-.bill-text-content{
+
+.bill-text-content {
     text-align: center;
 }
+
 .bill-button {
     /*margin: 2rem 2rem;*/
 }
 
-.form-bill{
+.form-bill {
     width: auto;
 }
