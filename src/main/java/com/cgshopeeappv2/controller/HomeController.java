@@ -23,9 +23,9 @@ import java.util.List;
 @Controller
 public class HomeController {
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
     @Autowired
-    ProductService productService;
+    private ProductService productService;
 
     @RequestMapping(value = {"/", "/home"})
     public ModelAndView home(
@@ -36,15 +36,17 @@ public class HomeController {
         String trend1 = "";
         String trend2 = "";
         if (search.isEmpty()) {
-            Cookie cookie = new Cookie("search", ".");
+            Cookie cookie = new Cookie("search", "");
             cookie.isHttpOnly();
             cookie.setMaxAge(2 * 365 * 24 * 60 * 60);
             response.addCookie(cookie);
         } else {
             search = search.replaceAll("-", " ");
             String[] searchs = search.split("\\.");
-            trend1 = searchs[0];
-            trend2 = searchs[1];
+            if (searchs.length != 0) {
+                trend1 = searchs[0];
+                trend2 = searchs[1];
+            }
         }
 //        kết thúc
         Page <Product> products = productService.findTrendByName(trend1, trend2, PageRequest.of(0, 12));

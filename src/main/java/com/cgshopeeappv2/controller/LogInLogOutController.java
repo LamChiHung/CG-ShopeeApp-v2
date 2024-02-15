@@ -2,6 +2,7 @@ package com.cgshopeeappv2.controller;
 
 import com.cgshopeeappv2.dto.RegisterObject;
 import com.cgshopeeappv2.entity.Account;
+import com.cgshopeeappv2.service.IMailService;
 import com.cgshopeeappv2.service.IRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("")
 public class LogInLogOutController {
     @Autowired
-    IRegisterService registerService;
+    private IRegisterService registerService;
+    @Autowired
+    private IMailService mailService;
 
 
     @GetMapping("/login")
@@ -50,8 +53,9 @@ public class LogInLogOutController {
             } else {
                 Account account = registerService.findById(registerObject.getUsername());
                 if (account == null) {
-                    registerService.createNewUserAccount(registerObject.getUsername(), registerObject.getPassword());
-                    redirectAttributes.addFlashAttribute("message", "Đăng ký thành công, vui lòng đăng nhập để tiếp tục.");
+                    Account account1 = registerService.createNewUserAccount(registerObject.getUsername(), registerObject.getPassword());
+                    mailService.verifyAccount(account1);
+                    redirectAttributes.addFlashAttribute("message", "Đăng ký thành công, mã xác thực tài khoản đã được gửi đến email đăng ký.");
                     return "redirect:/login";
                 } else {
                     redirectAttributes.addFlashAttribute("message", "Tài khoản đã được sử dụng.");
