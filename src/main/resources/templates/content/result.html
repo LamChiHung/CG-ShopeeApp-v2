@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
@@ -10,72 +11,49 @@
     <link rel="stylesheet"
           href="/css/themify-icons/themify-icons.css">
     <link rel="stylesheet"
-          href="/css/result.css">
-    <link rel="stylesheet"
           href="/css/nav-search.css">
+    <link rel="stylesheet"
+          href="/css/result.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 <header th:replace="common/header :: header">
 </header>
 <div class="content">
-    <nav th:replace="common/nav-search :: nav">
+    <nav th:replace="common/nav-search :: nav"
+         class="nav">
     </nav>
     <div class="content-container">
-        <div class="content-container-sort">
-            <div class="content-container-sort-bg">
-                <div class="content-container-sort-left">
-                    <p>Sắp xếp theo: </p>
-                    <div class="content-container-sort-item">
-                        Mới nhất
-                    </div>
-                    <div class="content-container-sort-item">
-                        Bán chạy
-                    </div>
-                    <div class="content-container-sort-item">
-                        Đánh giá cao
-                    </div>
-                    <div class="content-container-sort-item">
-                        Giá từ thấp đến cao
-                    </div>
-                    <div class="content-container-sort-item">
-                        Giá từ cao đến thấp
-                    </div>
-                </div>
-                <div class="content-container-sort-page">
-                    <span class="content-container-sort-page-current">1</span>
-                    <span>/</span>
-                    <span class="content-container-sort-page-total">4</span>
-                    <div class="content-container-sort-page-button">
-                        <
-                    </div>
-                    <div class="content-container-sort-page-button">
-                        >
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="content-container-sort"></div>
         <!-- Product Container -->
         <div class="body-productContainer">
-            <a href=""
-               class="body-productContainer-product">
+            <div th:each="product : ${products}"
+                 href=""
+                 class="body-productContainer-product">
                 <div class="body-productContainer-product-group">
-                    <img src="https://down-vn.img.susercontent.com/file/vn-11134601-7r98o-lloglii4lwbjf3"
+                    <img alt="ảnh sản phẩm"
+                         th:src="${product.img}"
                          class="body-productContainer-product-productImg">
-                    <div class="body-productContainer-product-productName">
+                    <div th:text="${product.name}"
+                         class="body-productContainer-product-productName">
                         Túi xách nữ Platform đẹp
                         khi đi chơi
                     </div>
                     <div class="body-productContainer-product-unitPrice">
                         <div class="body-productContainer-product-unitPrice-origin">
-                            <sub>đ</sub>75.000
+                            <sub>đ</sub><span
+                                th:text="${#numbers.formatDecimal(product.originPrice, 0, 'POINT', 0, 'POINT')}">100.000</span>
                         </div>
                         <div class="body-productContainer-product-unitPrice-sell">
-                            <sub>đ</sub>75.000
+                            <sub>đ</sub><span
+                                th:text="${#numbers.formatDecimal(product.sellPrice, 0, 'POINT', 0, 'POINT')}">75.000</span>
                         </div>
                     </div>
                     <div class="body-productContainer-product-info">
                         <div class="body-productContainer-product-info-star">
-                            <span class="yellow-star">
+                            <span th:if="${product.star >=1 }"
+                                  th:each="i : ${#numbers.sequence(1, product.getStar().intValue())}"
+                                  class="yellow-star">
                                 <svg class="yellow-star-sgv"
                                      xmlns="http://www.w3.org/2000/svg"
                                      version="1.1"
@@ -95,47 +73,9 @@
 </g>
 </svg>
                             </span>
-                            <span class="yellow-star">
-                                <svg class="yellow-star-sgv"
-                                     xmlns="http://www.w3.org/2000/svg"
-                                     version="1.1"
-                                     width="256"
-                                     height="256"
-                                     viewBox="0 0 256 256"
-                                     xml:space="preserve">
-
-<defs>
-</defs>
-<g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-   transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-	<path d="M 45.002 75.502 c 2.862 0 5.72 0.684 8.326 2.051 l 19.485 10.243 l -3.721 -21.678 c -1.002 -5.815 0.926 -11.753 5.164 -15.877 L 90 34.895 l -21.768 -3.161 c -5.838 -0.85 -10.884 -4.514 -13.499 -9.806 L 44.998 2.205 l -9.73 19.717 c -2.615 5.292 -7.661 8.962 -13.499 9.811 L 0 34.895 L 15.749 50.25 c 4.224 4.111 6.156 10.044 5.16 15.863 l -3.721 21.682 l 19.466 -10.238 C 39.268 76.19 42.135 75.502 45.002 75.502 z"
-          style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(235,255,100); fill-rule: nonzero; opacity: 1;"
-          transform=" matrix(1 0 0 1 0 0) "
-          stroke-linecap="round"/>
-</g>
-</svg>
-                            </span>
-                            <span class="yellow-star">
-                                <svg class="yellow-star-sgv"
-                                     xmlns="http://www.w3.org/2000/svg"
-                                     version="1.1"
-                                     width="256"
-                                     height="256"
-                                     viewBox="0 0 256 256"
-                                     xml:space="preserve">
-
-<defs>
-</defs>
-<g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-   transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-	<path d="M 45.002 75.502 c 2.862 0 5.72 0.684 8.326 2.051 l 19.485 10.243 l -3.721 -21.678 c -1.002 -5.815 0.926 -11.753 5.164 -15.877 L 90 34.895 l -21.768 -3.161 c -5.838 -0.85 -10.884 -4.514 -13.499 -9.806 L 44.998 2.205 l -9.73 19.717 c -2.615 5.292 -7.661 8.962 -13.499 9.811 L 0 34.895 L 15.749 50.25 c 4.224 4.111 6.156 10.044 5.16 15.863 l -3.721 21.682 l 19.466 -10.238 C 39.268 76.19 42.135 75.502 45.002 75.502 z"
-          style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(235,255,100); fill-rule: nonzero; opacity: 1;"
-          transform=" matrix(1 0 0 1 0 0) "
-          stroke-linecap="round"/>
-</g>
-</svg>
-                            </span>
-                            <span class="grey-star">
+                            <span th:if="${product.star < 5 }"
+                                  th:each="i : ${#numbers.sequence(1, 5 - product.getStar().intValue())}"
+                                  class="grey-star">
                                 <svg class="grey-star-sgv"
                                      xmlns="http://www.w3.org/2000/svg"
                                      version="1.1"
@@ -155,47 +95,101 @@
 </g>
 </svg>
                             </span>
-                            <span class="grey-star">
-                                <svg class="grey-star-sgv"
-                                     xmlns="http://www.w3.org/2000/svg"
-                                     version="1.1"
-                                     width="256"
-                                     height="256"
-                                     viewBox="0 0 256 256"
-                                     xml:space="preserve">
-
-<defs>
-</defs>
-<g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-   transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-	<path d="M 45.002 75.502 c 2.862 0 5.72 0.684 8.326 2.051 l 19.485 10.243 l -3.721 -21.678 c -1.002 -5.815 0.926 -11.753 5.164 -15.877 L 90 34.895 l -21.768 -3.161 c -5.838 -0.85 -10.884 -4.514 -13.499 -9.806 L 44.998 2.205 l -9.73 19.717 c -2.615 5.292 -7.661 8.962 -13.499 9.811 L 0 34.895 L 15.749 50.25 c 4.224 4.111 6.156 10.044 5.16 15.863 l -3.721 21.682 l 19.466 -10.238 C 39.268 76.19 42.135 75.502 45.002 75.502 z"
-          style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(199,199,194); fill-rule: nonzero; opacity: 1;"
-          transform=" matrix(1 0 0 1 0 0) "
-          stroke-linecap="round"/>
-</g>
-</svg>
-                            </span>
+                            <span class="body-productContainer-product-info-star-child"
+                                  th:text="${#numbers.formatDecimal(product.star, 0, 'POINT', 1, 'POINT')}">5.0</span>
                         </div>
                         <div class="body-productContainer-product-info-sold">
                             <p class="body-productContainer-product-info-sold-child">
                                 Đã bán</p>
-                            <span class="body-productContainer-product-info-sold-child">100</span>
+                            <span th:text="${product.sellNumber}"
+                                  class="body-productContainer-product-info-sold-child">100</span>
                         </div>
                     </div>
                     <div class="body-productContainer-product-button">
-                        <div class="body-productContainer-product-button-add">
+                        <a th:href="@{/api/cart/add/{id}(id=${product.id})}"
+                           class="body-productContainer-product-button-add">
                             <span>Thêm vào</span>
                             <span class="ti-shopping-cart-full"></span>
-                        </div>
+                        </a>
                         <div class="body-productContainer-product-button-buy">
                             Mua ngay
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
         <!-- End Product Container -->
     </div>
 </div>
+<script src="/js/nav-search.js"></script>
+<script sec:authorize="isAuthenticated()">
+    $(document).ready(
+        $(".body-productContainer-product-button-add").click(function (event) {
+            event.preventDefault();
+            console.log(this.href);
+            $.ajax(
+                {
+                    type: "GET",
+                    url: this.href,
+                    success: function (result) {
+                        console.log(result);
+                        $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                        $(".home-header-bg-container-bot-right-popup-container").empty();
+                        loadItem(result);
+                    }
+                }
+            )
+        })
+    );
+    $(document).ready(
+        $.ajax(
+            {
+                type: "GET",
+                url: '/api/cart',
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                    loadItem(result);
+                }
+            }
+        )
+    );
+
+    function deleteItem(event) {
+        event.preventDefault();
+        console.log(event.target.href);
+        $.ajax(
+            {
+                type: "GET",
+                url: event.target.href,
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                    $(".home-header-bg-container-bot-right-popup-container").empty();
+                    loadItem(result);
+                }
+            }
+        )
+    };
+
+    function loadItem(result) {
+        for (let i = 0; i < result.length; i++) {
+            $(".home-header-bg-container-bot-right-popup-container").append(
+                `<div class=\"home-header-bg-container-bot-right-popup-item\">\n` +
+                `                              <img class=\"home-header-bg-container-bot-right-popup-item-img\"\n` +
+                `                                     src=${result[i].product.img}>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-name\">\n` +
+                `                                    <span>${result[i].product.name}</span>\n` +
+                `                                </div>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-price\">\n` +
+                `                                    <sub>đ</sub><span>${(result[i].product.sellPrice).toLocaleString('de-DE')}</span>\n` +
+                `                                </div>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-delete\">\n` +
+                `                                    <a onclick="deleteItem(event)" class=\"home-header-bg-container-bot-right-popup-item-delete-link\"  href=\"/api/cart/delete/${result[i].product.id}\">Xóa</a>\n` +
+                `                                </div>\n` +
+                `                           </div>`)
+        }
+    }
+</script>
 </body>
 </html>

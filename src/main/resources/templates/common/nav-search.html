@@ -7,123 +7,49 @@
 </head>
 <body>
 <nav class="nav" th:fragment="nav">
-    <form class="nav-bg">
+    <form action="/search" class="nav-bg">
         <div class="nav-bg-item">
             <p class="nav-bg-item-header">
                 DANH MỤC
             </p>
-            <input required
-                   id="thoitrangnam"
-                   value="1"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
-            <label for="thoitrangnam"
-                   class="nav-bg-item-text">
-                Thời trang nam
-            </label>
-            <br>
-            <input id="thoitrangnu"
-                   value="2"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
-            <label for="thoitrangnu"
-                   class="nav-bg-item-text">
-                Thời trang nữ
-            </label>
-            <br>
-            <input id="dienthoai"
-                   value="3"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
-            <label for="dienthoai"
-                   class="nav-bg-item-text">
-                Điện thoại
-            </label>
-            <br>
-            <input id="laptop"
-                   value="4"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
-            <label for="laptop"
-                   class="nav-bg-item-text">
-                Laptop
-            </label>
-            <br>
-            <input id="mayanh"
-                   value="5"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
-            <label for="mayanh"
-                   class="nav-bg-item-text">
-                Máy ảnh
-            </label>
-            <br>
-            <input id="dongho"
-                   value="6"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
-            <label for="dongho"
-                   class="nav-bg-item-text">
-                Đồng hồ
-            </label>
-            <br>
-            <input id="giaynam"
-                   value="7"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
-            <label for="giaynam"
-                   class="nav-bg-item-text">
-                Giày nam
-            </label>
-            <br>
-            <input id="giaynu"
-                   value="8"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
-            <label for="giaynu"
-                   class="nav-bg-item-text">
-                Giày nữ
-            </label>
-            <br>
-            <input id="tuivinu"
-                   value="9"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
-            <label for="tuivinu"
-                   class="nav-bg-item-text">
-                Túi ví nữ
-            </label>
-            <br>
-            <input id="thethao"
-                   value="10"
-                   class="checkbox"
-                   type="checkbox"
-                   name="category">
-            <label for="thethao"
-                   class="nav-bg-item-text">
-                Thể thao
-            </label>
+            <input hidden="hidden" type="text"
+                   name="keyword" id="keyword"
+                   th:value="${keyword}"
+            >
+            <div th:each="categoryItem : ${categoryList}">
+                <input
+                        th:id="${categoryItem.id}"
+                        th:value="${categoryItem.id}"
+                        class="checkbox"
+                        type="checkbox"
+                        name="category"
+                        th:checked="${#lists.contains(category,categoryItem.id.toString)}"
+                >
+                <label th:for="${categoryItem.id}"
+                       th:text="${categoryItem.name}"
+                       class="nav-bg-item-text">
+                    Thời trang nam
+                </label>
+            </div>
         </div>
         <div class="nav-bg-item">
             <p class="nav-bg-item-header">
-                KHOẢNG GIÁ
+                KHOẢNG GIÁ:
             </p>
-            <input class="input-money" type="text"
-                   name="from"
-                   id="from"
-                   placeholder="TỪ (vnđ)">
+            <p class="nav-bg-item-header-money"><span
+                    th:text="${#numbers.formatDecimal(from,3,'POINT',0,'POINT') + 'đ'}"></span>
+                <span> - </span>
+                <span th:text="${#numbers.formatDecimal(to,3,'POINT',0,'POINT') + 'đ'}"></span>
+            </p>
+            <input
+                    class="input-money"
+                    type="text"
+                    name="from"
+                    id="from"
+                    placeholder="TỪ (vnđ)">
             <span class="line"></span>
             <input class="input-money" type="text"
-                   name="from" id="to"
+                   name="to" id="to"
                    placeholder="ĐẾN (vnđ)">
         </div>
         <div class="nav-bg-item">
@@ -133,7 +59,9 @@
             <div class="star-group">
                 <input type="radio"
                        name="star"
-                       id="5star">
+                       value="5"
+                       id="5star"
+                       th:checked="${star == 5}">
                 <label for="5star"
                        class="body-productContainer-product-info-star">
                     <span class="yellow-star">
@@ -240,8 +168,10 @@
                 </label>
             </div>
             <div class="star-group">
-                <input type="radio"
+                <input th:checked="${star == 4}"
+                       type="radio"
                        name="star"
+                       value="4"
                        id="4star">
                 <label for="4star"
                        class="body-productContainer-product-info-star">
@@ -350,7 +280,9 @@
             </div>
             <div class="star-group">
                 <input type="radio"
+                       th:checked="${star == 3}"
                        name="star"
+                       value="3"
                        id="3star">
                 <label for="3star"
                        class="body-productContainer-product-info-star">
@@ -459,7 +391,9 @@
             </div>
             <div class="star-group">
                 <input type="radio"
+                       th:checked="${star == 2}"
                        name="star"
+                       value="2"
                        id="2star">
                 <label for="2star"
                        class="body-productContainer-product-info-star">
@@ -568,7 +502,9 @@
             </div>
             <div class="star-group">
                 <input type="radio"
+                       th:checked="${star == 1}"
                        name="star"
+                       value="1"
                        id="1star">
                 <label for="1star"
                        class="body-productContainer-product-info-star">
@@ -674,6 +610,102 @@
                             </span>
                     <span>trở lên</span>
                 </label>
+            </div>
+        </div>
+        <div class="content-container-sort">
+            <div class="content-container-sort-bg">
+                <div class="content-container-sort-left">
+                    <p>Sắp xếp theo: </p>
+                    <input th:checked="${sort eq 'sold'}"
+                           class="content-container-sort-item-radio"
+                           type="radio"
+                           name="sort"
+                           value="sold"
+                           hidden="hidden"
+                           id="sold">
+                    <label
+                            for="sold"
+                            class="content-container-sort-item">
+                        Bán chạy
+                    </label>
+                    <input type="radio"
+                           th:checked="${sort eq 'star'}"
+                           name="sort"
+                           value="star"
+                           hidden="hidden"
+                           id="star">
+                    <label
+                            for="star"
+                            class="content-container-sort-item">
+                        Đánh giá cao
+                    </label>
+                    <input type="radio"
+                           th:checked="${sort eq 'asc'}"
+                           name="sort"
+                           value="asc"
+                           hidden="hidden"
+                           id="asc">
+                    <label
+                            for="asc"
+                            class="content-container-sort-item">
+                        Giá từ thấp đến cao
+                    </label>
+                    <input type="radio"
+                           name="sort"
+                           th:checked="${sort eq 'desc'}"
+                           value="desc"
+                           hidden="hidden"
+                           id="desc">
+                    <label
+                            for="desc"
+                            class="content-container-sort-item">
+                        Giá từ cao đến thấp
+                    </label>
+                    <span class="content-container-sort-item-keyword-text">Từ khóa tìm kiếm: <span
+                            th:text="${keyword}"></span></span>
+                </div>
+                <div class="content-container-sort-page">
+                    <span th:text="${products.number + 1}"
+                          class="content-container-sort-page-current">1</span>
+                    <span>/</span>
+                    <span th:text="${products.totalPages}"
+                          class="content-container-sort-page-total">4</span>
+                    <input hidden="hidden"
+                           id="page"
+                           type="text" name="page"
+                           th:value="${products.number}">
+                    <div
+                            th:if="${not products.hasPrevious() }"
+                            class="content-container-sort-page-button-disable">
+                        <
+                    </div>
+                    <div id="pagePrevious"
+                         th:if="${products.hasPrevious() and action eq 'search'}"
+                         class="content-container-sort-page-button"
+                    > <
+                    </div>
+                    <div id="pageNext"
+                         th:if="${products.hasNext() and action eq 'search'}"
+                         class="content-container-sort-page-button"
+                    > >
+                    </div>
+                    <a th:if="${products.hasPrevious() and action eq 'discovery'}"
+                       th:href="${url.toString() + '?page=' + (products.number - 1)}"
+                       class="content-container-sort-page-button">
+                        <
+                    </a>
+                    <a
+                            th:if="${products.hasNext() and action eq 'discovery'}"
+                            th:href="${url.toString() + '?page=' + (products.number + 1)}"
+                            class="content-container-sort-page-button">
+                        >
+                    </a>
+                    <div
+                            th:if="${not products.hasNext()}"
+                            class="content-container-sort-page-button-disable">
+                        >
+                    </div>
+                </div>
             </div>
         </div>
         <button class="submit-button"

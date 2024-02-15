@@ -90,13 +90,14 @@
     border: 1px solid var(--shope-color);
     font-size: 0.875rem;
     padding: 5px 5px;
+    min-height: 80px;
 }
 
 .product-container-row2-item-information {
     width: 90px;
     max-width: 90px;
     text-align: center;
-    max-height: 6.25rem;
+    /*max-height: 6.25rem;*/
     display: flex;
     align-items: center;
     justify-content: space-around;

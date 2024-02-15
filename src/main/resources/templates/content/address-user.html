@@ -1,6 +1,7 @@
 <!DOCTYPE html >
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <title>Title</title>
@@ -14,8 +15,7 @@
           href="/css/nav-user.css">
     <link rel="stylesheet"
           href="/css/themify-icons/themify-icons.css">
-    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"-->
-    <!--          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
 <body>
@@ -43,13 +43,15 @@
                 </div>
             </div>
 
-            <div class="person-body-container-content-bottom" th:each="a : ${list_address_user}">
+            <div class="person-body-container-content-bottom"
+                 th:each="a : ${list_address_user}">
                 <div class="person-body-container-content-bottom-group">
                     <div class="person-body-container-content-bottom-group-line">
                         <div class="person-body-container-content-bottom-group-line-left">
                             <div hidden="hidden"></div>
                             <div class="person-body-container-content-bottom-group-line-left-name"
-                                 th:value="*{a.name}" th:text="*{a.name}">
+                                 th:value="*{a.name}"
+                                 th:text="*{a.name}">
                             </div>
                             <div class="person-body-container-content-bottom-group-line-left-line">
 
@@ -70,8 +72,10 @@
                                 </button>
                             </div>
                             <div class="person-body-container-content-bottom-group-line-right-item">
-                                <button class="btn-delete" th:attr="data-id-delete=${a.id}"
-                                        th:id="'delete-address'+${a.id}">Xóa
+                                <button class="btn-delete"
+                                        th:attr="data-id-delete=${a.id}"
+                                        th:id="'delete-address'+${a.id}">
+                                    Xóa
                                 </button>
                             </div>
                         </div>
@@ -82,11 +86,13 @@
                                  th:text="*{a.apartment_number}">
                             </div>
                         </div>
-                        <div th:if="*{a.default_address=='true'}" class="button-default-address">
+                        <div th:if="*{a.default_address=='true'}"
+                             class="button-default-address">
                             <div class="person-body-container-content-bottom-group-line-right">
                                 <button disabled="disabled"
                                         class="person-body-container-content-bottom-group-line-right-item default-set">
-                                    Đang làm mặc định
+                                    Đang làm mặc
+                                    định
                                 </button>
                             </div>
                         </div>
@@ -145,38 +151,55 @@
                 <!--cập nhật dữ liệu-->
 
                 <div class="address-form-update-container">
-                    <form id="updateForm" th:action="@{/user/update-address}"
-                          class="address-update-form-container-form" method="post">
+                    <form id="updateForm"
+                          th:action="@{/user/update-address}"
+                          class="address-update-form-container-form"
+                          method="post">
                         <div class="address-form-container-form-header"></div>
 
                         <div class="address-form-container-form-body">
 
                             <div class="address-form-container-form-body-line">
                                 <div class="address-form-container-form-body-line-item">
-                                    <p>Họ và tên người nhận (Không
+                                    <p>Họ và tên
+                                        người nhận
+                                        (Không
                                         dấu)</p>
-                                    <input type="text" placeholder="Ví dụ: Nguyen Van A" name="name" id="name"
+                                    <input type="text"
+                                           placeholder="Ví dụ: Nguyen Van A"
+                                           name="name"
+                                           id="name"
                                     />
                                     <input type="text" name="id" id="id" hidden="hidden">
                                     <input type="text" name="IP" id="IP" hidden="hidden">
                                     <input type="text" name="default_address" id="default_address" hidden="hidden">
                                 </div>
                                 <div class="address-form-container-form-body-line-item">
-                                    <p>Số điện thoại</p>
+                                    <p>Số điện
+                                        thoại</p>
                                     <input type="text"
-                                           placeholder="Ví dụ: 09xxxxxxxx" name="phone_number" id="phone"
+                                           placeholder="Ví dụ: 09xxxxxxxx"
+                                           name="phone_number"
+                                           id="phone"
                                     />
                                 </div>
                             </div>
                             <div class="address-form-container-form-body-line">
                                 <div class="address-form-container-form-body-line-item">
-                                    <p>Tỉnh/Thành</p>
-                                    <select name="city" id="city">
-                                        <option value="hcm">Thành
-                                            phố Hồ Chí Minh
+                                    <p>
+                                        Tỉnh/Thành</p>
+                                    <select name="city"
+                                            id="city">
+                                        <option value="hcm">
+                                            Thành
+                                            phố Hồ
+                                            Chí
+                                            Minh
                                         </option>
-                                        <option value="hn">Thành
-                                            phố Hồ Hà Nội
+                                        <option value="hn">
+                                            Thành
+                                            phố Hồ
+                                            Hà Nội
                                         </option>
                                     </select>
                                 </div>
@@ -185,67 +208,95 @@
                                     <select name="district.id_Coordinates" id="district">
                                         <option value="1">Quận 1
                                         </option>
-                                        <option value="2">Quận 2
+                                        <option value="2">
+                                            Quận 2
                                         </option>
-                                        <option value="3">Quận 3
+                                        <option value="3">
+                                            Quận 3
                                         </option>
-                                        <option value="4">Quận 4
+                                        <option value="4">
+                                            Quận 4
                                         </option>
-                                        <option value="5">Quận 5
+                                        <option value="5">
+                                            Quận 5
                                         </option>
-                                        <option value="6">Quận 6
+                                        <option value="6">
+                                            Quận 6
                                         </option>
-                                        <option value="7">Quận 7
+                                        <option value="7">
+                                            Quận 7
                                         </option>
-                                        <option value="8">Quận 8
+                                        <option value="8">
+                                            Quận 8
                                         </option>
-                                        <option value="9">Quận 9
+                                        <option value="9">
+                                            Quận 9
                                         </option>
-                                        <option value="10">Quận 10
+                                        <option value="10">
+                                            Quận
+                                            10
                                         </option>
-                                        <option value="11">Quận 11
+                                        <option value="11">
+                                            Quận
+                                            11
                                         </option>
-                                        <option value="12">Quận 12
+                                        <option value="12">
+                                            Quận
+                                            12
                                         </option>
                                     </select>
                                 </div>
                                 <div class="address-form-container-form-body-line-item">
-                                    <p>Phường/Xã</p>
-                                    <select name="ward" id="ward">
-                                        <option value="1">Phường
+                                    <p>
+                                        Phường/Xã</p>
+                                    <select name="ward"
+                                            id="ward">
+                                        <option value="1">
+                                            Phường
                                             1
                                         </option>
-                                        <option value="2">Phường
+                                        <option value="2">
+                                            Phường
                                             2
                                         </option>
-                                        <option value="3">Phường
+                                        <option value="3">
+                                            Phường
                                             3
                                         </option>
-                                        <option value="4">Phường
+                                        <option value="4">
+                                            Phường
                                             4
                                         </option>
-                                        <option value="5">Phường
+                                        <option value="5">
+                                            Phường
                                             5
                                         </option>
-                                        <option value="6">Phường
+                                        <option value="6">
+                                            Phường
                                             6
                                         </option>
-                                        <option value="7">Phường
+                                        <option value="7">
+                                            Phường
                                             7
                                         </option>
-                                        <option value="8">Phường
+                                        <option value="8">
+                                            Phường
                                             8
                                         </option>
-                                        <option value="9">Phường
+                                        <option value="9">
+                                            Phường
                                             9
                                         </option>
-                                        <option value="10">Phường
+                                        <option value="10">
+                                            Phường
                                             10
                                         </option>
-                                        <option value="11">Phường
+                                        <option value="11">
+                                            Phường
                                             11
                                         </option>
-                                        <option value="12">Phường
+                                        <option value="12">
+                                            Phường
                                             12
                                         </option>
 
@@ -254,11 +305,13 @@
                             </div>
                             <div class="address-form-container-form-body-line">
                                 <div class="address-form-container-form-body-line-item full-width">
-                                    <p>Số nhà, Tên đường</p>
+                                    <p>Số nhà, Tên
+                                        đường</p>
                                     <input class="address-form-container-form-body-line-item-address"
                                            id="apartment-number"
                                            type="text"
-                                           placeholder="Ví dụ: 21K Nguyễn Văn Trỗi" name="apartment_number"/>
+                                           placeholder="Ví dụ: 21K Nguyễn Văn Trỗi"
+                                           name="apartment_number"/>
                                 </div>
                             </div>
                             <div class="address-form-container-form-footer">
@@ -267,7 +320,8 @@
                                     Trở lại
                                 </button>
                                 <button class="address-form-container-form-footer-button submit"
-                                        type="submit">Hoàn thành
+                                        type="submit">
+                                    Hoàn thành
                                 </button>
                             </div>
                         </div>
@@ -279,16 +333,29 @@
 
                 <!--Xóa địa chỉ-->
                 <div class="overlay-address"></div>
-                <div class="form-delete form-delete-container" id="form-delete-address">
-                    <h3 class="text-content-form-delete">Bạn có chắc muốn xóa địa chỉ này không</h3>
-                    <form style="height: 20rem; width: 40rem " th:action="@{/user/delete-address}" method="post">
+                <div class="form-delete form-delete-container"
+                     id="form-delete-address">
+                    <h3 class="text-content-form-delete">
+                        Bạn có chắc muốn xóa địa
+                        chỉ này không</h3>
+                    <form style="height: 20rem; width: 40rem "
+                          th:action="@{/user/delete-address}"
+                          method="post">
 
-                        <input name="id" id="id-delete" hidden="hidden"/>
+                        <input name="id"
+                               id="id-delete"
+                               hidden="hidden"/>
 
                         <div class="delete-form">
-                            <button type="submit" class="submit-button btn btn-success ">Xác nhận</button>
-                            <button type="button" style="background-color: red" id="cancel-button-form-delete"
-                                    class="cancel-button btn btn-danger">Hủy
+                            <button type="submit"
+                                    class="submit-button btn btn-success ">
+                                Xác nhận
+                            </button>
+                            <button type="button"
+                                    style="background-color: red"
+                                    id="cancel-button-form-delete"
+                                    class="cancel-button btn btn-danger">
+                                Hủy
                             </button>
                         </div>
                     </form>
@@ -301,7 +368,9 @@
 <!--form-->
 <div class="address-form-container">
     <form id="addForm"
-          class="address-form-container-form" th:action="@{/user/create-address}" method="post"
+          class="address-form-container-form"
+          th:action="@{/user/create-address}"
+          method="post"
           th:object="${address_user}">
         <div class="address-form-container-form-header">
             <p>Thêm địa chỉ mới</p>
@@ -313,12 +382,15 @@
                 <div class="address-form-container-form-body-line-item">
                     <p>Họ và tên người nhận (Không
                         dấu)</p>
-                    <input type="text" placeholder="Ví dụ: Nguyen Van A" name="name"/>
+                    <input type="text"
+                           placeholder="Ví dụ: Nguyen Van A"
+                           name="name"/>
                 </div>
                 <div class="address-form-container-form-body-line-item">
                     <p>Số điện thoại</p>
                     <input type="text"
-                           placeholder="Ví dụ: 09xxxxxxxx" name="phone_number"/>
+                           placeholder="Ví dụ: 09xxxxxxxx"
+                           name="phone_number"/>
                 </div>
             </div>
             <div class="address-form-container-form-body-line">
@@ -410,7 +482,8 @@
                     <p>Số nhà, Tên đường</p>
                     <input class="address-form-container-form-body-line-item-address"
                            type="text"
-                           placeholder="Ví dụ: 21K Nguyễn Văn Trỗi" name="apartment_number"/>
+                           placeholder="Ví dụ: 21K Nguyễn Văn Trỗi"
+                           name="apartment_number"/>
                 </div>
             </div>
             <div class="address-form-container-form-footer">
@@ -428,5 +501,19 @@
 
 
 <script th:src="@{/js/address-user.js}"></script>
+<script sec:authorize="isAuthenticated()">
+    $(document).ready(
+        $.ajax(
+            {
+                type: "GET",
+                url: '/api/cart',
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                }
+            }
+        )
+    )
+</script>
 </body>
 </html>

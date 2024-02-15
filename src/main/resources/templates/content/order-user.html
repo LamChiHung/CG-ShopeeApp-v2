@@ -1,6 +1,8 @@
 <!DOCTYPE html >
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+
 >
 <head>
     <title>Title</title>
@@ -14,6 +16,8 @@
           href="/css/nav-user.css">
     <link rel="stylesheet"
           href="/css/themify-icons/themify-icons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
 <header th:replace="common/header :: header">
@@ -243,5 +247,19 @@
         </div>
     </div>
 </div>
+<script sec:authorize="isAuthenticated()">
+    $(document).ready(
+        $.ajax(
+            {
+                type: "GET",
+                url: '/api/cart',
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                }
+            }
+        )
+    )
+</script>
 </body>
 </html>
