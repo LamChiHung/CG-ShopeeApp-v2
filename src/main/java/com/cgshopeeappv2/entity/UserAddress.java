@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
@@ -31,7 +32,9 @@ public class UserAddress {
 
     private String city;
 
-    private String district;
+    @ManyToOne
+    @JoinColumn(name = "district",referencedColumnName = "id_Coordinates")
+    private Coordinates district;
 
     private String ward;
 
