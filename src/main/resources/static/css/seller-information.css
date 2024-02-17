@@ -29,7 +29,7 @@
 .image-user{
     width: 8rem;
     height: 8rem;
-    background-color: #0f75ba;
+    border: solid black;
 }
 
 /* CSS để làm mờ khung toàn trang web */
@@ -66,4 +66,22 @@
 .submit-and-cancel-button{
     display: flex;
     justify-content: space-evenly;
+}
+
+
+.change-image-button{
+    position: relative;
+    display: inline-block;
+}
+
+#profile_pic {
+    display: none;
+}
+.button-image{
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }

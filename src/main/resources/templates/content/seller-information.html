@@ -25,6 +25,10 @@
 
 
 </head>
+
+<script>
+
+</script>
 <body>
 <header th:replace="common/header-seller :: header"></header>
 
@@ -45,15 +49,38 @@
                     </h3>
                 </div>
             </div>
+
+
             <div class="row space-position">
                 <div class="col-3 d-flex justify-content-end align-items-center">
                     <h3>Logo của cửa hàng :</h3>
                 </div>
                 <div class="col-9">
-                    <div class="image-user"
-                         th:field="*{img}"></div>
+                    <img class="image-user" th:src="*{img}">
+                    <form method="post" th:action="@{/seller/upload-image}"  enctype="multipart/form-data">
+                        <div class="col-3 d-flex justify-content-end align-items-center" >
+                            <input hidden="hidden" type="file" id="profile_pic" name="image" accept=".jpg, .jpeg, .png"/>
+                        </div>
+                        <div class="col-9">
+                            <button type="button">
+                                <label
+                                        class="person-body-container-content-bottom-right-mid-form-choose-picture"
+                                       for="profile_pic">Chọn ảnh</label>
+                            </button>
+                            <button type="submit">
+                                Lưu ảnh
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
+
+
+            <div class="row space-position">
+
+            </div>
+
+
             <div class="row space-position">
                 <div class="col-3 d-flex justify-content-end">
                     <h3>Địa chỉ cửa hàng :</h3>
@@ -109,7 +136,7 @@
                     <h3>Tên shop ở đây</h3>
                 </div>
             </div>
-            <div class="row space-position">
+            <div class="row space-position change-image">
                 <div class="col-3 d-flex justify-content-end align-items-center">
                     <h3>Logo của cửa hàng :</h3>
                 </div>
@@ -157,11 +184,12 @@
     </div>
 </div>
 
+
 <!-- Form thay đổi thông tin -->
 <div class="overlay"></div>
 <div class="form-container" id="formContainer">
     <form style="height: 25rem; width: 25rem "
-          action="/change-information"
+          th:action="@{/seller/change-information}"
           method="post" th:object="${seller}">
         <input hidden="hidden" th:field="*{id}">
         <input hidden="hidden"
@@ -195,6 +223,7 @@
                    id="phone-number-seller-information"
                    th:field="*{phoneNumber}">
         </div>
+
         <div class="mb-3">
             <label class="form-label">Link
                 facebook </label>

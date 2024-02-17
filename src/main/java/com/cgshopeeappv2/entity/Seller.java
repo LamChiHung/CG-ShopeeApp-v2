@@ -9,6 +9,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Entity
@@ -26,4 +27,6 @@ public class Seller {
     private String address;
     private String phoneNumber;
     private String linkFacebook;
+    private String horizontal_axis;
+    private String vertical_axis;
 }

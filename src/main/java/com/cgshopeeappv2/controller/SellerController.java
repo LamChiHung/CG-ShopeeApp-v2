@@ -7,6 +7,8 @@ import com.cgshopeeappv2.entity.Seller;
 import com.cgshopeeappv2.service.ICategoryService;
 import com.cgshopeeappv2.service.IProductService;
 import com.cgshopeeappv2.service.ISellerService;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,10 +21,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/seller")
@@ -35,17 +41,19 @@ public class SellerController {
     private ISellerService sellerService;
     @Autowired
     private ICategoryService categoryService;
+    @Autowired
+    private Cloudinary cloudinary;
 
     @GetMapping("/product")
     public ModelAndView product(@AuthenticationPrincipal Account account) {
         String username = account.getUsername();
         Seller seller = sellerService.getByAccountUsername(username);
-        List <Product> products = productService.getAllBySellerId(seller.getId());
+        List<Product> products = productService.getAllBySellerId(seller.getId());
         ModelAndView modelAndView = new ModelAndView("content/product-management");
         modelAndView.addObject("products", products);
         Product product = new Product();
         modelAndView.addObject("product", product);
-        List <Category> categories = categoryService.getAll();
+        List<Category> categories = categoryService.getAll();
         modelAndView.addObject("categories", categories);
         return modelAndView;
     }
@@ -111,13 +119,24 @@ public class SellerController {
         return modelAndView;
     }
 
+
     @PostMapping("/change-information")
-    public String changeInfo(@Valid @ModelAttribute("seller") Seller seller, BindingResult bindingResult, RedirectAttributes redirect) {
+    public String changeInfo( @Valid @ModelAttribute("seller") Seller seller, BindingResult bindingResult, RedirectAttributes redirect) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/information";
+            return "redirect:/seller/information";
         }
         iSellerService.save(seller);
-        System.out.println(seller.toString());
-        return "redirect:/information";
+        return "redirect:/seller/information";
+    }
+
+    @PostMapping("/upload-image")
+    public ModelAndView changeInfo(@RequestParam MultipartFile image,@AuthenticationPrincipal Account account, RedirectAttributes redirect) throws IOException {
+        Map uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+        Seller seller =  iSellerService.getSellerByAccount_username(account.getUsername());
+        String imageUrl = (String) uploadResult.get("url");
+        seller.setImg(imageUrl);
+        iSellerService.save(seller);
+       ModelAndView modelAndView = new ModelAndView("redirect:/seller/information");
+       return modelAndView;
     }
 }

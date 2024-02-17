@@ -9,6 +9,7 @@ import com.cgshopeeappv2.service.IBillService;
 import com.cgshopeeappv2.service.ICartItemService;
 import com.cgshopeeappv2.service.IUserAddressService;
 import com.cgshopeeappv2.service.IUserService;
+import jakarta.mail.Multipart;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Map;
+
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 
 @Controller
 @RequestMapping("/user")
@@ -40,15 +55,17 @@ public class UserController {
     @Autowired
     private IBillService billService;
 
+    @Autowired
+    private Cloudinary cloudinary;
+
+//    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
+
     @RequestMapping("/information")
     public ModelAndView information(Model model, @AuthenticationPrincipal Account account, HttpServletRequest request) {
         model.addAttribute("user", iUserService.getUserByAccount(account.getUsername()));
         ModelAndView modelAndView = new ModelAndView("content/user-information");
         User user = iUserService.getUserByAccount(account.getUsername());
-        List <UserAddress> list = iAddressUserService.getAllById(user.getId());
-        for (UserAddress x : list) {
-            list.toString();
-        }
+        List<UserAddress> list = iAddressUserService.getAllById(user.getId());
         User user1 = (User) request.getSession().getAttribute("user");
         System.out.println(user1.getName());
         return modelAndView;
@@ -63,7 +80,7 @@ public class UserController {
     @RequestMapping("/address")
     public ModelAndView address(@AuthenticationPrincipal Account account, Model model) {
         User user = iUserService.getUserByAccount(account.getUsername());
-        List <UserAddress> list = iAddressUserService.getAllById(user.getId());
+        List<UserAddress> list = iAddressUserService.getAllById(user.getId());
         ModelAndView modelAndView = new ModelAndView("content/address-user");
         modelAndView.addObject("address_user", user);
         modelAndView.addObject("list_address_user", list);
@@ -130,18 +147,52 @@ public class UserController {
     }
 
     @GetMapping("/cart")
-    public ModelAndView cart(
-            @AuthenticationPrincipal Account account
-    ) {
+    public ModelAndView cart(@AuthenticationPrincipal Account account) {
         ModelAndView modelAndView = new ModelAndView("content/cart-form");
         User user = iUserService.getUserByAccount(account.getUsername());
-        List <CartItem> cartItems = cartItemService.getByUser(user);
+        List<CartItem> cartItems = cartItemService.getByUser(user);
         UserAddress userAddress = iAddressUserService.findByDefaultAddress(account);
         modelAndView.addObject("cartItems", cartItems);
         modelAndView.addObject("a", userAddress);
-        List <Bill> bills = billService.createBill(account);
+        List<Bill> bills = billService.createBill(account);
         Integer deliveryCharge = billService.deliveryCharge(account, bills);
         modelAndView.addObject("deliveryCharge", deliveryCharge);
+        return modelAndView;
+    }
+
+//    @PostMapping("/upload-image")
+//    public ModelAndView create(@RequestParam MultipartFile image, @AuthenticationPrincipal Account account) throws IOException {
+//        Path staticPath = Paths.get("static");
+//        Path imagePath = Paths.get("images");
+//        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
+//            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
+//        }
+//        Path file = CURRENT_FOLDER.resolve(staticPath)
+//                .resolve(imagePath).resolve(image.getOriginalFilename());
+//        try (OutputStream os = Files.newOutputStream(file)) {
+//            os.write(image.getBytes());
+//        }
+//        User user = iUserService.getUserByAccount(account.getUsername());
+//        String img = "http://localhost:8080/" + imagePath.resolve(image.getOriginalFilename()).toString();
+//        user.setImg(img);
+//        iUserService.save(user);
+//        System.out.println(user);
+//        ModelAndView modelAndView = new ModelAndView("redirect:/user/information");
+//        return modelAndView;
+//    }
+
+    @PostMapping("/upload-image")
+    public ModelAndView create(@RequestParam MultipartFile image, @AuthenticationPrincipal Account account) throws IOException {
+        User user = iUserService.getUserByAccount(account.getUsername());
+
+        Map uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+
+        String imageUrl = (String) uploadResult.get("url");
+
+        user.setImg(imageUrl);
+        iUserService.save(user);
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/user/information");
         return modelAndView;
     }
 }
