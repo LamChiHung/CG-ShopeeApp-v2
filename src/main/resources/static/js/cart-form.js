@@ -53,16 +53,17 @@ function calculator(parentButtonClicked, quantity) {
     let rowContent = parentButtonClicked.parentElement.parentElement;
     console.log(rowContent);
     let originPrice = rowContent.children[2].children[1].children[1].textContent;
-    let rowTotalPriceValue = Number.parseInt(originPrice) * Number.parseInt(quantity.value);
+    let rowTotalPriceValue = Number.parseInt(originPrice.replaceAll(".", "")) * Number.parseInt(quantity.value);
     let rowTotalPrice = rowContent.children[4].children[1];
-    rowTotalPrice.textContent = rowTotalPriceValue;
+    rowTotalPrice.textContent = rowTotalPriceValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     let totalPrice = document.querySelector(".cart-body-container-footer-container-cartTotalMoney-money span");
     let totalPriceValue = 0;
     document.querySelectorAll(".cart-body-container-header-totalPrice p").forEach(element => {
-        totalPriceValue += Number.parseInt(element.textContent);
+
+        totalPriceValue += Number.parseInt(element.textContent.replaceAll(".", ""));
     })
     console.log(totalPrice);
-    totalPrice.textContent = totalPriceValue;
+    totalPrice.textContent = totalPriceValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     let totalQuantityValue = 0;
     document.querySelectorAll(".quantityValue").forEach(element => {
         totalQuantityValue += Number.parseInt(element.value);
@@ -70,16 +71,21 @@ function calculator(parentButtonClicked, quantity) {
     console.log(totalQuantityValue);
     let totalQuantity = document.querySelector(".cart-body-container-footer-container-cartTotalMoney-info span");
     totalQuantity.textContent = totalQuantityValue;
+
+    let deliveryCharge = document.querySelector(".cart-body-container-footer-container-deliveryCharge-money span");
+    let totalBill = document.querySelector(".cart-body-container-footer-container-totalBill-money span");
+    totalBill.textContent = (Number.parseInt(deliveryCharge.textContent.replaceAll(".", "")) + Number.parseInt(totalPrice.textContent.replaceAll(".", "")))
+        .toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
 window.onload = (event) => {
     let totalPrice = document.querySelector(".cart-body-container-footer-container-cartTotalMoney-money span");
     let totalPriceValue = 0;
     document.querySelectorAll(".cart-body-container-header-totalPrice p").forEach(element => {
-        totalPriceValue += Number.parseInt(element.textContent);
+        totalPriceValue += Number.parseInt(element.textContent.replaceAll(".", ""));
     })
     console.log(totalPrice);
-    totalPrice.textContent = totalPriceValue;
+    totalPrice.textContent = totalPriceValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     let totalQuantityValue = 0;
     document.querySelectorAll(".quantityValue").forEach(element => {
         totalQuantityValue += Number.parseInt(element.value);
@@ -87,4 +93,9 @@ window.onload = (event) => {
     console.log(totalQuantityValue);
     let totalQuantity = document.querySelector(".cart-body-container-footer-container-cartTotalMoney-info span");
     totalQuantity.textContent = totalQuantityValue;
+
+    let deliveryCharge = document.querySelector(".cart-body-container-footer-container-deliveryCharge-money span");
+    let totalBill = document.querySelector(".cart-body-container-footer-container-totalBill-money span");
+    totalBill.textContent = (Number.parseInt(deliveryCharge.textContent.replaceAll(".", "")) + Number.parseInt(totalPrice.textContent.replaceAll(".", "")))
+        .toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }

@@ -1,43 +1,49 @@
 package com.cgshopeeappv2.service.implement;
 
+import com.cgshopeeappv2.entity.Account;
+import com.cgshopeeappv2.entity.User;
 import com.cgshopeeappv2.entity.UserAddress;
-import com.cgshopeeappv2.repository.AddressUserRepo;
-import com.cgshopeeappv2.service.IAddressUserService;
+import com.cgshopeeappv2.repository.UserAddressRepo;
+import com.cgshopeeappv2.repository.UserRepo;
+import com.cgshopeeappv2.service.IUserAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserAddressService implements IAddressUserService {
+public class UserAddressService implements IUserAddressService {
 
     @Autowired
-    private AddressUserRepo addressUserRepo;
+    private UserAddressRepo userAddressRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @Override
-    public List<UserAddress> getAllById(Integer id) {
-        return addressUserRepo.findAllByIP_Id(id);
+    public List <UserAddress> getAllById(Integer id) {
+        return userAddressRepo.findAllByIP_Id(id);
     }
 
 
     @Override
     public void save(UserAddress userAddress) {
-        addressUserRepo.save(userAddress);
+        userAddressRepo.save(userAddress);
     }
 
     @Override
     public void deleteUserAddress(UserAddress userAddress) {
-        addressUserRepo.delete(userAddress);
+        userAddressRepo.delete(userAddress);
     }
 
     @Override
     public void deleteById(int id) {
-        addressUserRepo.deleteById(id);
+        userAddressRepo.deleteById(id);
     }
 
     @Override
     public void changeDefaultAddress(int id, int IP) {
-        List<UserAddress> userAddressesList = addressUserRepo.findAllByIdNotAndIP_Id(id, IP);
+        List <UserAddress> userAddressesList = userAddressRepo.findAllByIdNotAndIP_Id(id, IP);
         for (UserAddress address : userAddressesList) {
             address.setDefault_address("false");
             save(address);
@@ -46,6 +52,11 @@ public class UserAddressService implements IAddressUserService {
 
     @Override
     public UserAddress findById(int id) {
-        return addressUserRepo.findById(id);
+        return userAddressRepo.findById(id);
+    }
+
+    public UserAddress findByDefaultAddress(Account account) {
+        User user = userRepo.getUserByAccount_Username(account.getUsername());
+        return userAddressRepo.findDefaultAddress(user.getId());
     }
 }
