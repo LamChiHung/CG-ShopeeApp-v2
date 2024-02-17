@@ -30,11 +30,11 @@ public class SellerController {
     @Autowired
     private ISellerService iSellerService;
     @Autowired
-    IProductService productService;
+    private IProductService productService;
     @Autowired
-    ISellerService sellerService;
+    private ISellerService sellerService;
     @Autowired
-    ICategoryService categoryService;
+    private ICategoryService categoryService;
 
     @GetMapping("/product")
     public ModelAndView product(@AuthenticationPrincipal Account account) {

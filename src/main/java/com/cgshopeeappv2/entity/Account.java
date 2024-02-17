@@ -32,6 +32,8 @@ public class Account implements UserDetails {
     @Email
     private String username;
 
+    private String code;
+
     @NotBlank
     private String password;
 
@@ -53,7 +55,7 @@ public class Account implements UserDetails {
     public Account(String username, String password) {
         this.username = username;
         this.password = new BCryptPasswordEncoder().encode(password);
-        this.enabled = true;
+        this.enabled = false;
         this.accountNonLocked = true;
         this.accountNonExpired = true;
         this.credentialsNonExpired = true;

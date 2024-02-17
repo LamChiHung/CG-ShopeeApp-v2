@@ -155,7 +155,8 @@
                     </form>
                 </div>
                 <div class="home-header-bg-container-bot-right">
-                    <a class="home-header-bg-container-bot-right-item"></a>
+                    <a th:href="@{/user/cart}"
+                       class="home-header-bg-container-bot-right-item"></a>
                     <span class="home-header-bg-container-bot-right-quantity">0</span>
                     <div class="home-header-bg-container-bot-right-popup">
                         <div class="home-header-bg-container-bot-right-popup-container">
@@ -177,9 +178,10 @@
                             <!--                            </div>-->
                         </div>
                         <div class="home-header-bg-container-bot-right-popup-footer">
-                            <div class="home-header-bg-container-bot-right-popup-footer-button">
+                            <a th:href="@{/user/cart}"
+                               class="home-header-bg-container-bot-right-popup-footer-button">
                                 Xem giỏ hàng
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

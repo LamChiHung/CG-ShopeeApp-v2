@@ -20,9 +20,9 @@ import java.util.List;
 @Service
 public class ProductService implements IProductService {
     @Autowired
-    ProductRepo productRepo;
+    private ProductRepo productRepo;
     @Autowired
-    SellerRepo sellerRepo;
+    private SellerRepo sellerRepo;
 
     public void save(Product product, Account account) {
         if (product.getId() == null) {

@@ -4,10 +4,13 @@ import com.cgshopeeappv2.entity.Category;
 import com.cgshopeeappv2.entity.Product;
 import com.cgshopeeappv2.service.ICategoryService;
 import com.cgshopeeappv2.service.IProductService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,9 +22,9 @@ import java.util.List;
 @RequestMapping("/search")
 public class SearchController {
     @Autowired
-    IProductService productService;
+    private IProductService productService;
     @Autowired
-    ICategoryService categoryService;
+    private ICategoryService categoryService;
 
     @RequestMapping("")
     public ModelAndView search(
@@ -32,7 +35,9 @@ public class SearchController {
             @RequestParam(name = "star", defaultValue = "0") Integer star,
             @RequestParam(name = "sort", defaultValue = "") String sort,
             @RequestParam(name = "page", defaultValue = "0") Integer page,
-            HttpServletRequest request
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @CookieValue(name = "search", defaultValue = "") String search
     ) {
 
         List <Category> categoryList = categoryService.getAll();
@@ -40,6 +45,16 @@ public class SearchController {
         if (category.isEmpty()) {
             category = "1,2,3,4,5,6,7,8,9,10";
         }
+        if (search.isEmpty()) {
+            search = keyword.replaceAll(" ", "-") + "." + keyword.replaceAll(" ", "-");
+        } else {
+            String[] searchs = search.split("\\.");
+            searchs[1] = searchs[0];
+            searchs[0] = keyword.replaceAll(" ", "-");
+            search = searchs[0] + "." + searchs[1];
+        }
+        Cookie cookie = new Cookie("search", search);
+        response.addCookie(cookie);
         Page <Product> products = productService.search(keyword, category, from, to, star, sort, page);
         ModelAndView modelAndView = new ModelAndView("content/result");
         modelAndView.addObject("products", products);

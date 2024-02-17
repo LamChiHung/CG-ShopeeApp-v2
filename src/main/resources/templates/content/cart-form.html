@@ -13,6 +13,8 @@
           href="/css/header.css">
     <link rel="stylesheet"
           href="/css/nav-user.css">
+    <link rel="stylesheet"
+          href="/css/address-user.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -23,7 +25,7 @@
     <nav th:replace="common/nav-user :: nav">
     </nav>
     <div class="cart-body">
-        <form action="/payment" method="post"
+        <form action="/payment" method="get"
               class="cart-body-container">
             <div class="cart-body-container-header">
                 <div class="cart-body-container-header-productName">
@@ -45,12 +47,14 @@
                     Thao tác
                 </div>
             </div>
-            <div class="cart-body-container-content">
+            <div class="cart-body-container-content"
+                 th:each="cartItem: ${cartItems}">
                 <div class="cart-body-container-content-row cart-header">
                     <div
                             class="cart-body-container-content-row-shopIcon ti-briefcase"
                     ></div>
-                    <div class="cart-body-container-content-row-shopName">
+                    <div th:text="${cartItem.product.seller.name}"
+                         class="cart-body-container-content-row-shopName">
                         Vannesa
                     </div>
                 </div>
@@ -61,23 +65,26 @@
                         <div class="cart-body-container-header-productName cart-content">
                             <img
                                     class="cart-body-container-header-productName-img"
-                                    src="${product.getUrl()}"
+                                    th:src="${cartItem.product.img}"
                                     alt=""
                             />
-                            <p class="cart-body-container-header-productName-text">
+                            <p th:text="${cartItem.product.name}"
+                               class="cart-body-container-header-productName-text">
                                 iphone 15
                             </p>
                         </div>
-                        <div class="cart-body-container-header-category cart-content">
+                        <div th:text="${cartItem.product.category.name}"
+                             class="cart-body-container-header-category cart-content">
                             Đồ điện tử
                         </div>
-                        <div class="cart-body-container-header-unitPrice cart-content">
+                        <div class="cart-body-container-header-unitPrice cart-content modify-unitPrice">
                             <div class="cart-body-container-header-unitPrice-origin">
-                                <sub>đ</sub>1.000.000
+                                <sub>đ</sub> <span
+                                    th:text="${#numbers.formatDecimal(cartItem.product.originPrice, 0, 'POINT', 0, 'POINT')}">1.000.000</span>
                             </div>
                             <div class="cart-body-container-header-unitPrice-modify">
                                 <sub>đ</sub>
-                                <p>
+                                <p th:text="${#numbers.formatDecimal(cartItem.product.sellPrice, 0, 'POINT', 0, 'POINT')}">
                                     900.000</p>
                             </div>
                         </div>
@@ -92,11 +99,11 @@
                                 </button>
                                 <input
                                         type="text"
-                                        name="${product.getId()}"
+                                        th:name="${cartItem.getId()}"
                                         class="quantityValue"
                                         id="${product.getId()}"
                                         onkeyup="value=value.replace(/[^\d]/g,'')"
-                                        value="1"
+                                        th:value="${cartItem.quantity}"
                                 />
                                 <button
                                         class="plusButton"
@@ -109,9 +116,10 @@
                         </div>
                         <div class="cart-body-container-header-totalPrice cart-content">
                             <sub>đ</sub>
-                            <p>900.000</p>
+                            <p th:text="${#numbers.formatDecimal((cartItem.product.sellPrice * cartItem.quantity), 0, 'POINT', 0, 'POINT')}">
+                                900.000</p>
                         </div>
-                        <a href="${pageContext.request.contextPath}/delete?id=${product.getId()}"
+                        <a href=""
                            class="cart-body-container-header-action cart-content">Xóa</a>
                     </div>
                 </div>
@@ -119,19 +127,126 @@
                 <!-- End product -->
             </div>
             <div class="cart-body-container-footer">
+                <div class="cart-body-container-footer-address">
+                    <div>Địa chỉ nhận hàng:</div>
+                    <div th:if=" ${a} != null"
+                         class="person-body-container-content-bottom-group">
+                        <div
+                                class="person-body-container-content-bottom-group-line">
+                            <div class="person-body-container-content-bottom-group-line-left">
+                                <div hidden="hidden"></div>
+                                <div class="person-body-container-content-bottom-group-line-left-name"
+                                     th:value="${a.name}"
+                                     th:text="${a.name}">
+                                </div>
+                                <div class="person-body-container-content-bottom-group-line-left-line">
+
+                                </div>
+                                <div class="person-body-container-content-bottom-group-line-left-phone"
+                                     th:text="${a.phone_number}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="person-body-container-content-bottom-group-line">
+                            <div class="person-body-container-content-bottom-group-line-left">
+                                <div class="person-body-container-content-bottom-group-line-left-phone"
+                                     th:text="*{a.apartment_number}">
+                                </div>
+                            </div>
+                            <div
+                                    class="change-default-address">
+                                <a class="cart-change-address-button"
+                                   th:href="@{/user/address}"
+                                >
+                                    <div
+                                            class="button-change-default-address">
+                                        Thay
+                                        đổi
+                                        địa
+                                        chỉ
+                                        nhận
+                                        hàng
+                                    </div>
+                                </a>
+
+                            </div>
+
+                        </div>
+                        <div class="person-body-container-content-bottom-group-line">
+                            <div class="person-body-container-content-bottom-group-line-left">
+                                <div class="person-body-container-content-bottom-group-line-left-phone">
+                                    <!--                                <span th:text="*{a.ward}">-->
+                                    <span th:if="*{a.ward =='1'}">Phường 1</span>
+                                    <span th:if="*{a.ward =='2'}">Phường 2</span>
+                                    <span th:if="*{a.ward =='3'}">Phường 3</span>
+                                    <span th:if="*{a.ward =='4'}">Phường 4</span>
+                                    <span th:if="*{a.ward =='5'}">Phường 5</span>
+                                    <span th:if="*{a.ward =='6'}">Phường 6</span>
+                                    <span th:if="*{a.ward =='7'}">Phường 7</span>
+                                    <span th:if="*{a.ward =='8'}">Phường 8</span>
+                                    <span th:if="*{a.ward =='9'}">Phường 9</span>
+                                    <span th:if="*{a.ward =='10'}">Phường 10</span>
+                                    <!--                                </span>-->
+                                    <span>, </span>
+                                    <span th:if="*{a.district.id_Coordinates == 1}">Quận 1</span>
+                                    <span th:if="*{a.district.id_Coordinates == 2}">Quận 2</span>
+                                    <span th:if="*{a.district.id_Coordinates == 3}">Quận 3</span>
+                                    <span th:if="*{a.district.id_Coordinates == 4}">Quận 4</span>
+                                    <span th:if="*{a.district.id_Coordinates == 5}">Quận 5</span>
+                                    <span th:if="*{a.district.id_Coordinates == 6}">Quận 6</span>
+                                    <span th:if="*{a.district.id_Coordinates == 7}">Quận 7</span>
+                                    <span th:if="*{a.district.id_Coordinates == 8}">Quận 8</span>
+                                    <span th:if="*{a.district.id_Coordinates == 9}">Quận 9</span>
+                                    <span th:if="*{a.district.id_Coordinates == 10}">Quận 10</span>
+                                    <span th:if="*{a.district.id_Coordinates == 11}">Quận 11</span>
+                                    <span th:if="*{a.district.id_Coordinates == 12}">Quận 12</span>
+                                    <span>, </span>
+                                    <span th:if="*{a.city == 'hcm'}">Thành phố Hồ Chí Minh</span>
+                                    <span th:if="*{a.city == 'hn'}">Thành phố Hà Nội</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="cart-body-container-footer-container">
-                    <div class="cart-body-container-footer-container-cartTotalMoney">
-                        <p
-                                class="cart-body-container-footer-container-cartTotalMoney-info"
-                        >
-                            Tổng thanh toán
-                            (<span> </span> Sản
-                            phẩm):
+                    <div class="cart-body-container-footer-container-container">
+                        <div class="cart-body-container-footer-container-deliveryCharge">
+                            <p class="cart-body-container-footer-container-deliveryCharge-info">
+                                Chi phí vận
+                                chuyển:
+                            </p>
+                            <p class="cart-body-container-footer-container-deliveryCharge-money">
+                                <sub>đ</sub><span
+                                    th:text="${#numbers.formatDecimal(deliveryCharge, 0, 'POINT', 0, 'POINT')}">
+                        </span>
+                            </p>
+                        </div>
+                        <div class="cart-body-container-footer-container-cartTotalMoney">
+                            <p
+                                    class="cart-body-container-footer-container-cartTotalMoney-info"
+                            >
+                                Tổng tiền hàng
+                                (<span> </span>
+                                Sản
+                                phẩm):
+                            </p>
+                            <p
+                                    class="cart-body-container-footer-container-cartTotalMoney-money"
+                            >
+                                <sub>đ</sub><span> </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="cart-body-container-footer-container-totalBill">
+                        <p class="cart-body-container-footer-container-totalBill-info">
+                            Tổng hóa đơn:
                         </p>
-                        <p
-                                class="cart-body-container-footer-container-cartTotalMoney-money"
+                        <p class="cart-body-container-footer-container-totalBill-money">
+                            <sub>đ</sub><span
                         >
-                            <sub>đ</sub><span> </span>
+                            200.000.000
+                        </span>
                         </p>
                     </div>
                     <div class="cart-body-container-footer-container-payment">

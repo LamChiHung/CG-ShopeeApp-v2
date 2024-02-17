@@ -1,9 +1,13 @@
 package com.cgshopeeappv2.controller;
 
 import com.cgshopeeappv2.entity.Account;
+import com.cgshopeeappv2.entity.Bill;
+import com.cgshopeeappv2.entity.CartItem;
 import com.cgshopeeappv2.entity.User;
 import com.cgshopeeappv2.entity.UserAddress;
-import com.cgshopeeappv2.service.IAddressUserService;
+import com.cgshopeeappv2.service.IBillService;
+import com.cgshopeeappv2.service.ICartItemService;
+import com.cgshopeeappv2.service.IUserAddressService;
 import com.cgshopeeappv2.service.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -12,6 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +32,13 @@ public class UserController {
     private IUserService iUserService;
 
     @Autowired
-    private IAddressUserService iAddressUserService;
+    private IUserAddressService iAddressUserService;
+
+    @Autowired
+    private ICartItemService cartItemService;
+
+    @Autowired
+    private IBillService billService;
 
     @RequestMapping("/information")
     public ModelAndView information(Model model, @AuthenticationPrincipal Account account, HttpServletRequest request) {
@@ -115,6 +126,22 @@ public class UserController {
         iAddressUserService.save(userAddress);
         iAddressUserService.changeDefaultAddress(id, user.getId());
         ModelAndView modelAndView = new ModelAndView("redirect:/user/address");
+        return modelAndView;
+    }
+
+    @GetMapping("/cart")
+    public ModelAndView cart(
+            @AuthenticationPrincipal Account account
+    ) {
+        ModelAndView modelAndView = new ModelAndView("content/cart-form");
+        User user = iUserService.getUserByAccount(account.getUsername());
+        List <CartItem> cartItems = cartItemService.getByUser(user);
+        UserAddress userAddress = iAddressUserService.findByDefaultAddress(account);
+        modelAndView.addObject("cartItems", cartItems);
+        modelAndView.addObject("a", userAddress);
+        List <Bill> bills = billService.createBill(account);
+        Integer deliveryCharge = billService.deliveryCharge(account, bills);
+        modelAndView.addObject("deliveryCharge", deliveryCharge);
         return modelAndView;
     }
 }

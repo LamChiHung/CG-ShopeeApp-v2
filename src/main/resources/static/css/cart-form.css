@@ -118,8 +118,7 @@
     flex: 3.5;
     text-align: left;
     line-height: 55px;
-    padding: 0px 20px;
-    color: rgba(0, 0, 0, 0.8);
+    padding-left: 20px;
 }
 
 .cart-body-container-header-category {
@@ -134,7 +133,6 @@
     text-align: center;
     line-height: 55px;
     padding: 0px 20px;
-
 }
 
 .cart-body-container-header-quantity {
@@ -166,6 +164,7 @@
     display: flex;
     flex-direction: column;
     /* padding: 20px 20px; */
+    margin-bottom: 20px;
 }
 
 .cart-body-container-content-row {
@@ -202,6 +201,7 @@
 .cart-body-container-header-productName-text {
     height: fit-content;
     padding-left: 10px;
+    line-height: 1.3rem;
 }
 
 .cart-body-container-header-unitPrice.cart-content {
@@ -263,6 +263,8 @@
 
 .cart-body-container-footer {
     margin-top: 20px;
+    background-color: #fff;
+
 }
 
 .cart-body-container-footer-container {
@@ -272,24 +274,39 @@
     background-color: #fff;
     padding: 10px;
     justify-content: end;
+    font-size: 0.875rem;
     align-items: center;
 }
 
-.cart-body-container-footer-container-cartTotalMoney {
+.cart-body-container-footer-container-cartTotalMoney,
+.cart-body-container-footer-container-deliveryCharge,
+.cart-body-container-footer-container-totalBill {
     display: flex;
+    margin-left: 20px;
 }
 
-.cart-body-container-footer-container-cartTotalMoney-info {
+.cart-body-container-footer-container-totalBill {
+    font-size: 1rem;
+}
+
+.cart-body-container-footer-container-cartTotalMoney-info,
+.cart-body-container-footer-container-deliveryCharge-info,
+.cart-body-container-footer-container-totalBill-info {
     line-height: 44px;
 }
 
-.cart-body-container-footer-container-cartTotalMoney-money {
+.cart-body-container-footer-container-cartTotalMoney-money,
+.cart-body-container-footer-container-deliveryCharge-money,
+.cart-body-container-footer-container-totalBill-money {
     display: flex;
     padding-left: 10px;
     color: var(--shope-color);
-    font-size: 1.2rem;
     line-height: 44px;
     /* justify-content: end; */
+}
+
+.cart-body-container-footer-container-totalBill-money {
+    font-size: 1.2rem;
 }
 
 .cart-body-container-footer-container-payment {
@@ -314,4 +331,20 @@
 .cart-body-container-footer-container-payment button:hover {
     cursor: pointer;
     opacity: 0.8;
+}
+
+.modify-unitPrice {
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    line-height: 1.2rem;
+}
+
+.cart-body-container-footer-address {
+    padding: 20px;
+}
+
+.cart-change-address-button {
+    color: var(--shope-color);
+    text-decoration: none;
 }

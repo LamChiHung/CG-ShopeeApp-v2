@@ -1,6 +1,7 @@
 package com.cgshopeeappv2.controller;
 
 
+import com.cgshopeeappv2.dto.DistanceAPI;
 import com.cgshopeeappv2.entity.Account;
 import com.cgshopeeappv2.entity.CartItem;
 import com.cgshopeeappv2.entity.Product;
@@ -40,10 +41,9 @@ public class APIController {
 
     @GetMapping()
     public ResponseEntity <Object> getEmployees() {
-        final String uri = "https://api.nextbillion.io/distancematrix/json?origins=34.05456317,-118.31528428&destinations=33.96763110,-118.23215346&mode=car&key=b98e9dd2f9414231bae19340b76feff0&avoid=highway";
-
+        String uri = "https://api.nextbillion.io/distancematrix/json?origins=34.05456317,-118.31528428&destinations=33.96763110,-118.23215346&mode=car&key=b98e9dd2f9414231bae19340b76feff0&avoid=highway";
         RestTemplate restTemplate = new RestTemplate();
-        Object result = restTemplate.getForObject(uri, Object.class);
+        DistanceAPI result = restTemplate.getForObject(uri, DistanceAPI.class);
         System.out.println(result.toString());
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);

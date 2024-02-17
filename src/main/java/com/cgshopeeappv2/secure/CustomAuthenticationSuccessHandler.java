@@ -2,6 +2,7 @@ package com.cgshopeeappv2.secure;
 
 import com.cgshopeeappv2.entity.User;
 import com.cgshopeeappv2.repository.UserRepo;
+import com.cgshopeeappv2.service.IMailService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +17,9 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
-    UserRepo userRepo;
+    private UserRepo userRepo;
+    @Autowired
+    private IMailService mailService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {

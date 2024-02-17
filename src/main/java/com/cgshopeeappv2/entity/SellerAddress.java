@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,15 +14,14 @@ import org.hibernate.annotations.ColumnDefault;
 @Data
 @Entity
 @Table
-public class UserAddress {
-
+public class SellerAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "IP", referencedColumnName = "id")
-    private User IP;
+    private Seller IP;
 
     private String name;
 
@@ -40,10 +40,4 @@ public class UserAddress {
     @ColumnDefault("false")
     private String default_address;
 
-    @Override
-    public String toString() {
-        return "Tên: " + name + ", " +
-                "Số điện thoại: " + phone_number + "," +
-                "Địa chỉ: " + apartment_number + ", phường " + ward + ", quận " + district + ", thành phố " + city;
-    }
 }

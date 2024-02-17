@@ -13,9 +13,9 @@ import java.util.List;
 @Service
 public class CartItemService implements ICartItemService {
     @Autowired
-    CartItemRepo cartItemRepo;
+    private CartItemRepo cartItemRepo;
     @Autowired
-    ProductRepo productRepo;
+    private ProductRepo productRepo;
 
     @Override
     public void save(User user, Integer productId) {
