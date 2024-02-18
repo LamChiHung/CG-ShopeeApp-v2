@@ -38,7 +38,7 @@ public class Product {
     @Min(0)
     private Float star;
     private Integer sellNumber;
-    @Length(min = 2, max = 500)
+    @Length(min = 1, max = 500)
     private String img;
     @ManyToOne
     @JoinColumn(name = "seller_id", referencedColumnName = "id")

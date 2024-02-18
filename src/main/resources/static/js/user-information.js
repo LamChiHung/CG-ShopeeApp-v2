@@ -47,4 +47,10 @@ for (var i = 0; i < radioButtons.length; i++) {
     }
 }
 
+    // let imgContainer = document.querySelector('.person-body-container-content-bottom-right-top-avatar');
+    // let imageInput = document.getElementById('img');
+    // let imageUrl = imageInput.value;
+    // imgContainer.style.backgroundImage = `url(${imageUrl})`;
+    // alert(imageUrl);
+
 
