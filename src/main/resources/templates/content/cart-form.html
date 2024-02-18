@@ -129,6 +129,18 @@
             <div class="cart-body-container-footer">
                 <div class="cart-body-container-footer-address">
                     <div>Địa chỉ nhận hàng:</div>
+                    <div th:if=" ${a} == null"
+                         class="person-body-container-content-bottom-group">
+                        <a class="cart-change-address-button"
+                           th:href="@{/user/address}"
+                        >
+                            <div
+                                    class="button-change-default-address">
+                                Chọn địa chỉ nhận
+                                hàng
+                            </div>
+                        </a>
+                    </div>
                     <div th:if=" ${a} != null"
                          class="person-body-container-content-bottom-group">
                         <div
@@ -168,9 +180,7 @@
                                         hàng
                                     </div>
                                 </a>
-
                             </div>
-
                         </div>
                         <div class="person-body-container-content-bottom-group-line">
                             <div class="person-body-container-content-bottom-group-line-left">

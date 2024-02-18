@@ -20,10 +20,13 @@
           href="/css/seller-information.css">
     <link rel="stylesheet"
           href="/css/bill-management.css">
+    <link rel="stylesheet"
+          href="/css/order-user.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
           crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 
 </head>
@@ -34,87 +37,102 @@
     <nav class="nav"
          th:replace="common/nav-seller :: nav">
     </nav>
-    <div class="bill-body">
-        <div class="bill-container">
-            <div class="bill-container-row1">
-                <div class="bill-container-row1-item">
-                    Mã đơn hàng
-                </div>
-                <div class="bill-container-row1-item">
-                    Địa chỉ người nhận
-                </div>
-                <div class="bill-container-row1-item">
-                    Tổng giá trị đơn hàng
-                </div>
-                <div class="bill-container-row1-item">
-                    Thời gian nhận hàng dự kiến
-                </div>
-                <div class="bill-container-row1-item">
-                    Tiền giao hàng
-                </div>
-                <div class="bill-container-row1-item">
-                    Xác nhận đơn hàng
-                </div>
-                <div class="bill-container-row1-item">
-                    Hủy đơn
+    <div class="person-body-container">
+        <div class="person-body-container-content">
+            <div class="person-body-container-content-top">
+                <div class="person-body-container-content-top-left">
+                    <h1 class="person-body-container-content-top-title">
+                        Đơn hàng
+                    </h1>
+                    <div class="person-body-container-content-top-content">
+                        Quản lý đơn hàng giao dịch
+                    </div>
                 </div>
             </div>
+            <div class="person-body-container-content-bottom">
+                <div th:each="bill : ${bills}"
+                     class="person-body-container-content-bottom-group">
+                    <div class="person-body-container-content-bottom-group-line">
+                        <div class="person-body-container-content-bottom-group-line-left">
+                            <div
+                                    class="person-body-container-content-bottom-group-line-left-name">
+                                <p><span>Tên khách hàng: </span>
+                                    <span th:text="${bill.user.name}"></span>
+                                </p>
+                                <p>
+                                    <span>Địa chỉ: </span>
+                                    <span th:text="${bill.userAddress}"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="person-body-container-content-bottom-group-line-right">
+                            <div th:text="${bill.status.name}"
+                                 class="person-body-container-content-bottom-group-line-right-item line1">
+                                ĐANG CHỜ DUYỆT
+                            </div>
+                        </div>
+                    </div>
+                    <div class="person-body-container-content-bottom-group-line">
+                        <div class="person-body-container-content-bottom-group-line-left">
+                            <img th:src="${bill.billItem.img}"
+                                 alt="avatar"
+                                 class="person-body-container-content-bottom-group-line-left-img">
+                            <div class="person-body-container-content-bottom-group-line-left-info">
+                                <div th:text="${bill.billItem.getProductName()}"
+                                     class="person-body-container-content-bottom-group-line-left-name">
+                                    Tên món hàng ở
+                                    đây
+                                </div>
+                                <div
+                                        class="person-body-container-content-bottom-group-line-left-phone">
+                                    <span>x</span><span
+                                        th:text="${bill.billItem.quantity}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="person-body-container-content-bottom-group-line-right">
 
-            <div class="bill-container-row-3">
-                <div class="bill-container-row1-item">
-                    #333579
-                </div>
-                <div class="bill-container-row1-item">
-                    HCM
-                </div>
-                <div class="bill-container-row1-item">
-                    200000
-                </div>
-                <div class="bill-container-row1-item">
-                    23-27/03/2024
-                </div>
-                <div class="bill-container-row1-item">
-                    20000
-                </div>
-                <div class="bill-container-row1-item">
-                    <button class=" btn btn-success  bill-button">
-                        Xác nhận
-                    </button>
-                </div>
-                <div class="bill-container-row1-item">
-                    <button class=" btn btn-danger  delete-bill-button">
-                        Hủy
-                    </button>
-                </div>
-            </div>
-
-            <div class="bill-container-row-3">
-                <div class="bill-container-row1-item">
-                    #333579
-                </div>
-                <div class="bill-container-row1-item">
-                    HCM
-                </div>
-                <div class="bill-container-row1-item">
-                    200000
-                </div>
-                <div class="bill-container-row1-item">
-                    23-27/03/2024
-                </div>
-                <div class="bill-container-row1-item">
-                    20000
-                </div>
-                <div class="bill-container-row1-item">
-                    <button id="button-submit"
-                            class=" btn btn-success  bill-button">
-                        Xác nhận
-                    </button>
-                </div>
-                <div class="bill-container-row1-item">
-                    <button id="bill-delete"
-                            class=" btn btn-danger  delete-bill-button">
-                        Hủy
-                    </button>
+                            <div class="person-body-container-content-bottom-group-line-right-item line1">
+                                <span>Đơn giá: </span>
+                                <sub>đ</sub><span
+                                    th:text="${#numbers.formatDecimal(bill.billItem.getUnitPrice(),0,'POINT',0,'POINT')}"
+                            >900.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="person-body-container-content-bottom-group-line">
+                        <div class="person-body-container-content-bottom-group-line-right">
+                            <div class="person-body-container-content-bottom-group-line-left-name">
+                            <span class="person-body-container-content-bottom-group-line-left-name-icon">
+                                <svg width="16"
+                                     height="17"
+                                     viewBox="0 0 253 263"
+                                     fill="none"
+                                     xmlns="http://www.w3.org/2000/svg"><title>Shopee Guarantee</title><path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M126.5 0.389801C126.5 0.389801 82.61 27.8998 5.75 26.8598C5.08763 26.8507 4.43006 26.9733 3.81548 27.2205C3.20091 27.4677 2.64159 27.8346 2.17 28.2998C1.69998 28.7657 1.32713 29.3203 1.07307 29.9314C0.819019 30.5425 0.688805 31.198 0.689995 31.8598V106.97C0.687073 131.07 6.77532 154.78 18.3892 175.898C30.003 197.015 46.7657 214.855 67.12 227.76L118.47 260.28C120.872 261.802 123.657 262.61 126.5 262.61C129.343 262.61 132.128 261.802 134.53 260.28L185.88 227.73C206.234 214.825 222.997 196.985 234.611 175.868C246.225 154.75 252.313 131.04 252.31 106.94V31.8598C252.31 31.1973 252.178 30.5414 251.922 29.9303C251.667 29.3191 251.292 28.7649 250.82 28.2998C250.35 27.8358 249.792 27.4696 249.179 27.2225C248.566 26.9753 247.911 26.852 247.25 26.8598C170.39 27.8998 126.5 0.389801 126.5 0.389801Z"
+                                        fill="#ee4d2d"></path><path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M207.7 149.66L119.61 107.03C116.386 105.472 113.914 102.697 112.736 99.3154C111.558 95.9342 111.772 92.2235 113.33 88.9998C114.888 85.7761 117.663 83.3034 121.044 82.1257C124.426 80.948 128.136 81.1617 131.36 82.7198L215.43 123.38C215.7 120.38 215.85 117.38 215.85 114.31V61.0298C215.848 60.5592 215.753 60.0936 215.57 59.6598C215.393 59.2232 215.128 58.8281 214.79 58.4998C214.457 58.1705 214.063 57.909 213.63 57.7298C213.194 57.5576 212.729 57.4727 212.26 57.4798C157.69 58.2298 126.5 38.6798 126.5 38.6798C126.5 38.6798 95.31 58.2298 40.71 57.4798C40.2401 57.4732 39.7735 57.5602 39.3376 57.7357C38.9017 57.9113 38.5051 58.1719 38.1709 58.5023C37.8367 58.8328 37.5717 59.2264 37.3913 59.6604C37.2108 60.0943 37.1186 60.5599 37.12 61.0298V108.03L118.84 147.57C121.591 148.902 123.808 151.128 125.129 153.884C126.45 156.64 126.797 159.762 126.113 162.741C125.429 165.72 123.755 168.378 121.363 170.282C118.972 172.185 116.006 173.221 112.95 173.22C110.919 173.221 108.915 172.76 107.09 171.87L40.24 139.48C46.6407 164.573 62.3785 186.277 84.24 200.16L124.49 225.7C125.061 226.053 125.719 226.24 126.39 226.24C127.061 226.24 127.719 226.053 128.29 225.7L168.57 200.16C187.187 188.399 201.464 170.892 209.24 150.29C208.715 150.11 208.2 149.9 207.7 149.66Z"
+                                        fill="#fff"></path></svg>
+                            </span>
+                                <span>Thành tiền: </span>
+                                <sub class="total-money">đ</sub>
+                                <span th:text="${#numbers.formatDecimal(bill.getTotalMoney(),0,'POINT',0,'POINT')}"
+                                      class="total-money">2.700.000</span>
+                            </div>
+                            <div class="bill-button person-body-container-content-bottom-group-line-right-item buy-button">
+                                Xác nhận đơn hàng
+                            </div>
+                        </div>
+                    </div>
+                    <input readonly type="text"
+                           hidden="hidden"
+                           th:value="${bill.id}"
+                           name="id"
+                    >
                 </div>
             </div>
         </div>
@@ -127,46 +145,52 @@
     <h3 class="bill-text-content">Bạn có chắc muốn
         xác nhận hoàn thành đơn hàng này
         không?</h3>
-    <form class="form-bill">
+    <form action="/seller/bill/confirm"
+          method="get"
+          class="form-bill">
+        <input readonly type="text"
+               hidden="hidden" name="id"
+               id="bill-id">
         <div class="bill-form">
             <div>
-                <button id="exist-button"
+                <button type="button"
+                        id="exist-button"
                         class="cancel-bill-button btn btn-danger ">
-                    Cancel
+                    Hủy
                 </button>
             </div>
             <div>
                 <button type="submit"
                         class="submit-bill-button btn btn-success ">
-                    Submit
+                    Xác nhận
                 </button>
             </div>
         </div>
     </form>
 </div>
 <!--Hủy hóa đơn-->
-<div class="overlay-bill-2"></div>
-<div class="form-submit-bill form-submit-bill-container"
-     id="delete-bill">
-    <h3 class="bill-text-content">Bạn có chắc muốn
-        xóa đơn hàng này không</h3>
-    <form class="form-bill">
-        <div class="bill-form">
-            <div>
-                <button id="exist-bill-button"
-                        class="cancel-bill-button btn btn-danger ">
-                    Cancel
-                </button>
-            </div>
-            <div>
-                <button type="submit"
-                        class="submit-bill-button btn btn-success ">
-                    Submit
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
+<!--<div class="overlay-bill-2"></div>-->
+<!--<div class="form-submit-bill form-submit-bill-container"-->
+<!--     id="delete-bill">-->
+<!--    <h3 class="bill-text-content">Bạn có chắc muốn-->
+<!--        xóa đơn hàng này không</h3>-->
+<!--    <form class="form-bill">-->
+<!--        <div class="bill-form">-->
+<!--            <div>-->
+<!--                <button id="exist-bill-button"-->
+<!--                        class="cancel-bill-button btn btn-danger ">-->
+<!--                    Cancel-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <button type="submit"-->
+<!--                        class="submit-bill-button btn btn-success ">-->
+<!--                    Submit-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
 </body>
 <script src="/js/bill-management.js"></script>
 </html>

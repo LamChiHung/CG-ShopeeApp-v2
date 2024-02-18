@@ -44,6 +44,6 @@ public class UserAddress {
     public String toString() {
         return "Tên: " + name + ", " +
                 "Số điện thoại: " + phone_number + "," +
-                "Địa chỉ: " + apartment_number + ", phường " + ward + ", quận " + district + ", thành phố " + city;
+                "Địa chỉ: " + apartment_number + ", Phường " + ward + ", " + district.toString() + ", thành phố " + city;
     }
 }

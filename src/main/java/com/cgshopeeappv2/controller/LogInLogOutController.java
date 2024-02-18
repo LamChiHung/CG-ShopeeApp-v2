@@ -2,6 +2,8 @@ package com.cgshopeeappv2.controller;
 
 import com.cgshopeeappv2.dto.RegisterObject;
 import com.cgshopeeappv2.entity.Account;
+import com.cgshopeeappv2.entity.Wallet;
+import com.cgshopeeappv2.repository.WalletRepo;
 import com.cgshopeeappv2.service.IMailService;
 import com.cgshopeeappv2.service.IRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class LogInLogOutController {
     private IRegisterService registerService;
     @Autowired
     private IMailService mailService;
+    @Autowired
+    private WalletRepo walletRepo;
 
 
     @GetMapping("/login")
@@ -55,6 +59,8 @@ public class LogInLogOutController {
                 if (account == null) {
                     Account account1 = registerService.createNewUserAccount(registerObject.getUsername(), registerObject.getPassword());
                     mailService.verifyAccount(account1);
+                    Wallet wallet = new Wallet(account1.getUsername(), 1000000);
+                    walletRepo.saveAndFlush(wallet);
                     redirectAttributes.addFlashAttribute("message", "Đăng ký thành công, mã xác thực tài khoản đã được gửi đến email đăng ký.");
                     return "redirect:/login";
                 } else {

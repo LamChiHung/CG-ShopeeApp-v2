@@ -54,7 +54,10 @@ public class BillService implements IBillService {
             bill.setUser(user);
             bill.setSeller(cartItem.getProduct().getSeller());
             bill.setStatus(billStatusRepo.getReferenceById(1));
-            bill.setUserAddress(userAddressRepo.findDefaultAddress(user.getId()).toString());
+            if (userAddressRepo.findDefaultAddress(user.getId()) != null) {
+                bill.setUserAddress(userAddressRepo.findDefaultAddress(user.getId()).toString());
+
+            }
             bill.setTotalMoney((cartItem.getProduct().getSellPrice() * cartItem.getQuantity()));
             bills.add(bill);
         }
@@ -65,6 +68,9 @@ public class BillService implements IBillService {
         int charge = 0;
         User user = userRepo.getUserByAccount_Username(account.getUsername());
         UserAddress userAddress = userAddressRepo.findDefaultAddress(user.getId());
+        if (userAddress == null) {
+            return 0;
+        }
         Set <Seller> sellers = new HashSet <>();
         for (Bill bill : bills) {
             sellers.add(bill.getSeller());

@@ -36,7 +36,8 @@
                     </div>
                 </div>
                 <div class="person-body-container-content-top-right">
-                    <button id="add-address" class="person-body-container-content-top-right-button">
+                    <button id="add-address"
+                            class="person-body-container-content-top-right-button">
                         <span class="ti-plus"></span>
                         <span>Thêm địa chỉ mới</span>
                     </button>
@@ -68,7 +69,8 @@
                                         data-name=${a.name},
                                         data-id=${a.id},
                                         data-phone=*{a.phone_number},data-city=*{a.city},data-ward=*{a.ward},data-district=*{a.district.id_Coordinates},data-apartment=*{a.apartment_number}, data-default-address=*{a.default_address}"
-                                        th:id="'button-update-address-user-' + ${a.id}">Cập nhật
+                                        th:id="'button-update-address-user-' + ${a.id}">
+                                    Cập nhật
                                 </button>
                             </div>
                             <div class="person-body-container-content-bottom-group-line-right-item">
@@ -96,12 +98,20 @@
                                 </button>
                             </div>
                         </div>
-                        <div th:if="*{a.default_address == 'false'}" class="change-default-address">
-                            <form th:action="@{/user/change-default-address}" method="post">
+                        <div th:if="*{a.default_address == 'false'}"
+                             class="change-default-address">
+                            <form th:action="@{/user/change-default-address}"
+                                  method="post">
                                 <div class="person-body-container-content-bottom-group-line-right">
                                     <div class="person-body-container-content-bottom-group-line-right-item default-set">
-                                        <input hidden="hidden" name="id" th:value="*{a.id}">
-                                        <button type="submit" class="button-change-default-address"> Thiết lập mặc
+                                        <input hidden="hidden"
+                                               name="id"
+                                               th:value="*{a.id}">
+                                        <button type="submit"
+                                                class="button-change-default-address">
+                                            Thiết
+                                            lập
+                                            mặc
                                             định
                                         </button>
                                     </div>
@@ -140,8 +150,8 @@
                                 <span th:if="*{a.district.id_Coordinates == 11}">Quận 11</span>
                                 <span th:if="*{a.district.id_Coordinates == 12}">Quận 12</span>
                                 <span>, </span>
-                                <span th:if="*{a.city == 'hcm'}">Thành phố Hồ Chí Minh</span>
-                                <span th:if="*{a.city == 'hn'}">Thành phố Hà Nội</span>
+                                <span th:if="*{a.city == 'Hồ Chí Minh'}">Thành phố Hồ Chí Minh</span>
+                                <span th:if="*{a.city == 'Hà Nội'}">Thành phố Hà Nội</span>
                             </div>
                         </div>
                     </div>
@@ -170,9 +180,18 @@
                                            name="name"
                                            id="name"
                                     />
-                                    <input type="text" name="id" id="id" hidden="hidden">
-                                    <input type="text" name="IP" id="IP" hidden="hidden">
-                                    <input type="text" name="default_address" id="default_address" hidden="hidden">
+                                    <input type="text"
+                                           name="id"
+                                           id="id"
+                                           hidden="hidden">
+                                    <input type="text"
+                                           name="IP"
+                                           id="IP"
+                                           hidden="hidden">
+                                    <input type="text"
+                                           name="default_address"
+                                           id="default_address"
+                                           hidden="hidden">
                                 </div>
                                 <div class="address-form-container-form-body-line-item">
                                     <p>Số điện
@@ -190,13 +209,13 @@
                                         Tỉnh/Thành</p>
                                     <select name="city"
                                             id="city">
-                                        <option value="hcm">
+                                        <option value="Hồ Chí Minh">
                                             Thành
                                             phố Hồ
                                             Chí
                                             Minh
                                         </option>
-                                        <option value="hn">
+                                        <option value="Hà Nội">
                                             Thành
                                             phố Hồ
                                             Hà Nội
@@ -204,9 +223,12 @@
                                     </select>
                                 </div>
                                 <div class="address-form-container-form-body-line-item">
-                                    <p>Quận/Huyện</p>
-                                    <select name="district.id_Coordinates" id="district">
-                                        <option value="1">Quận 1
+                                    <p>
+                                        Quận/Huyện</p>
+                                    <select name="district.id_Coordinates"
+                                            id="district">
+                                        <option value="1">
+                                            Quận 1
                                         </option>
                                         <option value="2">
                                             Quận 2
@@ -315,7 +337,8 @@
                                 </div>
                             </div>
                             <div class="address-form-container-form-footer">
-                                <button id="address-cancel-button" type="button"
+                                <button id="address-cancel-button"
+                                        type="button"
                                         class="address-form-container-form-footer-button back">
                                     Trở lại
                                 </button>
@@ -375,8 +398,11 @@
         <div class="address-form-container-form-header">
             <p>Thêm địa chỉ mới</p>
         </div>
-        <input hidden="hidden" name="IP" th:value="*{id}">
-        <input hidden="hidden" name="default_address" value="false">
+        <input hidden="hidden" name="IP"
+               th:value="*{id}">
+        <input hidden="hidden"
+               name="default_address"
+               value="false">
         <div class="address-form-container-form-body">
             <div class="address-form-container-form-body-line">
                 <div class="address-form-container-form-body-line-item">
@@ -397,10 +423,12 @@
                 <div class="address-form-container-form-body-line-item">
                     <p>Tỉnh/Thành</p>
                     <select name="city">
-                        <option value="hcm">Thành
+                        <option value="Hồ Chí Minh">
+                            Thành
                             phố Hồ Chí Minh
                         </option>
-                        <option value="hn">Thành
+                        <option value="Hà Nội">
+                            Thành
                             phố Hồ Hà Nội
                         </option>
                     </select>

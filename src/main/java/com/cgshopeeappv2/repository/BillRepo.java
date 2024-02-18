@@ -10,5 +10,5 @@ import java.util.List;
 public interface BillRepo extends JpaRepository <Bill, Integer> {
     List <Bill> findAllByUserId(Integer id);
 
-    List <Bill> findAllBySellerId(Integer id);
+    List <Bill> findAllBySellerIdAndStatusId(Integer sellerId, Integer statusId);
 }

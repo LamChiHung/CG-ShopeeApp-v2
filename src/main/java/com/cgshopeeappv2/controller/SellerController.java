@@ -1,9 +1,17 @@
 package com.cgshopeeappv2.controller;
 
 import com.cgshopeeappv2.entity.Account;
+import com.cgshopeeappv2.entity.Bill;
 import com.cgshopeeappv2.entity.Category;
 import com.cgshopeeappv2.entity.Product;
 import com.cgshopeeappv2.entity.Seller;
+import com.cgshopeeappv2.entity.Wallet;
+import com.cgshopeeappv2.repository.BillItemRepo;
+import com.cgshopeeappv2.repository.BillRepo;
+import com.cgshopeeappv2.repository.BillStatusRepo;
+import com.cgshopeeappv2.repository.UserAddressRepo;
+import com.cgshopeeappv2.repository.WalletRepo;
+import com.cgshopeeappv2.service.IBillService;
 import com.cgshopeeappv2.service.ICategoryService;
 import com.cgshopeeappv2.service.IProductService;
 import com.cgshopeeappv2.service.ISellerService;
@@ -43,17 +51,29 @@ public class SellerController {
     private ICategoryService categoryService;
     @Autowired
     private Cloudinary cloudinary;
+    @Autowired
+    private BillRepo billRepo;
+    @Autowired
+    private BillItemRepo billItemRepo;
+    @Autowired
+    private IBillService billService;
+    @Autowired
+    private UserAddressRepo userAddressRepo;
+    @Autowired
+    private BillStatusRepo billStatusRepo;
+    @Autowired
+    private WalletRepo walletRepo;
 
     @GetMapping("/product")
     public ModelAndView product(@AuthenticationPrincipal Account account) {
         String username = account.getUsername();
         Seller seller = sellerService.getByAccountUsername(username);
-        List<Product> products = productService.getAllBySellerId(seller.getId());
+        List <Product> products = productService.getAllBySellerId(seller.getId());
         ModelAndView modelAndView = new ModelAndView("content/product-management");
         modelAndView.addObject("products", products);
         Product product = new Product();
         modelAndView.addObject("product", product);
-        List<Category> categories = categoryService.getAll();
+        List <Category> categories = categoryService.getAll();
         modelAndView.addObject("categories", categories);
         return modelAndView;
     }
@@ -64,7 +84,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account,
             @Validated @ModelAttribute("product") Product product, BindingResult bindingResult,
             @RequestParam MultipartFile img) throws IOException {
-        if (!img.isEmpty()){
+        if (! img.isEmpty()) {
             Map uploadResult = cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap());
             String imageUrl = (String) uploadResult.get("url");
             product.setImg(imageUrl);
@@ -108,9 +128,34 @@ public class SellerController {
     }
 
     @RequestMapping("/bill")
-    public ModelAndView bill() {
+    public ModelAndView bill(
+            @AuthenticationPrincipal Account account
+    ) {
+        Seller seller = sellerService.getByAccountUsername(account.getUsername());
+        List <Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 1);
         ModelAndView modelAndView = new ModelAndView("content/bill-management");
+        modelAndView.addObject("bills", bills);
+
         return modelAndView;
+    }
+
+    @RequestMapping("/bill/confirm")
+    public String billConfirm(
+            @AuthenticationPrincipal Account account,
+            @RequestParam(name = "id") Integer id
+    ) {
+        Bill bill = billRepo.findById(id).orElse(null);
+        if (bill != null) {
+            bill.setStatus(billStatusRepo.getReferenceById(2));
+            Product product = productService.getById(bill.getBillItem().getProductId());
+            product.setSellNumber(product.getSellNumber() + 1);
+            Wallet wallet = walletRepo.getReferenceById(account.getUsername());
+            wallet.setMoney(wallet.getMoney() + bill.getTotalMoney());
+            productService.save(product, account);
+            walletRepo.saveAndFlush(wallet);
+            billRepo.saveAndFlush(bill);
+        }
+        return "redirect:/seller/bill";
     }
 
     @RequestMapping("/voucher")
@@ -120,14 +165,19 @@ public class SellerController {
     }
 
     @RequestMapping("/history")
-    public ModelAndView history() {
+    public ModelAndView history(
+            @AuthenticationPrincipal Account account
+    ) {
+        Seller seller = sellerService.getByAccountUsername(account.getUsername());
+        List <Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 2);
         ModelAndView modelAndView = new ModelAndView("content/seller-history");
+        modelAndView.addObject("bills", bills);
         return modelAndView;
     }
 
 
     @PostMapping("/change-information")
-    public String changeInfo( @Valid @ModelAttribute("seller") Seller seller, BindingResult bindingResult, RedirectAttributes redirect) {
+    public String changeInfo(@Valid @ModelAttribute("seller") Seller seller, BindingResult bindingResult, RedirectAttributes redirect) {
         if (bindingResult.hasErrors()) {
             return "redirect:/seller/information";
         }
@@ -136,13 +186,13 @@ public class SellerController {
     }
 
     @PostMapping("/upload-image")
-    public ModelAndView changeInfo(@RequestParam MultipartFile image,@AuthenticationPrincipal Account account, RedirectAttributes redirect) throws IOException {
+    public ModelAndView changeInfo(@RequestParam MultipartFile image, @AuthenticationPrincipal Account account, RedirectAttributes redirect) throws IOException {
         Map uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-        Seller seller =  iSellerService.getSellerByAccount_username(account.getUsername());
+        Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
         String imageUrl = (String) uploadResult.get("url");
         seller.setImg(imageUrl);
         iSellerService.save(seller);
-       ModelAndView modelAndView = new ModelAndView("redirect:/seller/information");
-       return modelAndView;
+        ModelAndView modelAndView = new ModelAndView("redirect:/seller/information");
+        return modelAndView;
     }
 }
