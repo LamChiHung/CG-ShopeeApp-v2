@@ -174,22 +174,20 @@
                 </form>
                 <div class="person-body-container-content-bottom-right">
                     <div class="person-body-container-content-bottom-right-top">
-                        <div
-                                class="person-body-container-content-bottom-right-top-avatar"
-                        ></div>
+                        <img class="person-body-container-content-bottom-right-top-avatar" th:src="${user.getImg()}" >
                     </div>
                     <div class="person-body-container-content-bottom-right-mid">
                         <form
                                 class="person-body-container-content-bottom-right-mid-form"
-                                method="get"
+                                method="post"
                                 enctype="multipart/form-data"
-                                action=""
+                                action="/user/upload-image"
                         >
                             <input
                                     hidden="hidden"
                                     type="file"
                                     id="profile_pic"
-                                    name="profile_pic"
+                                    name="image"
                                     accept=".jpg, .jpeg, .png"
                             />
                             <label class="person-body-container-content-bottom-right-mid-form-choose-picture"

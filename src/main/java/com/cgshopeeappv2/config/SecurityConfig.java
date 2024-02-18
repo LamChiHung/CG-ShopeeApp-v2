@@ -64,6 +64,7 @@ public class SecurityConfig {
                                 .requestMatchers("/user/change-information").permitAll()
                                 .requestMatchers("/user/update-address").permitAll()
                                 .requestMatchers("/user/delete-address").permitAll()
+                                .requestMatchers("/user/upload-image").permitAll()
                                 .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/discovery").permitAll()
                                 .requestMatchers("/search").permitAll()
