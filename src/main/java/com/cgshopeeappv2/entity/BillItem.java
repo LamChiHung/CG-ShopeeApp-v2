@@ -21,6 +21,7 @@ public class BillItem {
     private Integer sellerId;
     private Integer unitPrice;
     private Integer quantity;
+    private String img;
 
     public BillItem(CartItem cartItem) {
         this.productId = cartItem.product.getId();
@@ -28,5 +29,6 @@ public class BillItem {
         this.sellerId = cartItem.product.getSeller().getId();
         this.unitPrice = cartItem.product.getSellPrice();
         this.quantity = cartItem.getQuantity();
+        this.img = cartItem.getProduct().getImg();
     }
 }

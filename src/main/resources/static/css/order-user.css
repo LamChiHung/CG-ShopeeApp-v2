@@ -246,7 +246,7 @@
     color: #08f;
 }
 
-.person-body-container-content-bottom-group-line-right-item:hover {
+.buy-button:hover {
     cursor: pointer;
     opacity: 0.8;
 }
