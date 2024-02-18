@@ -147,7 +147,8 @@
 <div class="addProduct-container">
     <form th:object="${product}" method="post"
           action="/seller/product"
-          class="addProduct-container-form">
+          class="addProduct-container-form"
+          enctype="multipart/form-data">
         <input type="hidden" name="a"
                value="update"
                accept-charset="UTF-8">
@@ -222,7 +223,7 @@
         <div class="addProduct-container-form-item">
             <label
                     class="addProduct-container-form-item-label"
-                    form="product-quantity"
+                    for="product-quantity-form"
             >Số lượng*</label
             >
             <input
@@ -235,20 +236,15 @@
             />
         </div>
         <div class="addProduct-container-form-item">
-            <label
-                    class="addProduct-container-form-item-label"
-                    form="product-urlAvatar"
-            >Link ảnh sản phẩm*</label
-            >
-            <input
-                    th:field="*{img}"
-                    class="addProduct-container-form-item-input"
-                    type="url"
-                    name="product-urlAvatar"
-                    id="product-urlAvatar-form"
-                    required
+            <label class="addProduct-container-form-item-label" for="product-urlAvatar-form">Link ảnh sản phẩm*</label>
+            <input type="file" name="img" accept=".jpg, .jpeg, .png" th:field="*{img}"
+                   th:value="${product.img}"
+                   th:text="${product.getImg()}"
+                   id="product-urlAvatar-form"
             />
+
         </div>
+
         <div class="addProduct-container-form-buttonGroup">
             <button
                     class="addProduct-container-form-buttonGroup-cancel"

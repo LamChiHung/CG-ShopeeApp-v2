@@ -62,7 +62,13 @@ public class SellerController {
     public String product(
             RedirectAttributes redirectAttributes,
             @AuthenticationPrincipal Account account,
-            @Validated @ModelAttribute("product") Product product, BindingResult bindingResult) {
+            @Validated @ModelAttribute("product") Product product, BindingResult bindingResult,
+            @RequestParam MultipartFile img) throws IOException {
+        if (!img.isEmpty()){
+            Map uploadResult = cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap());
+            String imageUrl = (String) uploadResult.get("url");
+            product.setImg(imageUrl);
+        }
         productService.save(product, account);
         redirectAttributes.addFlashAttribute("message", "Lưu sản phẩm thành công");
         return "redirect:/seller/product";
