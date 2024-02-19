@@ -11,6 +11,7 @@ import com.cgshopeeappv2.repository.WalletRepo;
 import com.cgshopeeappv2.service.IBillService;
 import com.cgshopeeappv2.service.ICartItemService;
 import com.cgshopeeappv2.service.IPaymentService;
+import com.cgshopeeappv2.service.ITransactionService;
 import com.cgshopeeappv2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,8 @@ public class PaymentService implements IPaymentService {
     private CartItemRepo cartItemRepo;
     @Autowired
     private BillItemRepo billItemRepo;
+    @Autowired
+    private ITransactionService transactionService;
 
     public String payment(Account account) {
         try {
@@ -54,6 +57,8 @@ public class PaymentService implements IPaymentService {
                     billItemRepo.saveAndFlush(bill.getBillItem());
                     bill.setDateTime(LocalDateTime.now());
                 }
+                transactionService.create(fromWallet, - totalMoney, "Thanh toán hóa đơn Shopee");
+
                 billRepo.saveAllAndFlush(bills);
                 fromWallet.setMoney(fromWallet.getMoney() - deliveryCharge);
                 List <CartItem> cartItems = cartItemService.getByUser(userService.getUserByAccount(account.getUsername()));

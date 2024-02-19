@@ -186,9 +186,10 @@
                             <span>Thêm vào</span>
                             <span class="ti-shopping-cart-full"></span>
                         </a>
-                        <div class="body-productContainer-product-button-buy">
+                        <a th:href="@{/user/cart/add/{id}(id = ${product.id})}"
+                           class="body-productContainer-product-button-buy">
                             Mua ngay
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>

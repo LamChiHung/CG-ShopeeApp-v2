@@ -56,16 +56,24 @@
                     <h3>Logo của cửa hàng :</h3>
                 </div>
                 <div class="col-9">
-                    <img class="image-user" th:src="*{img}">
-                    <form method="post" th:action="@{/seller/upload-image}"  enctype="multipart/form-data">
-                        <div class="col-3 d-flex justify-content-end align-items-center" >
-                            <input hidden="hidden" type="file" id="profile_pic" name="image" accept=".jpg, .jpeg, .png"/>
+                    <img class="image-user"
+                         th:src="*{img}">
+                    <form method="post"
+                          th:action="@{/seller/upload-image}"
+                          enctype="multipart/form-data">
+                        <div class="col-3 d-flex justify-content-end align-items-center">
+                            <input hidden="hidden"
+                                   type="file"
+                                   id="profile_pic"
+                                   name="image"
+                                   accept=".jpg, .jpeg, .png"/>
                         </div>
                         <div class="col-9">
                             <button type="button">
                                 <label
                                         class="person-body-container-content-bottom-right-mid-form-choose-picture"
-                                       for="profile_pic">Chọn ảnh</label>
+                                        for="profile_pic">Chọn
+                                    ảnh</label>
                             </button>
                             <button type="submit">
                                 Lưu ảnh
@@ -189,10 +197,6 @@
         <input hidden="hidden"
                th:field="*{account}">
         <input hidden="hidden" th:field="*{img}">
-        <input hidden="hidden"
-               th:field="*{horizontal_axis}">
-        <input hidden="hidden"
-               th:field="*{vertical_axis}">
         <input hidden="hidden" class="mb-3">
         <label class="form-label">Tên cửa
             hàng</label>

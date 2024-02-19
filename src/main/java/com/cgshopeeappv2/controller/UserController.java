@@ -3,15 +3,21 @@ package com.cgshopeeappv2.controller;
 import com.cgshopeeappv2.entity.Account;
 import com.cgshopeeappv2.entity.Bill;
 import com.cgshopeeappv2.entity.CartItem;
+import com.cgshopeeappv2.entity.TransactionInformation;
 import com.cgshopeeappv2.entity.User;
 import com.cgshopeeappv2.entity.UserAddress;
+import com.cgshopeeappv2.entity.Wallet;
 import com.cgshopeeappv2.repository.BillRepo;
+import com.cgshopeeappv2.repository.TransactionInformationRepo;
 import com.cgshopeeappv2.repository.UserRepo;
+import com.cgshopeeappv2.repository.WalletRepo;
 import com.cgshopeeappv2.service.IBillService;
 import com.cgshopeeappv2.service.ICartItemService;
 import com.cgshopeeappv2.service.IUserAddressService;
 import com.cgshopeeappv2.service.IUserService;
-import jakarta.mail.Multipart;
+import com.cgshopeeappv2.service.implement.TransactionInformationService;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,26 +27,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
-
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 
 @Controller
 @RequestMapping("/user")
@@ -60,9 +56,14 @@ public class UserController {
     private BillRepo billRepo;
     @Autowired
     private UserRepo userRepo;
-
+    @Autowired
+    private TransactionInformationRepo transactionInformationRepo;
+    @Autowired
+    private WalletRepo walletRepo;
     @Autowired
     private Cloudinary cloudinary;
+    @Autowired
+    private TransactionInformationService transactionInformationService;
 
 //    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 
@@ -71,7 +72,7 @@ public class UserController {
         model.addAttribute("user", iUserService.getUserByAccount(account.getUsername()));
         ModelAndView modelAndView = new ModelAndView("content/user-information");
         User user = iUserService.getUserByAccount(account.getUsername());
-        List<UserAddress> list = iAddressUserService.getAllById(user.getId());
+        List <UserAddress> list = iAddressUserService.getAllById(user.getId());
         User user1 = (User) request.getSession().getAttribute("user");
         System.out.println(user1.getName());
         return modelAndView;
@@ -91,7 +92,7 @@ public class UserController {
     @RequestMapping("/address")
     public ModelAndView address(@AuthenticationPrincipal Account account, Model model) {
         User user = iUserService.getUserByAccount(account.getUsername());
-        List<UserAddress> list = iAddressUserService.getAllById(user.getId());
+        List <UserAddress> list = iAddressUserService.getAllById(user.getId());
         ModelAndView modelAndView = new ModelAndView("content/address-user");
         modelAndView.addObject("address_user", user);
         modelAndView.addObject("list_address_user", list);
@@ -105,9 +106,28 @@ public class UserController {
     }
 
     @RequestMapping("/wallet")
-    public ModelAndView wallet() {
+    public ModelAndView wallet(
+            @AuthenticationPrincipal Account account
+    ) {
+        List <TransactionInformation> transactionInformations = transactionInformationRepo.findByWallet_UsernameOrderByLocalDateTimeDesc(account.getUsername());
+
+        Wallet wallet = walletRepo.getReferenceById(account.getUsername());
         ModelAndView modelAndView = new ModelAndView("content/wallet");
+        modelAndView.addObject("wallet", wallet);
+        modelAndView.addObject("transactionInformations", transactionInformations);
         return modelAndView;
+    }
+
+    @RequestMapping("wallet/add")
+    public String addMoney(
+            @AuthenticationPrincipal Account account,
+            @RequestParam("money") Integer money
+    ) {
+        Wallet wallet = walletRepo.getReferenceById(account.getUsername());
+        wallet.setMoney(wallet.getMoney() + money);
+        transactionInformationService.create(wallet, money, "Nạp tiền vào ví");
+        walletRepo.saveAndFlush(wallet);
+        return "redirect:/user/wallet";
     }
 
     @PostMapping("/change-information")
@@ -161,14 +181,25 @@ public class UserController {
     public ModelAndView cart(@AuthenticationPrincipal Account account) {
         ModelAndView modelAndView = new ModelAndView("content/cart-form");
         User user = iUserService.getUserByAccount(account.getUsername());
-        List<CartItem> cartItems = cartItemService.getByUser(user);
+        List <CartItem> cartItems = cartItemService.getByUser(user);
         UserAddress userAddress = iAddressUserService.findByDefaultAddress(account);
         modelAndView.addObject("cartItems", cartItems);
         modelAndView.addObject("a", userAddress);
-        List<Bill> bills = billService.createBill(account);
+        List <Bill> bills = billService.createBill(account);
         Integer deliveryCharge = billService.deliveryCharge(account, bills);
         modelAndView.addObject("deliveryCharge", deliveryCharge);
         return modelAndView;
+    }
+
+    @GetMapping("/cart/add/{id}")
+    public String addItem(
+            @PathVariable("id") Integer id,
+            @AuthenticationPrincipal Account account
+    ) {
+        User user = iUserService.getUserByAccount(account.getUsername());
+        cartItemService.save(user, id);
+        List <CartItem> cartItems = cartItemService.getByUser(user);
+        return "redirect:/user/cart";
     }
 
 //    @PostMapping("/upload-image")

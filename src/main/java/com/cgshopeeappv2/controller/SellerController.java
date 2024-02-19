@@ -15,6 +15,7 @@ import com.cgshopeeappv2.service.IBillService;
 import com.cgshopeeappv2.service.ICategoryService;
 import com.cgshopeeappv2.service.IProductService;
 import com.cgshopeeappv2.service.ISellerService;
+import com.cgshopeeappv2.service.ITransactionService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import jakarta.validation.Valid;
@@ -63,6 +64,8 @@ public class SellerController {
     private BillStatusRepo billStatusRepo;
     @Autowired
     private WalletRepo walletRepo;
+    @Autowired
+    private ITransactionService transactionService;
 
     @GetMapping("/product")
     public ModelAndView product(@AuthenticationPrincipal Account account) {
@@ -151,6 +154,7 @@ public class SellerController {
             product.setSellNumber(product.getSellNumber() + 1);
             Wallet wallet = walletRepo.getReferenceById(account.getUsername());
             wallet.setMoney(wallet.getMoney() + bill.getTotalMoney());
+            transactionService.create(wallet, bill.getTotalMoney(), "Nhận tiền hóa đơn từ khách hàng " + bill.getUser().getName());
             productService.save(product, account);
             walletRepo.saveAndFlush(wallet);
             billRepo.saveAndFlush(bill);
