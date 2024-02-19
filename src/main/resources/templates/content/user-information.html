@@ -16,6 +16,8 @@
           href="/css/themify-icons/themify-icons.css">
     <link rel="stylesheet"
           href="/css/change-password-form.css">
+    <link rel="stylesheet"
+          href="/css/message-popup.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
@@ -230,6 +232,8 @@
         <span class="ti-close"></span>
     </form>
 </div>
+<div th:replace="common/message-popup :: popup"></div>
+<script src="/js/message-popup.js"></script>
 <script th:src="@{/js/user-information.js}"></script>
 <script th:src="@{/js/change-password-form.js}"></script>
 <script sec:authorize="isAuthenticated()">

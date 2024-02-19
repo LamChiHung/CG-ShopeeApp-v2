@@ -14,6 +14,8 @@
           href="/css/nav-user.css">
     <link rel="stylesheet"
           href="/css/themify-icons/themify-icons.css">
+    <link rel="stylesheet"
+          href="/css/message-popup.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -102,7 +104,8 @@
         </div>
     </div>
 </div>
-
+<div th:replace="common/message-popup :: popup"></div>
+<script src="/js/message-popup.js"></script>
 <!--form-->
 <script src="/js/notify-user.js"></script>
 <script sec:authorize="isAuthenticated()">

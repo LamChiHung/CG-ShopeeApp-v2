@@ -9,6 +9,7 @@ import com.cgshopeeappv2.entity.UserAddress;
 import com.cgshopeeappv2.entity.Wallet;
 import com.cgshopeeappv2.repository.BillRepo;
 import com.cgshopeeappv2.repository.TransactionInformationRepo;
+import com.cgshopeeappv2.repository.UserAddressRepo;
 import com.cgshopeeappv2.repository.UserRepo;
 import com.cgshopeeappv2.repository.WalletRepo;
 import com.cgshopeeappv2.service.IBillService;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,6 +66,8 @@ public class UserController {
     private Cloudinary cloudinary;
     @Autowired
     private TransactionInformationService transactionInformationService;
+    @Autowired
+    private UserAddressRepo userAddressRepo;
 
 //    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 
@@ -83,7 +87,7 @@ public class UserController {
             @AuthenticationPrincipal Account account
     ) {
         User user = userRepo.getUserByAccount_Username(account.getUsername());
-        List <Bill> bills = billRepo.findAllByUserId(user.getId());
+        List <Bill> bills = billRepo.findAllByUserIdOrderByDateTimeDesc(user.getId());
         ModelAndView modelAndView = new ModelAndView("content/order-user");
         modelAndView.addObject("bills", bills);
         return modelAndView;
@@ -167,14 +171,20 @@ public class UserController {
     }
 
     @PostMapping("/change-default-address")
-    public ModelAndView changeDefault(@RequestParam("id") int id, @AuthenticationPrincipal Account account, Model model) {
+    public String changeDefault(@RequestParam("id") int id,
+                                @AuthenticationPrincipal Account account,
+                                RedirectAttributes redirectAttributes) {
         User user = iUserService.getUserByAccount(account.getUsername());
-        UserAddress userAddress = iAddressUserService.findById(id);
+        List <UserAddress> userAddresses = userAddressRepo.findAllByIP_Id(user.getId());
+        for (UserAddress userAddress : userAddresses) {
+            userAddress.setDefault_address("false");
+        }
+        userAddressRepo.saveAllAndFlush(userAddresses);
+        UserAddress userAddress = userAddressRepo.findById(id);
         userAddress.setDefault_address("true");
-        iAddressUserService.save(userAddress);
-        iAddressUserService.changeDefaultAddress(id, user.getId());
-        ModelAndView modelAndView = new ModelAndView("redirect:/user/address");
-        return modelAndView;
+        userAddressRepo.saveAndFlush(userAddress);
+        redirectAttributes.addFlashAttribute("message", "Đổi địa chỉ thành công");
+        return "redirect:/user/address";
     }
 
     @GetMapping("/cart")

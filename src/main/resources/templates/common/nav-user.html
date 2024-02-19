@@ -8,42 +8,41 @@
 <body>
 <nav class="nav" th:fragment="nav">
     <div class="nav-bg">
-        <div class="nav-bg-item">
+        <a th:href="@{/user/information}"
+           class="nav-bg-item">
             <span class="nav-bg-item-icon ti-user"></span>
             <span class="nav-bg-item-text">
                     Thông tin tài khoản
                 </span>
-        </div>
-        <div class="nav-bg-item">
+        </a>
+        <a th:href="@{/user/address}"
+           class="nav-bg-item">
             <span class="nav-bg-item-icon ti-location-pin"></span>
             <span class="nav-bg-item-text">
                     Địa chỉ
                 </span>
-        </div>
-        <div class="nav-bg-item">
+        </a>
+        <a th:href="@{/user/cart}"
+           class="nav-bg-item">
             <span class="nav-bg-item-icon ti-shopping-cart"></span>
             <span class="nav-bg-item-text">
                     Giỏ hàng
                 </span>
-        </div>
-        <div class="nav-bg-item">
-            <span class="nav-bg-item-icon ti-bell"> </span>
-            <span class="nav-bg-item-text">
-                    Thông báo
-                </span>
-        </div>
-        <div class="nav-bg-item">
+        </a>
+        <a th:href="@{/user/order}"
+           class="nav-bg-item">
             <span class="nav-bg-item-icon ti-receipt"> </span>
             <span class="nav-bg-item-text">
                     Theo dõi đơn hàng
                 </span>
-        </div>
-        <div class="nav-bg-item">
+        </a>
+        <a th:href="@{/user/wallet}"
+           class="nav-bg-item">
             <span class="nav-bg-item-icon ti-wallet"></span>
             <span class="nav-bg-item-text">
                     Ví tài khoản
                 </span>
-        </div>
+        </a>
     </div>
 </nav>
 </body>

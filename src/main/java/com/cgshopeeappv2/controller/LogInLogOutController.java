@@ -29,7 +29,12 @@ public class LogInLogOutController {
 
 
     @GetMapping("/login")
-    public ModelAndView logIn(@RequestParam(value = "message", defaultValue = "") String message) {
+    public ModelAndView logIn(
+            @RequestParam(name = "error", defaultValue = "false") String error) {
+        String message = "";
+        if (error.equals("true")) {
+            message = "Thông tin không chính xác hoặc tài khoản chưa được kích hoạt!";
+        }
         ModelAndView modelAndView = new ModelAndView("content/signin-form");
         modelAndView.addObject("message", message);
         return modelAndView;
