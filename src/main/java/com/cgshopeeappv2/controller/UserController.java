@@ -5,6 +5,8 @@ import com.cgshopeeappv2.entity.Bill;
 import com.cgshopeeappv2.entity.CartItem;
 import com.cgshopeeappv2.entity.User;
 import com.cgshopeeappv2.entity.UserAddress;
+import com.cgshopeeappv2.repository.BillRepo;
+import com.cgshopeeappv2.repository.UserRepo;
 import com.cgshopeeappv2.service.IBillService;
 import com.cgshopeeappv2.service.ICartItemService;
 import com.cgshopeeappv2.service.IUserAddressService;
@@ -54,6 +56,10 @@ public class UserController {
 
     @Autowired
     private IBillService billService;
+    @Autowired
+    private BillRepo billRepo;
+    @Autowired
+    private UserRepo userRepo;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -72,8 +78,13 @@ public class UserController {
     }
 
     @RequestMapping("/order")
-    public ModelAndView order() {
+    public ModelAndView order(
+            @AuthenticationPrincipal Account account
+    ) {
+        User user = userRepo.getUserByAccount_Username(account.getUsername());
+        List <Bill> bills = billRepo.findAllByUserId(user.getId());
         ModelAndView modelAndView = new ModelAndView("content/order-user");
+        modelAndView.addObject("bills", bills);
         return modelAndView;
     }
 

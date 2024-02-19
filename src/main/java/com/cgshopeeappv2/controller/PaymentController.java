@@ -2,7 +2,10 @@ package com.cgshopeeappv2.controller;
 
 import com.cgshopeeappv2.entity.Account;
 import com.cgshopeeappv2.entity.CartItem;
+import com.cgshopeeappv2.entity.User;
+import com.cgshopeeappv2.entity.UserAddress;
 import com.cgshopeeappv2.repository.CartItemRepo;
+import com.cgshopeeappv2.repository.UserAddressRepo;
 import com.cgshopeeappv2.service.IBillService;
 import com.cgshopeeappv2.service.ICartItemService;
 import com.cgshopeeappv2.service.IUserService;
@@ -29,6 +32,8 @@ public class PaymentController {
     IUserService userService;
     @Autowired
     CartItemRepo cartItemRepo;
+    @Autowired
+    UserAddressRepo userAddressRepo;
 
     @RequestMapping("")
     public String payment(
@@ -36,6 +41,13 @@ public class PaymentController {
             @AuthenticationPrincipal Account account,
             RedirectAttributes redirectAttributes
     ) {
+        User user = userService.getUserByAccount(account.getUsername());
+        UserAddress userAddress = userAddressRepo.findDefaultAddress(user.getId());
+        if (userAddress == null) {
+            String message = "Vui lòng chọn địa chỉ nhận hàng";
+            redirectAttributes.addFlashAttribute("message", message);
+            return "redirect:/user/cart";
+        }
         List <CartItem> cartItems = cartItemService.getByUser(userService.getUserByAccount(account.getUsername()));
         for (CartItem cartItem : cartItems) {
             String quantity = request.getParameter(cartItem.getId().toString());
