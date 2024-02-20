@@ -9,7 +9,6 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Entity
@@ -17,6 +16,7 @@ public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Pattern(regexp = "^[^0-9~`@!#$%^&*()_+{};:'<>/?]+$", message = "Tên không được chứa số hay ký tự đặc biệt")
     @Length(min = 2, max = 50, message = "Tên dài 2-50 ký tự")
     private String name;
@@ -24,7 +24,4 @@ public class Seller {
     @OneToOne
     @JoinColumn(name = "account_username", referencedColumnName = "username")
     private Account account;
-    private String address;
-    private String phoneNumber;
-    private String linkFacebook;
 }

@@ -16,6 +16,8 @@
           href="/css/themify-icons/themify-icons.css">
     <link rel="stylesheet"
           href="/css/change-password-form.css">
+    <link rel="stylesheet"
+          href="/css/message-popup.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
@@ -174,7 +176,8 @@
                 </form>
                 <div class="person-body-container-content-bottom-right">
                     <div class="person-body-container-content-bottom-right-top">
-                        <img class="person-body-container-content-bottom-right-top-avatar" th:src="${user.getImg()}" >
+                        <img class="person-body-container-content-bottom-right-top-avatar"
+                             th:src="${user.getImg()}">
                     </div>
                     <div class="person-body-container-content-bottom-right-mid">
                         <form
@@ -228,6 +231,9 @@
         <span class="ti-close"></span>
     </form>
 </div>
+
+<div th:replace="common/message-popup :: popup"></div>
+<script src="/js/message-popup.js"></script>
 <script src="/js/user-information.js"></script>
 <script src="/js/change-password-form.js"></script>
 <script sec:authorize="isAuthenticated()">
@@ -239,10 +245,47 @@
                 success: function (result) {
                     console.log(result);
                     $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                    loadItem(result);
                 }
             }
         )
-    )
+    );
+
+    function deleteItem(event) {
+        event.preventDefault();
+        console.log(event.target.href);
+        $.ajax(
+            {
+                type: "GET",
+                url: event.target.href,
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                    $(".home-header-bg-container-bot-right-popup-container").empty();
+                    loadItem(result);
+                }
+            }
+        )
+    }
+
+    function loadItem(result) {
+        for (let i = 0; i < result.length; i++) {
+            $(".home-header-bg-container-bot-right-popup-container").append(
+                `<div class=\"home-header-bg-container-bot-right-popup-item\">\n` +
+                `                              <img class=\"home-header-bg-container-bot-right-popup-item-img\"\n` +
+                `                                     src=${result[i].product.img}>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-name\">\n` +
+                `                                    <span>${result[i].product.name}</span>\n` +
+                `                                </div>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-price\">\n` +
+                `                                    <sub>đ</sub><span>${(result[i].product.sellPrice).toLocaleString('de-DE')}</span>\n` +
+                `                                </div>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-delete\">\n` +
+                `                                    <a onclick="deleteItem(event)" class=\"home-header-bg-container-bot-right-popup-item-delete-link\"  href=\"/api/cart/delete/${result[i].product.id}\">Xóa</a>\n` +
+                `                                </div>\n` +
+                `                           </div>`)
+        }
+    }
 </script>
 </body>
 </html>

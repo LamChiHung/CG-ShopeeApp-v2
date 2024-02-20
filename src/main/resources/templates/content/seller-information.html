@@ -18,6 +18,8 @@
           href="/css/nav-seller.css">
     <link rel="stylesheet"
           href="/css/seller-information.css">
+    <link rel="stylesheet"
+          href="/css/message-popup.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
@@ -56,16 +58,24 @@
                     <h3>Logo của cửa hàng :</h3>
                 </div>
                 <div class="col-9">
-                    <img class="image-user" th:src="*{img}">
-                    <form method="post" th:action="@{/seller/upload-image}"  enctype="multipart/form-data">
-                        <div class="col-3 d-flex justify-content-end align-items-center" >
-                            <input hidden="hidden" type="file" id="profile_pic" name="image" accept=".jpg, .jpeg, .png"/>
+                    <img class="image-user"
+                         th:src="*{img}">
+                    <form method="post"
+                          th:action="@{/seller/upload-image}"
+                          enctype="multipart/form-data">
+                        <div class="col-3 d-flex justify-content-end align-items-center">
+                            <input hidden="hidden"
+                                   type="file"
+                                   id="profile_pic"
+                                   name="image"
+                                   accept=".jpg, .jpeg, .png"/>
                         </div>
                         <div class="col-9">
                             <button type="button">
                                 <label
                                         class="person-body-container-content-bottom-right-mid-form-choose-picture"
-                                       for="profile_pic">Chọn ảnh</label>
+                                        for="profile_pic">Chọn
+                                    ảnh</label>
                             </button>
                             <button type="submit">
                                 Lưu ảnh
@@ -233,6 +243,8 @@
         </div>
     </form>
 </div>
+<div th:replace="common/message-popup :: popup"></div>
+<script src="/js/message-popup.js"></script>
 <script src="/js/seller-information.js"></script>
 </body>
 </html>

@@ -28,7 +28,11 @@ public class UserAddressService implements IUserAddressService {
 
     @Override
     public void save(UserAddress userAddress) {
-        userAddressRepo.save(userAddress);
+        if (userAddressRepo.findDefaultAddress(userAddress.getIP().getId()) == null) {
+            userAddress.setDefault_address("true");
+        }
+        ;
+        userAddressRepo.saveAndFlush(userAddress);
     }
 
     @Override

@@ -55,6 +55,7 @@ public class PaymentController {
             cartItemRepo.saveAndFlush(cartItem);
         }
         String message = paymentService.payment(account);
+
         redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/home";
     }

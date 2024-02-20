@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface BillRepo extends JpaRepository <Bill, Integer> {
-    List <Bill> findAllByUserId(Integer id);
+    List <Bill> findAllByUserIdOrderByDateTimeDesc(Integer id);
 
     List <Bill> findAllBySellerIdAndStatusId(Integer sellerId, Integer statusId);
 

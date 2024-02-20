@@ -32,10 +32,14 @@
     z-index: 1;
     border-right: 1px solid #dbdbdb;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .nav-bg-item {
     margin-bottom: 20px;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.7);
 }
 
 .nav-bg-item:hover {
