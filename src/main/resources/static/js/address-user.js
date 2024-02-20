@@ -4,7 +4,7 @@ if(username!=null){
     username.addEventListener('keyup', function (e) {
         let regex = /[^a-z A-Z]/;
         let text = username.value;
-        text = text.replace(regex, "");
+        text = text.replace(regex,"");
         username.value = text;
         let spaceRegex = /\s{2}/;
         text = text.replace(spaceRegex, " ");
@@ -13,7 +13,6 @@ if(username!=null){
 }
 
 let phone = document.getElementById('phone_number');
-
 if(phone!=null){
     phone.addEventListener('keyup', function (e) {
         let regex = /[^0-9]/;
