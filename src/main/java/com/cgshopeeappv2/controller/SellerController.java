@@ -29,11 +29,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@PreAuthorize("hasAuthority('ROLE_SELLER')")
 @Controller
 @RequestMapping("/seller")
 public class SellerController {
@@ -87,20 +90,7 @@ public class SellerController {
     @Autowired
     private SellerRepo sellerRepo;
 
-    @RequestMapping("")
-    public String seller(
-            @AuthenticationPrincipal Account account,
-            HttpServletRequest request
-    ) {
-        Seller seller = sellerRepo.findByAccount_Username(account.getUsername());
-        if (seller != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("seller", seller);
-            return "redirect:/seller/product";
-        } else {
-            return "redirect:/seller/register";
-        }
-    }
+
 
     @GetMapping("/product")
     public ModelAndView product(@AuthenticationPrincipal Account account) {
@@ -126,6 +116,10 @@ public class SellerController {
             Map uploadResult = cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap());
             String imageUrl = (String) uploadResult.get("url");
             product.setImg(imageUrl);
+        } else {
+            Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
+            Product oldProduct = productService.getById(product.getId());
+            product.setImg(oldProduct.getImg());
         }
         productService.save(product, account);
         redirectAttributes.addFlashAttribute("message", "Lưu sản phẩm thành công");
@@ -274,4 +268,6 @@ public class SellerController {
         ModelAndView modelAndView = new ModelAndView("redirect:/seller/information");
         return modelAndView;
     }
+
+
 }
