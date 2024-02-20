@@ -1,10 +1,9 @@
-setInterval(function () {
+let id = setInterval(function () {
     let count = 0;
     let radio1 = document.querySelector("#radio1");
     let radio2 = document.querySelector("#radio2");
     let radio3 = document.querySelector("#radio3");
     let radio4 = document.querySelector("#radio4");
-
     if (radio1.checked) {
         count = 1;
     }
@@ -17,16 +16,14 @@ setInterval(function () {
     if (radio4.checked) {
         count = 4;
     }
-
     if (count < 4) {
-        count++;
+        count = count + 1;
         document.querySelector(`#radio${count}`).checked = true;
     } else {
         count = 1;
         document.querySelector(`#radio${count}`).checked = true;
     }
-    
-
+    return () => clearInterval(id);
 }, 3000);
 
 var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -77,13 +74,10 @@ Snowflake.prototype.update = function () {
 };
 
 
-
-
 function setTranslate3DTransform(a, c, b) {
     var d = "translate3d(" + c + "px, " + b + "px, 0)";
     a.style[transformProperty] = d
 }
-
 
 
 function generateSnowflakes() {
@@ -106,7 +100,6 @@ function generateSnowflakes() {
     h.removeChild(b);
     moveSnowflakes()
 }
-
 
 
 function moveSnowflakes() {
