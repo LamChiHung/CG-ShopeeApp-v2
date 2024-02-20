@@ -2,6 +2,7 @@ package com.cgshopeeappv2.secure;
 
 import com.cgshopeeappv2.entity.Seller;
 import com.cgshopeeappv2.entity.User;
+import com.cgshopeeappv2.repository.AccountRepo;
 import com.cgshopeeappv2.repository.SellerRepo;
 import com.cgshopeeappv2.repository.UserRepo;
 import com.cgshopeeappv2.service.IMailService;
@@ -24,6 +25,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     private IMailService mailService;
     @Autowired
     private SellerRepo sellerRepo;
+    @Autowired
+    private AccountRepo accountRepo;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {

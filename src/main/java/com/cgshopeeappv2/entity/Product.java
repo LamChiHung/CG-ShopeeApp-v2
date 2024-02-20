@@ -37,6 +37,7 @@ public class Product {
     @Max(5)
     @Min(0)
     private Float star;
+    private Integer starNumber;
     private Integer sellNumber;
     @Length(min = 1, max = 500)
     private String img;

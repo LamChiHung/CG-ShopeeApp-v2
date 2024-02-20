@@ -6,6 +6,7 @@ import com.cgshopeeappv2.entity.Wallet;
 import com.cgshopeeappv2.repository.WalletRepo;
 import com.cgshopeeappv2.service.IMailService;
 import com.cgshopeeappv2.service.IRegisterService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -30,8 +31,9 @@ public class LogInLogOutController {
 
     @GetMapping("/login")
     public ModelAndView logIn(
-            @RequestParam(name = "error", defaultValue = "false") String error) {
-        String message = "";
+            @RequestParam(name = "error", defaultValue = "false") String error,
+            @RequestParam(name = "message", defaultValue = "") String message
+    ) {
         if (error.equals("true")) {
             message = "Thông tin không chính xác hoặc tài khoản chưa được kích hoạt!";
         }
@@ -51,7 +53,7 @@ public class LogInLogOutController {
             @ModelAttribute("register") RegisterObject registerObject,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
-    ) {
+    ) throws MessagingException {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("message", "Dữ liệu không hợp lệ.");
             return "redirect:/register";
@@ -67,7 +69,7 @@ public class LogInLogOutController {
                     Wallet wallet = new Wallet(account1.getUsername(), 1000000);
                     walletRepo.saveAndFlush(wallet);
                     redirectAttributes.addFlashAttribute("message", "Đăng ký thành công, mã xác thực tài khoản đã được gửi đến email đăng ký.");
-                    return "redirect:/login";
+                    return "redirect:/register";
                 } else {
                     redirectAttributes.addFlashAttribute("message", "Tài khoản đã được sử dụng.");
                     return "redirect:/register";

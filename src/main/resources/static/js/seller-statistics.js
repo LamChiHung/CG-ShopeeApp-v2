@@ -1,4 +1,3 @@
-
 function submitForm() {
     document.getElementById("monthForm").submit();
 }
@@ -82,7 +81,7 @@ function drawVisualization() {
         ['Tháng', 'doanh số', 'doanh số trung bình'],
         [jan, valueOfJan / 1000000, (valueOfJan / 1000000) / 2],
         [feb, valueOfFeb / 1000000, (valueOfFeb / 1000000) / 2],
-        [mar, valueOfFeb / 1000000, (valueOfFeb / 1000000) / 2],
+        [mar, valueOfMar / 1000000, (valueOfMar / 1000000) / 2],
         [apr, valueOfApr / 1000000, (valueOfApr / 1000000) / 2],
         [may, valueOfMay / 1000000, (valueOfMay / 1000000) / 2],
         [jun, valueOfJun / 1000000, (valueOfJun / 1000000) / 2],
@@ -99,7 +98,10 @@ function drawVisualization() {
         vAxis: {title: 'triệu đồng'},
         hAxis: {title: 'Tháng'},
         seriesType: 'bars',
-        series: {0: {color: getRandomColor()}, 1: {type: 'line', color: '#dc3912'}},
+        series: {
+            0: {color: getRandomColor()},
+            1: {type: 'line', color: '#dc3912'}
+        },
     };
 
     function getRandomColor() {
