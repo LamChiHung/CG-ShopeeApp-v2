@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/user/rating"
+      th:fragment="rating-star"
+      class="message-popup-container-star">
+    <input type="text" name="id" hidden="hidden"
+           id="productId">
+    <img
+            class="message-popup-container-img"
+            src="https://t3.ftcdn.net/jpg/01/21/64/88/360_F_121648819_ZQ0tZ6tjLzxim1SG7CQ86raBw4sglCzB.jpg"
+            alt=""
+    />
+    <p class="message-popup-container-title">Đánh
+        Giá Sản phẩm</p>
+    <div class="radio-group">
+        <input
+                class="radio-group-radio"
+                type="radio"
+                name="star"
+                id="1"
+                value="1"
+        />
+        <label class="rating-star" for="1">
+            <i class="fa-solid fa-star my-star"> </i
+            ></label>
+        <input
+                class="radio-group-radio"
+                type="radio"
+                name="star"
+                id="2"
+                value="2"
+        />
+        <label class="rating-star" for="2">
+            <i class="fa-solid fa-star my-star"> </i
+            ></label>
+        <input
+                class="radio-group-radio"
+                type="radio"
+                name="star"
+                id="3"
+                value="3"
+        />
+        <label class="rating-star" for="3">
+            <i class="fa-solid fa-star my-star"> </i
+            ></label>
+        <input
+                class="radio-group-radio"
+                type="radio"
+                name="star"
+                id="4"
+                value="4"
+        />
+        <label class="rating-star" for="4">
+            <i class="fa-solid fa-star my-star"> </i
+            ></label>
+        <input
+                class="radio-group-radio"
+                type="radio"
+                name="star"
+                id="5"
+                value="5"
+        />
+        <label class="rating-star" for="5">
+            <i class="fa-solid fa-star my-star"> </i
+            ></label>
+    </div>
+    <div class="message-popup-container-button-group">
+        <button type="submit"
+                class="message-popup-container-button-star">
+            Xác nhận
+        </button>
+        <div
+                class="message-popup-container-button-cancel">
+            Hủy
+        </div>
+    </div>
+
+</form>
+</body>
+</html>

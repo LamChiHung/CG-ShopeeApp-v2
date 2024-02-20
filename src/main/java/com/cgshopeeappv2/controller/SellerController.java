@@ -117,6 +117,8 @@ public class SellerController {
             Product oldProduct = productService.getById(product.getId());
             product.setImg(oldProduct.getImg());
         }
+        product.setStar(5.0f);
+        product.setStarNumber(10);
         productService.save(product, account);
         redirectAttributes.addFlashAttribute("message", "Lưu sản phẩm thành công");
         return "redirect:/seller/product";

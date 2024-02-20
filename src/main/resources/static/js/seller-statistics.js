@@ -1,4 +1,3 @@
-
 function submitForm() {
     document.getElementById("monthForm").submit();
 }
@@ -95,7 +94,10 @@ function drawVisualization() {
         vAxis: {title: 'triệu đồng'},
         hAxis: {title: 'Tháng'},
         seriesType: 'bars',
-        series: {0: {color: getRandomColor()}, 1: {type: 'line', color: '#dc3912'}},
+        series: {
+            0: {color: getRandomColor()},
+            1: {type: 'line', color: '#dc3912'}
+        },
     };
     function getRandomColor() {
         var letters = '0123456789ABCDEF';
