@@ -217,6 +217,8 @@
 
 .person-body-container-content-bottom-group-line-left-name {
     margin-right: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .person-body-container-content-bottom-group-line-left-line {
@@ -244,6 +246,13 @@
     margin-left: 10px;
     font-size: 0.875rem;
     color: #08f;
+    display: flex;
+    align-items: center;
+}
+
+.buy-button {
+    text-align: center;
+    justify-content: center;
 }
 
 .buy-button:hover {

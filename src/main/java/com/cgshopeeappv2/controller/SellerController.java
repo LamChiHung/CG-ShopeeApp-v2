@@ -1,22 +1,32 @@
 package com.cgshopeeappv2.controller;
 
 import com.cgshopeeappv2.entity.Account;
+import com.cgshopeeappv2.entity.AccountRole;
 import com.cgshopeeappv2.entity.Bill;
 import com.cgshopeeappv2.entity.Category;
 import com.cgshopeeappv2.entity.Product;
 import com.cgshopeeappv2.entity.Seller;
+import com.cgshopeeappv2.entity.SellerAddress;
 import com.cgshopeeappv2.entity.Wallet;
+import com.cgshopeeappv2.repository.AccountRoleRepo;
 import com.cgshopeeappv2.repository.BillItemRepo;
 import com.cgshopeeappv2.repository.BillRepo;
 import com.cgshopeeappv2.repository.BillStatusRepo;
+import com.cgshopeeappv2.repository.CoordinateRepo;
+import com.cgshopeeappv2.repository.RoleRepo;
+import com.cgshopeeappv2.repository.SellerAddressRepo;
+import com.cgshopeeappv2.repository.SellerRepo;
 import com.cgshopeeappv2.repository.UserAddressRepo;
 import com.cgshopeeappv2.repository.WalletRepo;
 import com.cgshopeeappv2.service.IBillService;
 import com.cgshopeeappv2.service.ICategoryService;
 import com.cgshopeeappv2.service.IProductService;
 import com.cgshopeeappv2.service.ISellerService;
+import com.cgshopeeappv2.service.ITransactionService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -63,6 +73,33 @@ public class SellerController {
     private BillStatusRepo billStatusRepo;
     @Autowired
     private WalletRepo walletRepo;
+    @Autowired
+    private ITransactionService transactionService;
+    @Autowired
+    private CoordinateRepo coordinateRepo;
+    @Autowired
+    private SellerAddressRepo sellerAddressRepo;
+    @Autowired
+    private AccountRoleRepo accountRoleRepo;
+    @Autowired
+    private RoleRepo roleRepo;
+    @Autowired
+    private SellerRepo sellerRepo;
+
+    @RequestMapping("")
+    public String seller(
+            @AuthenticationPrincipal Account account,
+            HttpServletRequest request
+    ) {
+        Seller seller = sellerRepo.findByAccount_Username(account.getUsername());
+        if (seller != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("seller", seller);
+            return "redirect:/seller/product";
+        } else {
+            return "redirect:/seller/register";
+        }
+    }
 
     @GetMapping("/product")
     public ModelAndView product(@AuthenticationPrincipal Account account) {
@@ -105,11 +142,47 @@ public class SellerController {
         return "redirect:/seller/product";
     }
 
-    @RequestMapping("/register")
+    @GetMapping("/register")
     public ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView("content/seller-register-form");
-
         return modelAndView;
+    }
+
+    @PostMapping("/register")
+    public String sellerRegister(
+            @AuthenticationPrincipal Account account,
+            @RequestParam(name = "name", defaultValue = "") String name,
+            @RequestParam(name = "phone_number", defaultValue = "") String phoneNumber,
+            @RequestParam(name = "city", defaultValue = "") String city,
+            @RequestParam(name = "district", defaultValue = "") String district,
+            @RequestParam(name = "ward", defaultValue = "") String ward,
+            @RequestParam(name = "apartment_number", defaultValue = "") String apartment,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (name.isEmpty() || phoneNumber.isEmpty() || city.isEmpty() || district.isEmpty() || ward.isEmpty() || apartment.isEmpty()) {
+            redirectAttributes.addFlashAttribute("message", "Vui lòng điền đầy đủ thông tin");
+            return "redirect:/seller/register";
+        } else {
+            AccountRole accountRole = new AccountRole();
+            accountRole.setRole(roleRepo.getReferenceById("ROLE_SELLER"));
+            accountRole.setAccount(account);
+            accountRoleRepo.saveAndFlush(accountRole);
+            Seller seller = new Seller();
+            seller.setAccount(account);
+            seller.setName(name);
+            sellerRepo.saveAndFlush(seller);
+            SellerAddress sellerAddress = new SellerAddress();
+            sellerAddress.setName(name);
+            sellerAddress.setIP(sellerService.getByAccountUsername(account.getUsername()));
+            sellerAddress.setDefault_address("true");
+            sellerAddress.setWard(ward);
+            sellerAddress.setApartment_number(apartment);
+            sellerAddress.setCity(city);
+            sellerAddress.setDistrict(coordinateRepo.getReferenceById(Integer.parseInt(district)));
+            sellerAddressRepo.saveAndFlush(sellerAddress);
+            redirectAttributes.addFlashAttribute("message", "Đăng ký cửa hàng thành công, hãy bắt đầu thêm sản phẩm cho cửa hàng của bạn");
+            return "redirect:/seller/product";
+        }
     }
 
     @RequestMapping("/statistics")
@@ -151,6 +224,7 @@ public class SellerController {
             product.setSellNumber(product.getSellNumber() + 1);
             Wallet wallet = walletRepo.getReferenceById(account.getUsername());
             wallet.setMoney(wallet.getMoney() + bill.getTotalMoney());
+            transactionService.create(wallet, bill.getTotalMoney(), "Nhận tiền hóa đơn từ khách hàng " + bill.getUser().getName());
             productService.save(product, account);
             walletRepo.saveAndFlush(wallet);
             billRepo.saveAndFlush(bill);

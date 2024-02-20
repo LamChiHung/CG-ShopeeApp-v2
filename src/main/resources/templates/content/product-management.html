@@ -16,6 +16,8 @@
           href="/css/themify-icons/themify-icons.css">
     <link rel="stylesheet"
           href="/css/nav-seller.css">
+    <link rel="stylesheet"
+          href="/css/message-popup.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
@@ -236,8 +238,12 @@
             />
         </div>
         <div class="addProduct-container-form-item">
-            <label class="addProduct-container-form-item-label" for="product-urlAvatar-form">Link ảnh sản phẩm*</label>
-            <input type="file" name="img" accept=".jpg, .jpeg, .png" th:field="*{img}"
+            <label class="addProduct-container-form-item-label"
+                   for="product-urlAvatar-form">Link
+                ảnh sản phẩm*</label>
+            <input type="file" name="img"
+                   accept=".jpg, .jpeg, .png"
+                   th:field="*{img}"
                    th:value="${product.img}"
                    th:text="${product.getImg()}"
                    id="product-urlAvatar-form"
@@ -263,7 +269,8 @@
     </form>
 
 </div>
-
+<div th:replace="common/message-popup :: popup"></div>
+<script src="/js/message-popup.js"></script>
 <script src="/js/product-management.js"></script>
 <script>
     $(document).ready(function () {

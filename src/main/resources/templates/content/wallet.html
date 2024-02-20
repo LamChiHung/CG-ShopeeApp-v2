@@ -15,6 +15,8 @@
           href="/css/nav-user.css">
     <link rel="stylesheet"
           href="/css/themify-icons/themify-icons.css">
+    <link rel="stylesheet"
+          href="/css/message-popup.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 
@@ -36,7 +38,8 @@
                     <div class="person-body-container-content-top-content">
                         <img src="https://cf.shopee.vn/file/7a50ae604381d75a40ed0cdd211f0e2d_tn"
                              class="coin">
-                        <span class="yellow-money">10.000.000</span><sub
+                        <span th:text="${#numbers.formatDecimal(wallet.getMoney(),0,'POINT',0,'POINT')}"
+                              class="yellow-money">10.000.000</span><sub
                             class="yellow-money">đ</sub>
                     </div>
                 </div>
@@ -48,21 +51,23 @@
                 </div>
             </div>
             <div class="person-body-container-content-bottom">
-                <div class="person-body-container-content-bottom-group">
+                <div th:each="transaction : ${transactionInformations}"
+                     class="person-body-container-content-bottom-group">
                     <div class="person-body-container-content-bottom-group-line">
                         <div class="person-body-container-content-bottom-group-line-left">
-                            <span class="ti-user person-body-container-content-bottom-group-line-left-name">
+                            <span class="ti-wallet person-body-container-content-bottom-group-line-left-name">
                             </span>
-                            <span>From: </span>
-                            <div class="person-body-container-content-bottom-group-line-left-name">
-                                Tên đối tác giao
-                                dịch
+                            <span>Nội dung giao dịch: </span>
+                            <div th:text="${transaction.getContent()}"
+                                 class="person-body-container-content-bottom-group-line-left-name">
+
                             </div>
                         </div>
                     </div>
                     <div class="person-body-container-content-bottom-group-line">
                         <div class="person-body-container-content-bottom-group-line-left">
-                            <div class="coin">
+                            <div th:if="${transaction.getMoney() >= 0}"
+                                 class="coin">
                                 <svg enable-background="new 0 0 15 15"
                                      viewBox="0 0 15 15"
                                      x="0" y="0"
@@ -160,35 +165,8 @@
                                     </g>
                                 </svg>
                             </div>
-                            <div class="person-body-container-content-bottom-group-line-left-info">
-                                <div class="person-body-container-content-bottom-group-line-left-name">
-                                    <span>+</span>
-                                    <span>1.000.000</span>
-                                    <sub>đ</sub>
-                                </div>
-                                <div class="person-body-container-content-bottom-group-line-left-phone">
-                                    16:00
-                                    24-2-2024
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="person-body-container-content-bottom-group">
-                    <div class="person-body-container-content-bottom-group-line">
-                        <div class="person-body-container-content-bottom-group-line-left">
-                            <span class="ti-user person-body-container-content-bottom-group-line-left-name">
-                            </span>
-                            <span>To: </span>
-                            <div class="person-body-container-content-bottom-group-line-left-name">
-                                Tên đối tác giao
-                                dịch
-                            </div>
-                        </div>
-                    </div>
-                    <div class="person-body-container-content-bottom-group-line">
-                        <div class="person-body-container-content-bottom-group-line-left">
-                            <div class="coin">
+                            <div th:if="${transaction.getMoney() < 0}"
+                                 class="coin">
                                 <svg enable-background="new 0 0 15 15"
                                      viewBox="0 0 15 15"
                                      x="0" y="0"
@@ -280,137 +258,18 @@
                             </div>
                             <div class="person-body-container-content-bottom-group-line-left-info">
                                 <div class="person-body-container-content-bottom-group-line-left-name">
-                                    <span>-</span>
-                                    <span>1.000.000</span>
+                                    <span th:if="${transaction.getMoney() < 0}"
+                                    >-</span>
+                                    <span th:if="${transaction.getMoney() >= 0}"
+                                    >+</span>
+                                    <span th:if="${transaction.getMoney() < 0}"
+                                          th:text="${#numbers.formatDecimal(-transaction.getMoney(),0,'POINT',0,'POINT')}">1.000.000</span>
+                                    <span th:if="${transaction.getMoney() >= 0}"
+                                          th:text="${#numbers.formatDecimal(transaction.getMoney(),0,'POINT',0,'POINT')}">1.000.000</span>
                                     <sub>đ</sub>
                                 </div>
-                                <div class="person-body-container-content-bottom-group-line-left-phone">
-                                    16:00
-                                    24-2-2024
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="person-body-container-content-bottom-group">
-                    <div class="person-body-container-content-bottom-group-line">
-                        <div class="person-body-container-content-bottom-group-line-left">
-                            <span class="ti-user person-body-container-content-bottom-group-line-left-name">
-                            </span>
-                            <span>From: </span>
-                            <div class="person-body-container-content-bottom-group-line-left-name">
-                                Tên đối tác giao
-                                dịch
-                            </div>
-                        </div>
-                    </div>
-                    <div class="person-body-container-content-bottom-group-line">
-                        <div class="person-body-container-content-bottom-group-line-left">
-                            <div class="coin">
-                                <svg enable-background="new 0 0 15 15"
-                                     viewBox="0 0 15 15"
-                                     x="0" y="0"
-                                     class="shopee-svg-icon rB22eL">
-                                    <linearGradient
-                                            id="coingold-a"
-                                            gradientTransform="matrix(1 0 0 -1 0 -810.11)"
-                                            gradientUnits="userSpaceOnUse"
-                                            x1="2.9694"
-                                            x2="12.0447"
-                                            y1="-811.8111"
-                                            y2="-823.427">
-                                        <stop offset="0"
-                                              stop-color="#f6c430"></stop>
-                                        <stop offset=".5281"
-                                              stop-color="#ffecaa"></stop>
-                                        <stop offset=".6639"
-                                              stop-color="#fdde82"></stop>
-                                        <stop offset=".9673"
-                                              stop-color="#f7bc1e"></stop>
-                                        <stop offset="1"
-                                              stop-color="#f6b813"></stop>
-                                    </linearGradient>
-                                    <linearGradient
-                                            id="coingold-b"
-                                            gradientTransform="matrix(1 0 0 -1 0 -810.11)"
-                                            gradientUnits="userSpaceOnUse"
-                                            x1="7.5"
-                                            x2="7.5"
-                                            y1="-810.2517"
-                                            y2="-824.9919">
-                                        <stop offset="0"
-                                              stop-color="#e49b00"></stop>
-                                        <stop offset=".9416"
-                                              stop-color="#d67b00"></stop>
-                                        <stop offset="1"
-                                              stop-color="#d57900"></stop>
-                                    </linearGradient>
-                                    <linearGradient
-                                            id="coingold-c"
-                                            gradientTransform="matrix(1 0 0 -1 0 -810.11)"
-                                            gradientUnits="userSpaceOnUse"
-                                            x1="4.0932"
-                                            x2="10.9068"
-                                            y1="-813.5499"
-                                            y2="-821.6702">
-                                        <stop offset="0"
-                                              stop-color="#f99d00"></stop>
-                                        <stop offset=".1752"
-                                              stop-color="#eea10b"></stop>
-                                        <stop offset=".5066"
-                                              stop-color="#fcd21f"></stop>
-                                        <stop offset=".6657"
-                                              stop-color="#f2ba10"></stop>
-                                        <stop offset="1"
-                                              stop-color="#d57900"></stop>
-                                    </linearGradient>
-                                    <linearGradient
-                                            id="coingold-d"
-                                            gradientUnits="userSpaceOnUse"
-                                            x1="5.4204"
-                                            x2="9.7379"
-                                            y1="5.0428"
-                                            y2="10.188">
-                                        <stop offset="0"
-                                              stop-color="#ffec88"></stop>
-                                        <stop offset=".5003"
-                                              stop-color="#fdf4cb"></stop>
-                                        <stop offset=".7556"
-                                              stop-color="#fceba4"></stop>
-                                        <stop offset="1"
-                                              stop-color="#fae17a"></stop>
-                                    </linearGradient>
-                                    <g>
-                                        <circle cx="7.5"
-                                                cy="7.5"
-                                                fill="url(#coingold-a)"
-                                                r="7.4"></circle>
-                                        <path d="m7.5.4c3.9 0 7.1 3.2 7.1 7.1s-3.2 7.1-7.1 7.1-7.1-3.2-7.1-7.1 3.2-7.1 7.1-7.1m0-.3c-4.1 0-7.4 3.3-7.4 7.4s3.3 7.4 7.4 7.4 7.4-3.3 7.4-7.4-3.3-7.4-7.4-7.4z"
-                                              fill="url(#coingold-b)"></path>
-                                        <path d="m14.4 7.7c0-.1 0-.1 0-.2 0-3.8-3.1-6.9-6.9-6.9s-6.9 3.1-6.9 6.9v.2c.1-3.7 3.1-6.7 6.9-6.7s6.8 3 6.9 6.7z"
-                                              fill="#fff5c9"></path>
-                                        <circle cx="7.5"
-                                                cy="7.5"
-                                                fill="url(#coingold-c)"
-                                                r="5.3"></circle>
-                                        <path d="m11.4 4c1.1 1 1.8 2.4 1.8 3.9 0 2.9-2.4 5.3-5.3 5.3-1.6 0-3-.7-3.9-1.8.9.8 2.2 1.4 3.5 1.4 2.9 0 5.3-2.4 5.3-5.3 0-1.4-.5-2.6-1.4-3.5z"
-                                              fill="#ffeead"></path>
-                                        <path d="m11.4 4c-1-1.1-2.4-1.8-3.9-1.8-2.9 0-5.3 2.4-5.3 5.3 0 1.6.7 3 1.8 3.9-.8-.9-1.4-2.2-1.4-3.5 0-2.9 2.4-5.3 5.3-5.3 1.4 0 2.6.5 3.5 1.4z"
-                                              fill="#c97201"></path>
-                                        <path d="m6.2 4.8c-.5.4-.6 1.1-.5 1.7.1.5.5 1 1.1 1.3.7.4 2.4.8 2.4 1.7 0 .2-.1.5-.2.6-.3.4-.8.5-1.3.5-.3 0-.7-.1-1-.2s-.6-.3-.9-.5c-.2-.1-.4 0-.5.1-.1.2 0 .4.1.5.5.4 1 .7 1.7.8.6.1 1.3.1 1.8-.2.5-.2.9-.6 1-1.2s-.1-1.2-.5-1.6c-.5-.5-2-1-2.4-1.3-.3-.2-.6-.5-.6-1 .1-.6.5-.9 1.1-.9.5 0 1.1.1 1.6.4.4.3.8-.4.4-.7-1-.6-2.5-.7-3.3 0z"
-                                              fill="#c67830"></path>
-                                        <path d="m6.1 4.5c-.5.4-.6 1.1-.5 1.7.1.5.5 1 1.1 1.3.7.4 2.4.8 2.4 1.7 0 .2-.1.5-.2.6-.3.4-.8.5-1.3.5-.3 0-.7-.1-1-.2s-.6-.3-.9-.5c-.2-.1-.4 0-.5.1-.1.2 0 .4.1.5.5.4 1 .7 1.7.8.6.1 1.3.1 1.8-.2.5-.2.9-.6 1-1.2s-.2-1.2-.6-1.6c-.5-.5-1.9-1-2.3-1.3-.3-.2-.6-.5-.6-1 .1-.6.5-.9 1.1-.9.5 0 1.1.1 1.6.4.4.3.8-.4.4-.7-1-.6-2.5-.7-3.3 0z"
-                                              fill="url(#coingold-d)"></path>
-                                    </g>
-                                </svg>
-                            </div>
-                            <div class="person-body-container-content-bottom-group-line-left-info">
-                                <div class="person-body-container-content-bottom-group-line-left-name">
-                                    <span>+</span>
-                                    <span>1.000.000</span>
-                                    <sub>đ</sub>
-                                </div>
-                                <div class="person-body-container-content-bottom-group-line-left-phone">
+                                <div th:text="${#temporals.format(transaction.getLocalDateTime(),'dd-MM-yyyy HH:mm:ss')}"
+                                     class="person-body-container-content-bottom-group-line-left-phone">
                                     16:00
                                     24-2-2024
                                 </div>
@@ -423,7 +282,9 @@
     </div>
 </div>
 <div class="address-form-container">
-    <form id="addForm"
+    <form action="/user/wallet/add"
+          method="post"
+          id="addForm"
           class="address-form-container-form">
         <div class="address-form-container-form-header">
             <p>Nạp tiền vào ví</p>
@@ -432,7 +293,8 @@
             <div class="address-form-container-form-body-line">
                 <div class="address-form-container-form-body-line-item">
                     <p>Nhập số tiền (vnđ)</p>
-                    <input id="phone" type="text"
+                    <input name="money"
+                           id="phone" type="text"
                            placeholder="Ví dụ: 1.000.000"/>
                 </div>
             </div>
@@ -448,6 +310,8 @@
         </div>
     </form>
 </div>
+<div th:replace="common/message-popup :: popup"></div>
+<script src="/js/message-popup.js"></script>
 <script src="/js/wallet.js"></script>
 <script sec:authorize="isAuthenticated()">
     $(document).ready(
@@ -458,10 +322,47 @@
                 success: function (result) {
                     console.log(result);
                     $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                    loadItem(result);
                 }
             }
         )
-    )
+    );
+
+    function deleteItem(event) {
+        event.preventDefault();
+        console.log(event.target.href);
+        $.ajax(
+            {
+                type: "GET",
+                url: event.target.href,
+                success: function (result) {
+                    console.log(result);
+                    $(".home-header-bg-container-bot-right-quantity").text(result.length);
+                    $(".home-header-bg-container-bot-right-popup-container").empty();
+                    loadItem(result);
+                }
+            }
+        )
+    }
+
+    function loadItem(result) {
+        for (let i = 0; i < result.length; i++) {
+            $(".home-header-bg-container-bot-right-popup-container").append(
+                `<div class=\"home-header-bg-container-bot-right-popup-item\">\n` +
+                `                              <img class=\"home-header-bg-container-bot-right-popup-item-img\"\n` +
+                `                                     src=${result[i].product.img}>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-name\">\n` +
+                `                                    <span>${result[i].product.name}</span>\n` +
+                `                                </div>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-price\">\n` +
+                `                                    <sub>đ</sub><span>${(result[i].product.sellPrice).toLocaleString('de-DE')}</span>\n` +
+                `                                </div>\n` +
+                `                                <div class=\"home-header-bg-container-bot-right-popup-item-delete\">\n` +
+                `                                    <a onclick="deleteItem(event)" class=\"home-header-bg-container-bot-right-popup-item-delete-link\"  href=\"/api/cart/delete/${result[i].product.id}\">Xóa</a>\n` +
+                `                                </div>\n` +
+                `                           </div>`)
+        }
+    }
 </script>
 </body>
 </html>

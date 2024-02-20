@@ -26,6 +26,8 @@
           rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
           crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="/css/message-popup.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 
@@ -191,6 +193,8 @@
 <!--        </div>-->
 <!--    </form>-->
 <!--</div>-->
+<div th:replace="common/message-popup :: popup"></div>
+<script src="/js/message-popup.js"></script>
 </body>
 <script src="/js/bill-management.js"></script>
 </html>

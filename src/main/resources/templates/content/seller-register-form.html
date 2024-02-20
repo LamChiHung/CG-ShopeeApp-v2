@@ -3,9 +3,24 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet"
+          href="/css/address-user.css">
+    <link rel="stylesheet"
+          href="/css/address-form.css">
+    <link rel="stylesheet"
+          href="/css/header.css">
+    <link rel="stylesheet"
+          href="/css/nav-user.css">
+    <link rel="stylesheet"
+          href="/css/themify-icons/themify-icons.css">
+    <link rel="stylesheet"
           href="/css/seller-register-form.css">
+    <link rel="stylesheet"
+          href="/css/message-popup.css">
 </head>
 <body>
+<header th:replace="/common/header :: header">
+
+</header>
 <div class="seller-register-container">
     <img class="seller-register-container-img"
          src="https://deo.shopeesz.com/shopee/pap-admin-live-sg/upload/upload_9dab85081088531ee6d1aa958a90f55e.png"
@@ -15,9 +30,144 @@
     <p class="seller-register-container-text">Nhấn
         vào nút bên dưới để đăng ký trở thành
         người bán tại Shopee</p>
-    <a href="/seller/register"
-       class="seller-register-container-submit">Trở
-        thành người bán</a>
+    <button
+            class="seller-register-container-submit">
+        Trở
+        thành người bán
+    </button>
 </div>
+<div class="address-form-container">
+    <form id="addForm"
+          class="address-form-container-form"
+          th:action="@{/seller/register}"
+          method="post"
+    >
+        <div class="address-form-container-form-header">
+            <p>Tạo tài khoản cửa hàng</p>
+        </div>
+        <div class="address-form-container-form-body">
+            <div class="address-form-container-form-body-line">
+                <div class="address-form-container-form-body-line-item">
+                    <p>Tên cửa hàng</p>
+                    <input type="text"
+                           placeholder="Ví dụ: HK Shop"
+                           name="name"
+                           required/>
+                </div>
+                <div class="address-form-container-form-body-line-item">
+                    <p>Số điện thoại</p>
+                    <input type="text"
+                           required
+                           placeholder="Ví dụ: 09xxxxxxxx"
+                           name="phone_number"/>
+                </div>
+            </div>
+            <div class="address-form-container-form-body-line">
+                <div class="address-form-container-form-body-line-item">
+                    <p>Tỉnh/Thành</p>
+                    <select name="city">
+                        <option value="Hồ Chí Minh">
+                            Thành
+                            phố Hồ Chí Minh
+                        </option>
+                    </select>
+                </div>
+                <div class="address-form-container-form-body-line-item">
+                    <p>Quận/Huyện</p>
+                    <select name="district"
+                    >
+                        <option value=1>Quận 1
+                        </option>
+                        <option value=2>Quận 2
+                        </option>
+                        <option value=3>Quận 3
+                        </option>
+                        <option value=4>Quận 4
+                        </option>
+                        <option value=5>Quận 5
+                        </option>
+                        <option value=6>Quận 6
+                        </option>
+                        <option value=7>Quận 7
+                        </option>
+                        <option value=8>Quận 8
+                        </option>
+                        <option value=9>Quận 9
+                        </option>
+                        <option value=10>Quận 10
+                        </option>
+                        <option value=11>Quận 11
+                        </option>
+                        <option value=12>Quận 12
+                        </option>
+                    </select>
+                </div>
+                <div class="address-form-container-form-body-line-item">
+                    <p>Phường/Xã</p>
+                    <select name="ward">
+                        <option value="1">Phường
+                            1
+                        </option>
+                        <option value="2">Phường
+                            2
+                        </option>
+                        <option value="3">Phường
+                            3
+                        </option>
+                        <option value="4">Phường
+                            4
+                        </option>
+                        <option value="5">Phường
+                            5
+                        </option>
+                        <option value="6">Phường
+                            6
+                        </option>
+                        <option value="7">Phường
+                            7
+                        </option>
+                        <option value="8">Phường
+                            8
+                        </option>
+                        <option value="9">Phường
+                            9
+                        </option>
+                        <option value="10">Phường
+                            10
+                        </option>
+                        <option value="11">Phường
+                            11
+                        </option>
+                        <option value="12">Phường
+                            12
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="address-form-container-form-body-line">
+                <div class="address-form-container-form-body-line-item full-width">
+                    <p>Số nhà, Tên đường</p>
+                    <input class="address-form-container-form-body-line-item-address"
+                           type="text"
+                           placeholder="Ví dụ: 21K Nguyễn Văn Trỗi"
+                           required
+                           name="apartment_number"/>
+                </div>
+            </div>
+            <div class="address-form-container-form-footer">
+                <div id="closeAdd"
+                     class="address-form-container-form-footer-button back">
+                    Trở lại
+                </div>
+                <button class="address-form-container-form-footer-button submit"
+                        type="submit">Hoàn thành
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:replace="common/message-popup :: popup"></div>
+<script src="/js/message-popup.js"></script>
+<script src="/js/seller-register.js"></script>
 </body>
 </html>

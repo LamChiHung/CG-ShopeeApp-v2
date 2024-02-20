@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="popup"
+     th:if="${message != null and message != ''}"
+     class="message-popup-container">
+    <img class="message-popup-container-img"
+         src="/img/logo.png" alt=""/>
+    <p class="message-popup-container-title">Thông
+        báo</p>
+    <p th:text="${message}"
+       class="message-popup-container-content">
+        Tên đăng nhập hoặc tài khoản không đúng
+    </p>
+    <button class="message-popup-container-button">
+        Xác nhận
+    </button>
+</div>
+</body>
+</html>
