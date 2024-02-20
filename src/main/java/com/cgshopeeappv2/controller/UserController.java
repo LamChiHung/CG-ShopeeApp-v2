@@ -4,6 +4,7 @@ import com.cgshopeeappv2.dto.ChangePasswordDTO;
 import com.cgshopeeappv2.entity.Account;
 import com.cgshopeeappv2.entity.Bill;
 import com.cgshopeeappv2.entity.CartItem;
+import com.cgshopeeappv2.entity.Product;
 import com.cgshopeeappv2.entity.Seller;
 import com.cgshopeeappv2.entity.TransactionInformation;
 import com.cgshopeeappv2.entity.User;
@@ -11,6 +12,7 @@ import com.cgshopeeappv2.entity.UserAddress;
 import com.cgshopeeappv2.entity.Wallet;
 import com.cgshopeeappv2.repository.AccountRepo;
 import com.cgshopeeappv2.repository.BillRepo;
+import com.cgshopeeappv2.repository.ProductRepo;
 import com.cgshopeeappv2.repository.SellerRepo;
 import com.cgshopeeappv2.repository.TransactionInformationRepo;
 import com.cgshopeeappv2.repository.UserAddressRepo;
@@ -76,6 +78,8 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private SellerRepo sellerRepo;
+    @Autowired
+    private ProductRepo productRepo;
 
 //    @Autowired
 //    private IAccountService iAccountService;
@@ -88,9 +92,6 @@ public class UserController {
     private UserAddressRepo userAddressRepo;
 
 //    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
-
-    @Autowired
-    private SellerRepo sellerRepo;
 
     @RequestMapping("/seller-home")
     public String seller(
@@ -300,6 +301,22 @@ public class UserController {
             ModelAndView modelAndView = new ModelAndView("redirect:/user/information");
             return modelAndView;
         }
+    }
+
+    @RequestMapping("/rating")
+    public String rating(
+            @RequestParam("id") Integer id,
+            @RequestParam(name = "star", defaultValue = "5") Integer star,
+            RedirectAttributes redirectAttributes
+    ) {
+        Product product = productRepo.getReferenceById(id);
+        float productStar = product.getStar() * product.getStarNumber() + star;
+        int productStarNumber = product.getStarNumber() + 1;
+        float productNewStar = productStar / productStarNumber;
+        product.setStar(productNewStar);
+        productRepo.saveAndFlush(product);
+        redirectAttributes.addFlashAttribute("message", "Đánh giá sản phẩm thành công");
+        return "redirect:/user/order";
     }
 
     @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)

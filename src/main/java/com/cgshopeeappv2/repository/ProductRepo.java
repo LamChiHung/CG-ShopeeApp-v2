@@ -20,7 +20,9 @@ public interface ProductRepo extends JpaRepository <Product, Integer> {
             "ORDER BY CASE\n" +
             "    WHEN p.name LIKE CONCAT('%',:name1,'%') AND p.star >= 4 THEN 1\n" +
             "    WHEN p.name LIKE CONCAT('%',:name2,'%') AND p.star >= 4 THEN 2\n" +
-            "    ELSE 3\n" +
+            "    WHEN p.star >= 5 THEN 3\n" +
+            "    WHEN p.star >= 4 THEN 4\n" +
+            "    ELSE 8\n" +
             "END, p.sellNumber")
     Page <Product> findTrendbyName(String name1, String name2, Pageable pageable);
 

@@ -18,6 +18,8 @@
           href="/css/themify-icons/themify-icons.css">
     <link rel="stylesheet"
           href="/css/message-popup.css">
+    <link rel="stylesheet"
+          href="/css/rating-star.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 </head>
@@ -114,6 +116,11 @@
                                class="person-body-container-content-bottom-group-line-right-item buy-button">
                                 Mua lại
                             </a>
+                            <div th:if="${bill.status.id == 2}"
+                                 th:attr="id=${bill.billItem.getProductId()}"
+                                 class="person-body-container-content-bottom-group-line-right-item rating-button">
+                                Đánh giá sản phẩm
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -122,6 +129,12 @@
     </div>
 </div>
 <div th:replace="common/message-popup :: popup"></div>
+<form th:replace="common/rating-star :: rating-star"></form>
+<script src="/js/rating-star.js"></script>
+<script
+        src="https://kit.fontawesome.com/c7e91ec87e.js"
+        crossorigin="anonymous"
+></script>
 <script src="/js/message-popup.js"></script>
 <script sec:authorize="isAuthenticated()">
     $(document).ready(

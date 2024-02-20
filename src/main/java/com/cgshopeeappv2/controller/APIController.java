@@ -12,6 +12,7 @@ import com.cgshopeeappv2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@PreAuthorize("hasAuthority('ROLE_USER')")
 public class APIController {
     @Autowired
     IProductService productService;
