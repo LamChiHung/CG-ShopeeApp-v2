@@ -29,6 +29,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,6 +49,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+@PreAuthorize("hasAuthority('ROLE_SELLER')")
 @Controller
 @RequestMapping("/seller")
 public class SellerController {
@@ -86,7 +88,6 @@ public class SellerController {
     @Autowired
     private SellerRepo sellerRepo;
 
-
     @GetMapping("/product")
     public ModelAndView product(@AuthenticationPrincipal Account account) {
         String username = account.getUsername();
@@ -111,6 +112,10 @@ public class SellerController {
             Map uploadResult = cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap());
             String imageUrl = (String) uploadResult.get("url");
             product.setImg(imageUrl);
+        } else {
+            Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
+            Product oldProduct = productService.getById(product.getId());
+            product.setImg(oldProduct.getImg());
         }
         productService.save(product, account);
         redirectAttributes.addFlashAttribute("message", "Lưu sản phẩm thành công");
@@ -281,4 +286,6 @@ public class SellerController {
         redirect.addFlashAttribute("message", "Upload ảnh thành công");
         return "redirect:/seller/information";
     }
+
+
 }

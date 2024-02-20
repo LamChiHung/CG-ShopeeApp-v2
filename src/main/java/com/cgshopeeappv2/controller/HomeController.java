@@ -30,6 +30,7 @@ public class HomeController {
     @Autowired
     private SellerRepo sellerRepo;
 
+
     @RequestMapping(value = {"/", "/home"})
     public ModelAndView home(
             @CookieValue(name = "search", defaultValue = "") String search,
@@ -108,7 +109,5 @@ public class HomeController {
         modelAndView.addObject("url", url);
         return modelAndView;
     }
-
-
 }
 

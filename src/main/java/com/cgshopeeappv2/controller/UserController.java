@@ -27,11 +27,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,18 +49,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+@ControllerAdvice
 @Controller
+@PreAuthorize("hasAuthority('ROLE_USER')")
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     private IUserService iUserService;
-
     @Autowired
     private IUserAddressService iAddressUserService;
-
     @Autowired
     private ICartItemService cartItemService;
-
     @Autowired
     private IBillService billService;
     @Autowired
@@ -86,6 +88,24 @@ public class UserController {
     private UserAddressRepo userAddressRepo;
 
 //    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
+
+    @Autowired
+    private SellerRepo sellerRepo;
+
+    @RequestMapping("/seller-home")
+    public String seller(
+            @AuthenticationPrincipal Account account,
+            HttpServletRequest request
+    ) {
+        Seller seller = sellerRepo.findByAccount_Username(account.getUsername());
+        if (seller != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("seller", seller);
+            return "redirect:/seller/product";
+        } else {
+            return "content/seller-register-form";
+        }
+    }
 
     @RequestMapping("/information")
     public ModelAndView information(Model model, @AuthenticationPrincipal Account account, HttpServletRequest request) {
@@ -282,18 +302,10 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/seller-home")
-    public String seller(
-            @AuthenticationPrincipal Account account,
-            HttpServletRequest request
-    ) {
-        Seller seller = sellerRepo.findByAccount_Username(account.getUsername());
-        if (seller != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("seller", seller);
-            return "redirect:/seller/product";
-        } else {
-            return "redirect:/seller/register";
-        }
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public String handleForbiddenException(org.springframework.security.access.AccessDeniedException e) {
+        ModelAndView modelAndView = new ModelAndView();
+        return "redirect:/user/seller-home";
     }
 }
+
