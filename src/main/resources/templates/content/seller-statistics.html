@@ -35,51 +35,97 @@
     <div style="display: none">
         <!--Biểu đồ tròn-->
         <!--        <h2 id="title-1">Tỉ trọng của 5 sản phẩm bán chạy nhất</h2>-->
-        <div id="product-1">Sản phẩm 1</div>
-        <div id="value-of-product-1">1</div>
-        <div id="product-2">Sản phẩm 2</div>
-        <div id="value-of-product-2">2</div>
-        <div id="product-3">Sản phẩm 3</div>
-        <div id="value-of-product-3">3</div>
-        <div id="product-4">Sản phẩm 4</div>
-        <div id="value-of-product-4">4</div>
-        <div id="product-5">Sản phẩm 5</div>
-        <div id="value-of-product-5">5</div>
+        <div id="total-quantity" th:text="${TotalQuantity}"></div>
+
+        <div th:if="${listName[0]}!=''" th:name="product-1" th:text="${listName[0]}"></div>
+        <div th:if="${listName[0]}==''" th:name="product-1">Chưa có sản phẩm</div>
+        <div th:if="${listQuantity[0]!=null}" th:name="value-of-product-1" th:text="${listQuantity[0]}"></div>
+
+
+        <div th:if="${listName[1]}!=''" th:name="product-2" th:text="${listName[1]}"></div>
+        <div th:if="${listName[1]}==''" th:name="product-2">Chưa có sản phẩm</div>
+        <div th:if="${listQuantity[1]!=null}" th:name="value-of-product-2" th:text="${listQuantity[1]}"></div>
+
+
+        <div th:if="${listName[2]}!=''" th:name="product-3" th:text="${listName[2]}"></div>
+        <div th:if="${listName[2]}==''" th:name="product-3">Chưa có sản phẩm</div>
+        <div th:if="${listQuantity[2]!=null}" th:name="value-of-product-3" th:text="${listQuantity[2]}"></div>
+
+
+        <div th:if="${listName[3]}!=''" th:name="product-4" th:text="${listName[3]}"></div>
+        <div th:if="${listName[3]}==''" th:name="product-4">Chưa có sản phẩm</div>
+        <div th:if="${listQuantity[3]!=null}" th:name="value-of-product-4" th:text="${listQuantity[3]}"></div>
+
+
+        <div th:if="${listName[4]}!=''" th:name="product-5" th:text="${listName[4]}"></div>
+        <div th:if="${listName[4]}==''" th:name="product-5">Chưa có sản phẩm</div>
+        <div th:if="${listQuantity[4]!=null}" th:name="value-of-product-5" th:text="${listQuantity[4]}"></div>
+
+
         <!--Biểu đồ cột đường kết hợp-->
+
+
         <div id="Jan">Tháng 1</div>
-        <div id="value-1">1</div>
+        <div id="value-1" th:text="${listMonth[0]}"></div>
         <div id="Feb">Tháng 2</div>
-        <div id="value-2">2</div>
+        <div id="value-2" th:text="${listMonth[1]}"></div>
+
+
         <div id="Mar">Tháng 3</div>
-        <div id="value-3">3</div>
+        <div id="value-3" th:text="${listMonth[2]}"></div>
+
         <div id="Apr">Tháng 4</div>
-        <div id="value-4">4</div>
+        <div id="value-4" th:text="${listMonth[3]}"></div>
+
+
         <div id="May">Tháng 5</div>
-        <div id="value-5">5</div>
+        <div id="value-5" th:text="${listMonth[4]}"></div>
+
+
         <div id="Jun">Tháng 6</div>
-        <div id="value-6">6</div>
+        <div id="value-6" th:text="${listMonth[5]}"></div>
+
         <div id="Jul">Tháng 7</div>
-        <div id="value-7">7</div>
+        <div id="value-7" th:text="${listMonth[6]}"></div>
+
         <div id="Aug">Tháng 8</div>
-        <div id="value-8">8</div>
+        <div id="value-8" th:text="${listMonth[7]}"></div>
+
         <div id="Sep">Tháng 9</div>
-        <div id="value-9">9</div>
+        <div id="value-9" th:text="${listMonth[8]}"></div>
+
         <div id="Oct">Tháng 10</div>
-        <div id="value-10">10</div>
+        <div id="value-10" th:text="${listMonth[9]}"></div>
         <div id="Nov">Tháng 11</div>
-        <div id="value-11">11</div>
+        <div id="value-11" th:text="${listMonth[10]}"></div>
+
         <div id="Dev">Tháng 12</div>
-        <div id="value-12">12</div>
-
-
+        <div id="value-12" th:text="${listMonth[11]}"></div>
     </div>
-
     <div class="product-body">
         <div class="product-container">
-
             <div class="statistics-container-row1">
-                <h4 id="title-1">Tỉ trọng của 5
-                    sản phẩm bán chạy nhất</h4>
+                <h4 id="title-1">Tỉ trọng của 5 sản phẩm bán chạy nhất trong tháng</h4>
+                <span>
+               <form id="monthForm" action="/seller/statistics" method="post">
+                 <select id="month" name="month">
+                 <option value="1"> Tháng 1 </option>
+                 <option value="2"> Tháng 2 </option>
+                 <option value="3"> Tháng 3 </option>
+                 <option value="4"> Tháng 4 </option>
+                 <option value="5"> Tháng 5 </option>
+                 <option value="6"> Tháng 6 </option>
+                 <option value="7"> Tháng 7 </option>
+                 <option value="8"> Tháng 8 </option>
+                 <option value="9"> Tháng 9 </option>
+                 <option value="10"> Tháng 10 </option>
+                 <option value="11"> Tháng 11 </option>
+                 <option value="12"> Tháng 12 </option>
+                 </select>
+                 <button type="submit">Xác nhận</button>
+               </form>
+
+                </span>
                 <div id="piechart_3d"></div>
             </div>
 
@@ -88,11 +134,7 @@
                     tháng</h4>
                 <div id="chart_div"></div>
             </div>
-
-            <div></div>
-
         </div>
-
     </div>
 </div>
 
@@ -100,6 +142,6 @@
 <script type="text/javascript"
         src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript"></script>
-<script th:src="/js/seller-statistics.js"></script>
+<script src="/js/seller-statistics.js"></script>
 </body>
 </html>

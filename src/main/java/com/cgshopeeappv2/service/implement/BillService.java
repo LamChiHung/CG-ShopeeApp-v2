@@ -18,10 +18,13 @@ import com.cgshopeeappv2.repository.UserAddressRepo;
 import com.cgshopeeappv2.repository.UserRepo;
 import com.cgshopeeappv2.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -43,10 +46,10 @@ public class BillService implements IBillService {
     @Autowired
     SellerAddressRepo sellerAddressRepo;
 
-    public List <Bill> createBill(Account account) {
-        List <Bill> bills = new ArrayList <>();
+    public List<Bill> createBill(Account account) {
+        List<Bill> bills = new ArrayList<>();
         User user = userRepo.getUserByAccount_Username(account.getUsername());
-        List <CartItem> cartItems = cartItemRepo.findAllByUserId(user.getId());
+        List<CartItem> cartItems = cartItemRepo.findAllByUserId(user.getId());
         for (CartItem cartItem : cartItems) {
             Bill bill = new Bill();
             BillItem billItem = new BillItem(cartItem);
@@ -64,14 +67,14 @@ public class BillService implements IBillService {
         return bills;
     }
 
-    public int deliveryCharge(Account account, List <Bill> bills) {
+    public int deliveryCharge(Account account, List<Bill> bills) {
         int charge = 0;
         User user = userRepo.getUserByAccount_Username(account.getUsername());
         UserAddress userAddress = userAddressRepo.findDefaultAddress(user.getId());
         if (userAddress == null) {
             return 0;
         }
-        Set <Seller> sellers = new HashSet <>();
+        Set<Seller> sellers = new HashSet<>();
         for (Bill bill : bills) {
             sellers.add(bill.getSeller());
         }
@@ -91,5 +94,38 @@ public class BillService implements IBillService {
             charge += distance * 2;
         }
         return charge;
+    }
+
+    @Override
+    public List<Integer> getTotalMoneyByMonthInYearAndSeller(int year, int sellerId) {
+        Integer[] myArray = new Integer[12];
+        for (int i = 0; i < 12; i++) {
+            Integer totalMoney = billRepo.getTotalMoneyByMonthInYearAndSeller(year, sellerId, i + 1);
+            myArray[i] = (totalMoney != null) ? totalMoney : 0;
+        }
+        return Arrays.asList(myArray);
+    }
+
+    @Override
+    public List<Integer> findTop5ProductQuantitiesByMonth(int month) {
+        List<Integer> list = billRepo.findTop5ProductQuantitiesByMonth(month);
+        while (list.size() < 5) {
+            list.add(0);
+        }
+       return list;
+    }
+
+    @Override
+    public List<String> findTop5ProductNamesByMonthAndStatus(int month) {
+        List<String> list = billRepo.findTop5ProductNamesByMonthAndStatus(month);
+        while (list.size() < 5) {
+            list.add("");
+        }
+        return list ;
+    }
+
+    @Override
+    public Integer getTotalQuantityByMonthAndSeller(int month, int sellerId) {
+        return billRepo.getTotalQuantityByMonthAndSeller(month, sellerId);
     }
 }

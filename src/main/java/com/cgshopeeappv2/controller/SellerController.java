@@ -35,6 +35,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,12 +69,12 @@ public class SellerController {
     public ModelAndView product(@AuthenticationPrincipal Account account) {
         String username = account.getUsername();
         Seller seller = sellerService.getByAccountUsername(username);
-        List <Product> products = productService.getAllBySellerId(seller.getId());
+        List<Product> products = productService.getAllBySellerId(seller.getId());
         ModelAndView modelAndView = new ModelAndView("content/product-management");
         modelAndView.addObject("products", products);
         Product product = new Product();
         modelAndView.addObject("product", product);
-        List <Category> categories = categoryService.getAll();
+        List<Category> categories = categoryService.getAll();
         modelAndView.addObject("categories", categories);
         return modelAndView;
     }
@@ -84,7 +85,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account,
             @Validated @ModelAttribute("product") Product product, BindingResult bindingResult,
             @RequestParam MultipartFile img) throws IOException {
-        if (! img.isEmpty()) {
+        if (!img.isEmpty()) {
             Map uploadResult = cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap());
             String imageUrl = (String) uploadResult.get("url");
             product.setImg(imageUrl);
@@ -113,12 +114,16 @@ public class SellerController {
     }
 
     @RequestMapping("/statistics")
-    public ModelAndView statistics() {
-        ModelAndView modelAndView = new ModelAndView("content/seller-statistics");
-        return modelAndView;
+    public String statistics(Model model, @AuthenticationPrincipal Account account, @RequestParam(name = "month", defaultValue = "1") int monthly ) {
+        Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
+        model.addAttribute("listMonth",
+                billService.getTotalMoneyByMonthInYearAndSeller(2024, seller.getId()));
+        model.addAttribute("listQuantity", billService.findTop5ProductQuantitiesByMonth(monthly));
+        model.addAttribute("listName", billService.findTop5ProductNamesByMonthAndStatus(monthly));
+        model.addAttribute("TotalQuantity", billService.getTotalQuantityByMonthAndSeller(monthly, seller.getId()));
+        return "content/seller-statistics";
     }
 
-//    Account account = new Account("lamchihung24@gmail.com","");
 
     @RequestMapping("/information")
     public ModelAndView information(Model model, @AuthenticationPrincipal Account account) {
@@ -132,7 +137,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account
     ) {
         Seller seller = sellerService.getByAccountUsername(account.getUsername());
-        List <Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 1);
+        List<Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 1);
         ModelAndView modelAndView = new ModelAndView("content/bill-management");
         modelAndView.addObject("bills", bills);
 
@@ -169,7 +174,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account
     ) {
         Seller seller = sellerService.getByAccountUsername(account.getUsername());
-        List <Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 2);
+        List<Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 2);
         ModelAndView modelAndView = new ModelAndView("content/seller-history");
         modelAndView.addObject("bills", bills);
         return modelAndView;

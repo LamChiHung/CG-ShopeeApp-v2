@@ -1,10 +1,12 @@
 package com.cgshopeeappv2.controller;
 
+import com.cgshopeeappv2.dto.ChangePasswordDTO;
 import com.cgshopeeappv2.entity.Account;
 import com.cgshopeeappv2.entity.Bill;
 import com.cgshopeeappv2.entity.CartItem;
 import com.cgshopeeappv2.entity.User;
 import com.cgshopeeappv2.entity.UserAddress;
+import com.cgshopeeappv2.repository.AccountRepo;
 import com.cgshopeeappv2.repository.BillRepo;
 import com.cgshopeeappv2.repository.UserRepo;
 import com.cgshopeeappv2.service.IBillService;
@@ -16,12 +18,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -62,6 +66,14 @@ public class UserController {
     private UserRepo userRepo;
 
     @Autowired
+    private AccountRepo accountRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+//    @Autowired
+//    private IAccountService iAccountService;
+
+    @Autowired
     private Cloudinary cloudinary;
 
 //    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
@@ -82,7 +94,7 @@ public class UserController {
             @AuthenticationPrincipal Account account
     ) {
         User user = userRepo.getUserByAccount_Username(account.getUsername());
-        List <Bill> bills = billRepo.findAllByUserId(user.getId());
+        List<Bill> bills = billRepo.findAllByUserId(user.getId());
         ModelAndView modelAndView = new ModelAndView("content/order-user");
         modelAndView.addObject("bills", bills);
         return modelAndView;
@@ -127,7 +139,6 @@ public class UserController {
     @PostMapping("/create-address")
     public ModelAndView createAddress(@ModelAttribute UserAddress userAddress) {
         iAddressUserService.save(userAddress);
-        System.out.println(userAddress);
         ModelAndView modelAndView = new ModelAndView("redirect:/user/address");
         return modelAndView;
     }
@@ -171,26 +182,6 @@ public class UserController {
         return modelAndView;
     }
 
-//    @PostMapping("/upload-image")
-//    public ModelAndView create(@RequestParam MultipartFile image, @AuthenticationPrincipal Account account) throws IOException {
-//        Path staticPath = Paths.get("static");
-//        Path imagePath = Paths.get("images");
-//        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
-//            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
-//        }
-//        Path file = CURRENT_FOLDER.resolve(staticPath)
-//                .resolve(imagePath).resolve(image.getOriginalFilename());
-//        try (OutputStream os = Files.newOutputStream(file)) {
-//            os.write(image.getBytes());
-//        }
-//        User user = iUserService.getUserByAccount(account.getUsername());
-//        String img = "http://localhost:8080/" + imagePath.resolve(image.getOriginalFilename()).toString();
-//        user.setImg(img);
-//        iUserService.save(user);
-//        System.out.println(user);
-//        ModelAndView modelAndView = new ModelAndView("redirect:/user/information");
-//        return modelAndView;
-//    }
 
     @PostMapping("/upload-image")
     public ModelAndView create(@RequestParam MultipartFile image, @AuthenticationPrincipal Account account) throws IOException {
@@ -205,5 +196,20 @@ public class UserController {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/user/information");
         return modelAndView;
+    }
+
+    @RequestMapping("/changePassword")
+    public ModelAndView changePassword(@AuthenticationPrincipal Account account, @ModelAttribute ChangePasswordDTO changePasswordDTO, BindingResult bindingResult) {
+        boolean isValidOldPW = passwordEncoder.matches(changePasswordDTO.getOldPW(), account.getPassword());
+        boolean isValidNewPW = changePasswordDTO.getNewPW().equals(changePasswordDTO.getNewAgainPW());
+        if (isValidOldPW && isValidNewPW) {
+            account.setPassword(changePasswordDTO.getNewPW());
+            accountRepo.save(account);
+            ModelAndView modelAndView = new ModelAndView("redirect:/login");
+            return modelAndView;
+        } else {
+            ModelAndView modelAndView = new ModelAndView("redirect:/user/information");
+            return modelAndView;
+        }
     }
 }
