@@ -89,9 +89,6 @@ public class UserController {
 
 //    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 
-    @Autowired
-    private SellerRepo sellerRepo;
-
     @RequestMapping("/seller-home")
     public String seller(
             @AuthenticationPrincipal Account account,
