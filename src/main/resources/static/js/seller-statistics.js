@@ -1,22 +1,24 @@
-var product1 = document.getElementById('product-1');
-var nameOfProduct1 = product1.textContent;
-var value1 = document.getElementById('value-of-product-1').textContent
 
-var product2 = document.getElementById('product-2');
-var nameOfProduct2 = product2.textContent;
-var value2 = document.getElementById('value-of-product-2').textContent
+function submitForm() {
+    document.getElementById("monthForm").submit();
+}
 
-var product3 = document.getElementById('product-3')
-var nameOfProduct3 = product3.textContent;
-var value3 = document.getElementById('value-of-product-3').textContent
+let nameOfProduct1 = document.querySelector('[name="product-1"]').textContent;
+let value1 = document.querySelector('[name="value-of-product-1"]').textContent
 
-var product4 = document.getElementById('product-4');
-var nameOfProduct4 = product4.textContent;
-var value4 = document.getElementById('value-of-product-4').textContent
+let nameOfProduct2 = document.querySelector('[name="product-2"]').textContent;
+let value2 = document.querySelector('[name="value-of-product-2"]').textContent;
 
-var product5 = document.getElementById('product-5')
-var nameOfProduct5 = product5.textContent;
-var value5 = document.getElementById('value-of-product-5').textContent
+let nameOfProduct3 = document.querySelector('[name="product-3"]').textContent;
+let value3 = document.querySelector('[name="value-of-product-3"]').textContent;
+
+let nameOfProduct4 = document.querySelector('[name="product-4"]').textContent;
+let value4 = document.querySelector('[name="value-of-product-4"]').textContent;
+
+let nameOfProduct5 = document.querySelector('[name="product-5"]').textContent;
+let value5 = document.querySelector('[name="value-of-product-5"]').textContent;
+
+let total = parseInt(document.getElementById('total-quantity').textContent);
 
 var titleStatistics1 = document.getElementById('title-1').textContent
 
@@ -26,11 +28,11 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
     var data = google.visualization.arrayToDataTable([
         ['Task', 'Hours per Day'],
-        [nameOfProduct1, parseInt(value1)],
-        [nameOfProduct2, parseInt(value2)],
-        [nameOfProduct3, parseInt(value3)],
-        [nameOfProduct4, parseInt(value4)],
-        [nameOfProduct5, parseInt(value5)]
+        [nameOfProduct1, parseInt(value1) / total],
+        [nameOfProduct2, parseInt(value2) / total],
+        [nameOfProduct3, parseInt(value3) / total],
+        [nameOfProduct4, parseInt(value4) / total],
+        [nameOfProduct5, parseInt(value5) / total],
     ]);
 
     var options = {
@@ -42,57 +44,62 @@ function drawChart() {
     chart.draw(data, options);
 }
 
+
 var jan = document.getElementById('Jan').textContent
 var feb = document.getElementById('Feb').textContent
 var mar = document.getElementById('Mar').textContent
 var apr = document.getElementById('Apr').textContent
 var may = document.getElementById('May').textContent
 var jun = document.getElementById('Jun').textContent
-var jul = document.getElementById('Jul').textContent
+let jul = document.getElementById('Jul').textContent
+
 var aug = document.getElementById('Aug').textContent
 var sep = document.getElementById('Sep').textContent
 var oct = document.getElementById('Oct').textContent
 var nov = document.getElementById('Nov').textContent
 var dev = document.getElementById('Dev').textContent
+
 var valueOfJan = parseInt(document.getElementById('value-1').textContent)
 var valueOfFeb = parseInt(document.getElementById('value-2').textContent)
 var valueOfMar = parseInt(document.getElementById('value-3').textContent)
 var valueOfApr = parseInt(document.getElementById('value-4').textContent)
 var valueOfMay = parseInt(document.getElementById('value-5').textContent)
 var valueOfJun = parseInt(document.getElementById('value-6').textContent)
-var valueOfJul = parseInt(document.getElementById('value-7').textContent)
+let valueOfJul = parseInt(document.getElementById('value-7').textContent)
 var valueOfAug = parseInt(document.getElementById('value-8').textContent)
 var valueOfSep = parseInt(document.getElementById('value-9').textContent)
 var valueOfOct = parseInt(document.getElementById('value-10').textContent)
 var valueOfNov = parseInt(document.getElementById('value-11').textContent)
 var valueOfDev = parseInt(document.getElementById('value-12').textContent)
 
+
 google.charts.load('current', {'packages': ['corechart']});
 google.charts.setOnLoadCallback(drawVisualization);
+
 function drawVisualization() {
     // Some raw data (not necessarily accurate)
     var data = google.visualization.arrayToDataTable([
-        ['Tháng', 'doanh số', 'dtb'],
-        [jan, valueOfJan, valueOfJan / 2],
-        [feb, valueOfFeb, valueOfFeb / 2],
-        [mar, valueOfMar, valueOfMar / 2],
-        [apr, valueOfApr, valueOfApr / 2],
-        [may, valueOfMay, valueOfMay / 2],
-        [jun, valueOfJun, valueOfJun / 2],
-        [jul, valueOfJul, valueOfJul / 2],
-        [aug, valueOfAug, valueOfAug / 2],
-        [sep, valueOfSep, valueOfSep / 2],
-        [oct, valueOfOct, valueOfOct / 2],
-        [nov, valueOfNov, valueOfNov / 2],
-        [dev, valueOfDev, valueOfDev / 2],
+        ['Tháng', 'doanh số', 'doanh số trung bình'],
+        [jan, valueOfJan / 1000000, (valueOfJan / 1000000) / 2],
+        [feb, valueOfFeb / 1000000, (valueOfFeb / 1000000) / 2],
+        [mar, valueOfFeb / 1000000, (valueOfFeb / 1000000) / 2],
+        [apr, valueOfApr / 1000000, (valueOfApr / 1000000) / 2],
+        [may, valueOfMay / 1000000, (valueOfMay / 1000000) / 2],
+        [jun, valueOfJun / 1000000, (valueOfJun / 1000000) / 2],
+        [jul, valueOfJul / 1000000, (valueOfJul / 1000000) / 2],
+        [aug, valueOfAug / 1000000, (valueOfAug / 1000000) / 2],
+        [sep, valueOfSep / 1000000, (valueOfSep / 1000000) / 2],
+        [oct, valueOfOct / 1000000, (valueOfOct / 1000000) / 2],
+        [nov, valueOfNov / 1000000, (valueOfNov / 1000000) / 2],
+        [dev, valueOfDev / 1000000, (valueOfDev / 1000000) / 2],
     ]);
 
     var options = {
         title: ' ',
-        vAxis: { title: 'triệu đồng' },
-        hAxis: { title: 'Tháng' },
+        vAxis: {title: 'triệu đồng'},
+        hAxis: {title: 'Tháng'},
         seriesType: 'bars',
-        series: { 0: { color: getRandomColor() }, 1: { type: 'line', color: '#dc3912' } },
+        series: {0: {color: getRandomColor()}, 1: {type: 'line', color: '#dc3912'}},
     };
 
     function getRandomColor() {

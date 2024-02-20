@@ -35,7 +35,8 @@ public class HomeController {
 //        Lấy cookie lịch sử tìm kiếm để hiển thị sản phẩm recommend
         String trend1 = "";
         String trend2 = "";
-        if (search.isEmpty() || search.equals(".")) {
+        if (search.isEmpty()||search.equals(".")) {
+
             Cookie cookie = new Cookie("search", "");
             cookie.isHttpOnly();
             cookie.setMaxAge(2 * 365 * 24 * 60 * 60);
@@ -69,13 +70,13 @@ public class HomeController {
     ) {
         String trend1;
         String trend2;
+
         if (search.isEmpty()) {
             trend1 = "";
             trend2 = "";
         } else {
             search = search.replaceAll("-", " ");
             String[] searchs = search.split("\\.");
-
             trend1 = searchs[0];
             trend2 = searchs[1];
         }

@@ -214,7 +214,7 @@
 <div class="changeForm-container">
     <form th:replace="common/change-password-form :: form"
           class="form-changePassword"
-          method="post" action="/user">
+          method="get" action="/user/changePassword">
         <input style="display: none" name="action"
                value="changePassword">
         <label>Mật khẩu cũ: <br><input
@@ -225,17 +225,17 @@
                 name="newPW"></label>
         <label>Nhập lại mật khẩu mới: <br><input
                 type="password" name="newAgainPW"></label>
-
         <button class="formChange-submit"
                 type="submit">Lưu
         </button>
         <span class="ti-close"></span>
     </form>
 </div>
+
 <div th:replace="common/message-popup :: popup"></div>
 <script src="/js/message-popup.js"></script>
-<script th:src="@{/js/user-information.js}"></script>
-<script th:src="@{/js/change-password-form.js}"></script>
+<script src="/js/user-information.js"></script>
+<script src="/js/change-password-form.js"></script>
 <script sec:authorize="isAuthenticated()">
     $(document).ready(
         $.ajax(
