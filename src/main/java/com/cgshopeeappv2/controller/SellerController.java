@@ -31,7 +31,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -194,9 +193,9 @@ public class SellerController {
 //    Account account = new Account("lamchihung24@gmail.com","");
 
     @RequestMapping("/information")
-    public ModelAndView information(Model model, @AuthenticationPrincipal Account account) {
-        model.addAttribute("seller", iSellerService.getSellerByAccount_username(account.getUsername()));
+    public ModelAndView information(@AuthenticationPrincipal Account account) {
         ModelAndView modelAndView = new ModelAndView("content/seller-information");
+        modelAndView.addObject("seller", iSellerService.getSellerByAccount_username(account.getUsername()));
         return modelAndView;
     }
 
@@ -251,22 +250,37 @@ public class SellerController {
 
 
     @PostMapping("/change-information")
-    public String changeInfo(@Valid @ModelAttribute("seller") Seller seller, BindingResult bindingResult, RedirectAttributes redirect) {
+    public String changeInfo(
+            @Valid @ModelAttribute("seller") Seller seller,
+            BindingResult bindingResult,
+            RedirectAttributes redirect,
+            HttpServletRequest request
+    ) {
         if (bindingResult.hasErrors()) {
+            redirect.addFlashAttribute("message", "Có lỗi xảy ra");
             return "redirect:/seller/information";
         }
         iSellerService.save(seller);
+        HttpSession session = request.getSession();
+        session.setAttribute("seller", seller);
+        redirect.addFlashAttribute("message", "Đổi thông tin thành công");
         return "redirect:/seller/information";
     }
 
     @PostMapping("/upload-image")
-    public ModelAndView changeInfo(@RequestParam MultipartFile image, @AuthenticationPrincipal Account account, RedirectAttributes redirect) throws IOException {
+    public String changeInfo(
+            @RequestParam MultipartFile image,
+            @AuthenticationPrincipal Account account,
+            RedirectAttributes redirect,
+            HttpServletRequest request) throws IOException {
         Map uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
         Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
         String imageUrl = (String) uploadResult.get("url");
         seller.setImg(imageUrl);
         iSellerService.save(seller);
-        ModelAndView modelAndView = new ModelAndView("redirect:/seller/information");
-        return modelAndView;
+        HttpSession session = request.getSession();
+        session.setAttribute("seller", seller);
+        redirect.addFlashAttribute("message", "Upload ảnh thành công");
+        return "redirect:/seller/information";
     }
 }
