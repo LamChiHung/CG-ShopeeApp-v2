@@ -1,22 +1,18 @@
 package com.cgshopeeappv2.controller;
 
-import com.cgshopeeappv2.entity.Account;
 import com.cgshopeeappv2.entity.Category;
 import com.cgshopeeappv2.entity.Product;
-import com.cgshopeeappv2.entity.Seller;
 import com.cgshopeeappv2.repository.SellerRepo;
 import com.cgshopeeappv2.service.implement.CategoryService;
 import com.cgshopeeappv2.service.implement.ProductService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +27,8 @@ public class HomeController {
     private CategoryService categoryService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private SellerRepo sellerRepo;
 
 
     @RequestMapping(value = {"/", "/home"})
@@ -41,7 +39,7 @@ public class HomeController {
 //        Lấy cookie lịch sử tìm kiếm để hiển thị sản phẩm recommend
         String trend1 = "";
         String trend2 = "";
-        if (search.isEmpty()||search.equals(".")) {
+        if (search.isEmpty() || search.equals(".")) {
 
             Cookie cookie = new Cookie("search", "");
             cookie.isHttpOnly();
@@ -50,9 +48,13 @@ public class HomeController {
         } else {
             search = search.replaceAll("-", " ");
             String[] searchs = search.split("\\.");
-            if (searchs.length != 0) {
+            if (searchs.length > 1) {
                 trend1 = searchs[0];
                 trend2 = searchs[1];
+            } else {
+
+                trend1 = searchs[0];
+                trend2 = searchs[0];
             }
         }
 //        kết thúc
@@ -83,8 +85,13 @@ public class HomeController {
         } else {
             search = search.replaceAll("-", " ");
             String[] searchs = search.split("\\.");
-            trend1 = searchs[0];
-            trend2 = searchs[1];
+            if (searchs.length > 1) {
+                trend1 = searchs[0];
+                trend2 = searchs[1];
+            } else {
+                trend1 = searchs[0];
+                trend2 = searchs[0];
+            }
         }
         List <Category> categoryList = categoryService.getAll();
         Page <Product> products = productService.findTrendByName(trend1, trend2, pageable);
@@ -102,8 +109,5 @@ public class HomeController {
         modelAndView.addObject("url", url);
         return modelAndView;
     }
-
-
-
 }
 

@@ -8,42 +8,41 @@
 <body>
 <nav class="nav" th:fragment="nav">
     <div class="nav-bg">
-        <div class="nav-bg-item">
+        <a th:href="@{/seller/information}"
+           class="nav-bg-item">
             <span class="nav-bg-item-icon ti-home"></span>
             <span class="nav-bg-item-text">
                     Thông tin cửa hàng
                 </span>
-        </div>
-        <div class="nav-bg-item">
+        </a>
+        <a th:href="@{/seller/product}"
+           class="nav-bg-item">
             <span class="nav-bg-item-icon ti-package"> </span>
-            <span class="nav-bg-item-text" >
-                    Quản lý sản phẩm
-            </span>
-        </div>
-        <div class="nav-bg-item">
-            <span class="nav-bg-item-icon ti-ticket"> </span>
             <span class="nav-bg-item-text">
-                    Quản lý voucher
+                    Quản lý sản phẩm
                 </span>
-        </div>
-        <div class="nav-bg-item">
+        </a>
+        <a th:href="@{/seller/bill}"
+           class="nav-bg-item">
             <span class="nav-bg-item-icon ti-receipt"> </span>
             <span class="nav-bg-item-text">
                     Quản lý đơn hàng
                 </span>
-        </div>
-        <div class="nav-bg-item">
+        </a>
+        <a th:href="@{/seller/history}"
+           class="nav-bg-item">
             <span class="nav-bg-item-icon ti-money"></span>
             <span class="nav-bg-item-text">
                     Lịch sử giao dịch
                 </span>
-        </div>
-        <div class="nav-bg-item">
+        </a>
+        <a th:href="@{/seller/statistics}"
+           class="nav-bg-item">
             <span class="nav-bg-item-icon ti-bar-chart"></span>
             <span class="nav-bg-item-text">
                     Thống kê bán hàng
                 </span>
-        </div>
+        </a>
     </div>
 </nav>
 </body>

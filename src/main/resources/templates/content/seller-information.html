@@ -17,7 +17,7 @@
     <link rel="stylesheet"
           href="/css/nav-seller.css">
     <link rel="stylesheet"
-          href="/css/seller-information.css">
+          href="/css/user-information.css">
     <link rel="stylesheet"
           href="/css/message-popup.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -34,214 +34,125 @@
 <body>
 <header th:replace="common/header-seller :: header"></header>
 
-<div class="content">
-    <nav class="nav"
-         th:replace="common/nav-seller :: nav"></nav>
-    <div class="product-body">
-        <div class="information-container"
-             th:object="${seller}">
-            <h1 class="header-seller-info">Thông
-                tin cửa hàng</h1>
-            <div class="row space-position space-top">
-                <div class="col-3 d-flex justify-content-end">
-                    <h3>Tên cửa hàng :</h3>
-                </div>
-                <div class="col-9">
-                    <h3 th:text="*{name}">
-                    </h3>
+<div class="person-body">
+    <nav th:replace="common/nav-seller :: nav">
+
+    </nav>
+    <div class="person-body-container">
+        <div class="person-body-container-content">
+            <div class="person-body-container-content-top">
+                <h1 class="person-body-container-content-top-title">
+                    Hồ Sơ Cửa Hàng
+                </h1>
+                <div class="person-body-container-content-top-content">
+                    Quản lý thông tin hồ sơ cửa
+                    hàng
                 </div>
             </div>
-
-
-            <div class="row space-position">
-                <div class="col-3 d-flex justify-content-end align-items-center">
-                    <h3>Logo của cửa hàng :</h3>
-                </div>
-                <div class="col-9">
-                    <img class="image-user"
-                         th:src="*{img}">
-                    <form method="post"
-                          th:action="@{/seller/upload-image}"
-                          enctype="multipart/form-data">
-                        <div class="col-3 d-flex justify-content-end align-items-center">
-                            <input hidden="hidden"
-                                   type="file"
-                                   id="profile_pic"
-                                   name="image"
-                                   accept=".jpg, .jpeg, .png"/>
+            <div class="person-body-container-content-bottom"
+                 th:object="${seller}">
+                <form th:action="@{/seller/change-information}"
+                      method="post"
+                      class="person-body-container-content-bottom-left">
+                    <input hidden="hidden"
+                           th:field="*{id}">
+                    <div class="person-body-container-content-bottom-left-row">
+                        <div
+                                class="person-body-container-content-bottom-left-row-label"
+                        >
+                            Email
                         </div>
-                        <div class="col-9">
-                            <button type="button">
-                                <label
-                                        class="person-body-container-content-bottom-right-mid-form-choose-picture"
-                                        for="profile_pic">Chọn
-                                    ảnh</label>
+                        <div
+                                class="person-body-container-content-bottom-left-row-value"
+                        >
+                            <div style="text-align: left"
+                                 class="person-body-container-content-bottom-left-row-value-input"
+                                 th:text="*{account.getUsername()}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="person-body-container-content-bottom-left-row">
+                        <div
+                                class="person-body-container-content-bottom-left-row-label"
+                        >
+                            Tên cửa hàng:
+                        </div>
+                        <div
+                                class="person-body-container-content-bottom-left-row-value"
+                        >
+                            <input style="text-align: left"
+                                   class="person-body-container-content-bottom-left-row-value-input"
+                                   th:field="*{name}"
+                            >
+
+                        </div>
+                    </div>
+                    <div class="person-body-container-content-bottom-left-row">
+                        <div
+                                class="person-body-container-content-bottom-left-row-label"
+                        >
+                            Địa chỉ cửa hàng
+                        </div>
+                        <div th:text="${sellerAddress.toString()}"
+                             style="text-align: left"
+                             class="person-body-container-content-bottom-left-row-value changePassword"
+                        >
+                        </div>
+                    </div>
+                    <div class="person-body-container-content-bottom-left-row">
+                        <div
+                                class="person-body-container-content-bottom-left-row-label button"
+                        >
+                            Button
+                        </div>
+                        <div
+                                class="person-body-container-content-bottom-left-row-value"
+                        >
+                            <button
+                                    class="person-body-container-content-bottom-left-row-value-button save-change"
+                                    type="submit"
+                            >
+                                Lưu
                             </button>
-                            <button type="submit">
+                        </div>
+                    </div>
+                </form>
+                <div class="person-body-container-content-bottom-right">
+                    <div class="person-body-container-content-bottom-right-top">
+                        <img class="person-body-container-content-bottom-right-top-avatar"
+                             th:src="${seller.getImg()}">
+                    </div>
+                    <div class="person-body-container-content-bottom-right-mid">
+                        <form
+                                class="person-body-container-content-bottom-right-mid-form"
+                                method="post"
+                                enctype="multipart/form-data"
+                                action="/seller/upload-image"
+                        >
+                            <input
+                                    hidden="hidden"
+                                    type="file"
+                                    id="profile_pic"
+                                    name="image"
+                                    accept=".jpg, .jpeg, .png"
+                            />
+                            <label class="person-body-container-content-bottom-right-mid-form-choose-picture"
+                                   for="profile_pic">Chọn
+                                ảnh</label>
+                            <button class="person-body-container-content-bottom-right-mid-form-choose-picture"
+                                    type="submit">
                                 Lưu ảnh
                             </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-<!--            <div class="row space-position">-->
-<!--                <div class="col-3 d-flex justify-content-end">-->
-<!--                    <h3>Địa chỉ cửa hàng :</h3>-->
-<!--                </div>-->
-<!--                <div class="col-9">-->
-<!--                    <h3 class="word-wrap"-->
-<!--                        th:text="*{address}">-->
-<!--                    </h3>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="row space-position">-->
-<!--                <div class="col-3 d-flex justify-content-end">-->
-<!--                    <h3>Số điện thoại :</h3>-->
-<!--                </div>-->
-<!--                <div class="col-9">-->
-<!--                    <h3 class="word-wrap"-->
-<!--                        th:text="*{phoneNumber}"></h3>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="row space-position">-->
-<!--                <div class="col-3 d-flex justify-content-end">-->
-<!--                    <h3>Link Facebook</h3>-->
-<!--                </div>-->
-<!--                <div class="col-9">-->
-<!--                    <h3 class="word-wrap"-->
-<!--                        th:text="*{linkFacebook}"></h3>-->
-<!--                </div>-->
-            </div>
-            <div class="row space-position">
-                <div class="col-3 d-flex justify-content-end"></div>
-                <div class="col-9">
-                    <button style="padding: 1rem 1rem"
-                            class="changeInfo"
-                            id="change-information">
-                        Thay đổi thông tin
-                    </button>
+                        </form>
+                    </div>
+                    <div class="person-body-container-content-bottom-right-bottom">
+                        <p>Định dạng:.JPEG,
+                            .PNG</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!--Đổ data tại đây-->
-<div style="display: none">
-    <div class="product-body">
-        <div class="information-container">
-            <h1 class="header-seller-info">Thông
-                tin cửa hàng</h1>
-            <div class="row space-position space-top">
-                <div class="col-3 d-flex justify-content-end">
-                    <h3>Tên cửa hàng :</h3>
-                </div>
-                <div class="col-9">
-                    <h3>Tên shop ở đây</h3>
-                </div>
-            </div>
-            <div class="row space-position change-image">
-                <div class="col-3 d-flex justify-content-end align-items-center">
-                    <h3>Logo của cửa hàng :</h3>
-                </div>
-                <div class="col-9">
-                    <div class="image-user"></div>
-                </div>
-            </div>
-            <div class="row space-position">
-                <div class="col-3 d-flex justify-content-end">
-                    <h3>Địa chỉ cửa hàng :</h3>
-                </div>
-                <div class="col-9">
-                    <h3 class="word-wrap"> Địa chỉ
-                        cụ thể </h3>
-                </div>
-            </div>
-            <div class="row space-position">
-                <div class="col-3 d-flex justify-content-end">
-                    <h3>Số điện thoại :</h3>
-                </div>
-                <div class="col-9">
-                    <h3 class="word-wrap">
-                        000000000xxx </h3>
-                </div>
-            </div>
-            <div class="row space-position">
-                <div class="col-3 d-flex justify-content-end">
-                    <h3>Link Facebook</h3>
-                </div>
-                <div class="col-9">
-                    <h3 class="word-wrap">
-                        link </h3>
-                </div>
-            </div>
-            <div class="row space-position">
-                <div class="col-3 d-flex justify-content-end"></div>
-                <div class="col-9">
-                    <button style="padding: 1rem 1rem"
-                            class="changeInfo">
-                        Thay đổi thông tin
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Form thay đổi thông tin -->
-<div class="overlay"></div>
-<div class="form-container" id="formContainer">
-    <form style="height: 25rem; width: 25rem "
-          th:action="@{/seller/change-information}"
-          method="post" th:object="${seller}">
-        <input hidden="hidden" th:field="*{id}">
-        <input hidden="hidden"
-               th:field="*{account}">
-        <input hidden="hidden" th:field="*{img}">
-        <input hidden="hidden" class="mb-3">
-        <label class="form-label">Tên cửa
-            hàng</label>
-        <input type="text" class="form-control"
-               id="name-seller-information"
-               th:field="*{name}">
-        <p th:if="${#fields.hasErrors('name')}"
-           th:errors="*{name}"></p>
-<!--        <div class="mb-3">-->
-<!--            <label class="form-label">Địa chỉ cửa-->
-<!--                hàng</label>-->
-<!--            <input type="text"-->
-<!--                   class="form-control "-->
-<!--                   id="address-seller-information"-->
-<!--                   th:field="*{address}">-->
-<!--        </div>-->
-<!--        <div class="mb-3">-->
-<!--            <label class="form-label">Số điện-->
-<!--                thoại</label>-->
-<!--            <input type="text"-->
-<!--                   class="form-control "-->
-<!--                   id="phone-number-seller-information"-->
-<!--                   th:field="*{phoneNumber}">-->
-<!--        </div>-->
-
-<!--        <div class="mb-3">-->
-<!--            <label class="form-label">Link-->
-<!--                facebook </label>-->
-<!--            <input type="text"-->
-<!--                   class="form-control "-->
-<!--                   th:field="*{linkFacebook}">-->
-<!--        </div>-->
-        <div class="submit-and-cancel-button">
-            <button type="submit"
-                    class="btn btn-primary">Xác
-                nhận
-            </button>
-            <button type="reset"
-                    id="cancel-form-information"
-                    class="btn btn-primary">Hủy
-            </button>
-        </div>
-    </form>
 </div>
 <div th:replace="common/message-popup :: popup"></div>
 <script src="/js/message-popup.js"></script>

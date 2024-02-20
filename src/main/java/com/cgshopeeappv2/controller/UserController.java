@@ -8,8 +8,8 @@ import com.cgshopeeappv2.entity.Seller;
 import com.cgshopeeappv2.entity.TransactionInformation;
 import com.cgshopeeappv2.entity.User;
 import com.cgshopeeappv2.entity.UserAddress;
-import com.cgshopeeappv2.repository.AccountRepo;
 import com.cgshopeeappv2.entity.Wallet;
+import com.cgshopeeappv2.repository.AccountRepo;
 import com.cgshopeeappv2.repository.BillRepo;
 import com.cgshopeeappv2.repository.SellerRepo;
 import com.cgshopeeappv2.repository.TransactionInformationRepo;
@@ -27,7 +27,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,10 +39,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -51,6 +48,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
 @ControllerAdvice
 @Controller
 @PreAuthorize("hasAuthority('ROLE_USER')")
@@ -76,6 +74,8 @@ public class UserController {
     private AccountRepo accountRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private SellerRepo sellerRepo;
 
 //    @Autowired
 //    private IAccountService iAccountService;
@@ -91,6 +91,7 @@ public class UserController {
 
     @Autowired
     private SellerRepo sellerRepo;
+
     @RequestMapping("/seller-home")
     public String seller(
             @AuthenticationPrincipal Account account,
@@ -177,9 +178,12 @@ public class UserController {
             HttpServletRequest request
 
     ) {
-        System.out.println(user.toString());
-        iUserService.save(user);
-        request.getSession().setAttribute("user", user);
+        User user1 = userRepo.getReferenceById(user.getId());
+        user1.setName(user.getName());
+        user1.setGender(user.getGender());
+        user1.setDateOfBirth(user.getDateOfBirth());
+        iUserService.save(user1);
+        request.getSession().setAttribute("user", user1);
         ModelAndView modelAndView = new ModelAndView("redirect:/user/information");
         return modelAndView;
     }
@@ -297,10 +301,11 @@ public class UserController {
             return modelAndView;
         }
     }
-    
+
     @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
     public String handleForbiddenException(org.springframework.security.access.AccessDeniedException e) {
         ModelAndView modelAndView = new ModelAndView();
         return "redirect:/user/seller-home";
     }
 }
+

@@ -35,7 +35,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,7 +46,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -90,18 +88,16 @@ public class SellerController {
     @Autowired
     private SellerRepo sellerRepo;
 
-
-
     @GetMapping("/product")
     public ModelAndView product(@AuthenticationPrincipal Account account) {
         String username = account.getUsername();
         Seller seller = sellerService.getByAccountUsername(username);
-        List<Product> products = productService.getAllBySellerId(seller.getId());
+        List <Product> products = productService.getAllBySellerId(seller.getId());
         ModelAndView modelAndView = new ModelAndView("content/product-management");
         modelAndView.addObject("products", products);
         Product product = new Product();
         modelAndView.addObject("product", product);
-        List<Category> categories = categoryService.getAll();
+        List <Category> categories = categoryService.getAll();
         modelAndView.addObject("categories", categories);
         return modelAndView;
     }
@@ -112,7 +108,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account,
             @Validated @ModelAttribute("product") Product product, BindingResult bindingResult,
             @RequestParam MultipartFile img) throws IOException {
-        if (!img.isEmpty()) {
+        if (! img.isEmpty()) {
             Map uploadResult = cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap());
             String imageUrl = (String) uploadResult.get("url");
             product.setImg(imageUrl);
@@ -181,7 +177,7 @@ public class SellerController {
     }
 
     @RequestMapping("/statistics")
-    public String statistics(Model model, @AuthenticationPrincipal Account account, @RequestParam(name = "month", defaultValue = "1") int monthly ) {
+    public String statistics(Model model, @AuthenticationPrincipal Account account, @RequestParam(name = "month", defaultValue = "1") int monthly) {
         Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
         model.addAttribute("listMonth",
                 billService.getTotalMoneyByMonthInYearAndSeller(2024, seller.getId()));
@@ -193,9 +189,12 @@ public class SellerController {
 
 
     @RequestMapping("/information")
-    public ModelAndView information(Model model, @AuthenticationPrincipal Account account) {
-        model.addAttribute("seller", iSellerService.getSellerByAccount_username(account.getUsername()));
+    public ModelAndView information(@AuthenticationPrincipal Account account) {
         ModelAndView modelAndView = new ModelAndView("content/seller-information");
+        Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
+        SellerAddress sellerAddress = sellerAddressRepo.findByIP_Id(seller.getId());
+        modelAndView.addObject("seller", seller);
+        modelAndView.addObject("sellerAddress", sellerAddress);
         return modelAndView;
     }
 
@@ -204,7 +203,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account
     ) {
         Seller seller = sellerService.getByAccountUsername(account.getUsername());
-        List<Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 1);
+        List <Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 1);
         ModelAndView modelAndView = new ModelAndView("content/bill-management");
         modelAndView.addObject("bills", bills);
 
@@ -242,7 +241,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account
     ) {
         Seller seller = sellerService.getByAccountUsername(account.getUsername());
-        List<Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 2);
+        List <Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 2);
         ModelAndView modelAndView = new ModelAndView("content/seller-history");
         modelAndView.addObject("bills", bills);
         return modelAndView;
@@ -250,23 +249,42 @@ public class SellerController {
 
 
     @PostMapping("/change-information")
-    public String changeInfo(@Valid @ModelAttribute("seller") Seller seller, BindingResult bindingResult, RedirectAttributes redirect) {
+    public String changeInfo(
+            @Valid @ModelAttribute("seller") Seller seller,
+            BindingResult bindingResult,
+            RedirectAttributes redirect,
+            HttpServletRequest request
+    ) {
         if (bindingResult.hasErrors()) {
+            redirect.addFlashAttribute("message", "Có lỗi xảy ra");
             return "redirect:/seller/information";
         }
-        iSellerService.save(seller);
+        Seller seller1 = sellerRepo.findById(seller.getId()).orElse(null);
+        if (seller1 != null) {
+            seller1.setName(seller.getName());
+            sellerRepo.saveAndFlush(seller1);
+            HttpSession session = request.getSession();
+            session.setAttribute("seller", seller1);
+            redirect.addFlashAttribute("message", "Đổi thông tin thành công");
+        }
         return "redirect:/seller/information";
     }
 
     @PostMapping("/upload-image")
-    public ModelAndView changeInfo(@RequestParam MultipartFile image, @AuthenticationPrincipal Account account, RedirectAttributes redirect) throws IOException {
+    public String changeInfo(
+            @RequestParam MultipartFile image,
+            @AuthenticationPrincipal Account account,
+            RedirectAttributes redirect,
+            HttpServletRequest request) throws IOException {
         Map uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
         Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
         String imageUrl = (String) uploadResult.get("url");
         seller.setImg(imageUrl);
         iSellerService.save(seller);
-        ModelAndView modelAndView = new ModelAndView("redirect:/seller/information");
-        return modelAndView;
+        HttpSession session = request.getSession();
+        session.setAttribute("seller", seller);
+        redirect.addFlashAttribute("message", "Upload ảnh thành công");
+        return "redirect:/seller/information";
     }
 
 

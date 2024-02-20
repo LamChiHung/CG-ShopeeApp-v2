@@ -39,9 +39,10 @@
                 <div class="header-container-right-info">
                     <img
                             class="header-container-right-info-ava"
-                            src="../img/check.png"
+                            th:src="${session.seller.img}"
                     />
-                    <div class="header-container-right-info-name">
+                    <div th:text="${session.seller.name}"
+                         class="header-container-right-info-name">
                         LK Shop
                     </div>
                 </div>
