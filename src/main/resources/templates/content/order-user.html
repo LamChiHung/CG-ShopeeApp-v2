@@ -110,9 +110,10 @@
                                 <span th:text="${#numbers.formatDecimal(bill.getTotalMoney(),0,'POINT',0,'POINT')}"
                                       class="total-money">2.700.000</span>
                             </div>
-                            <div class="person-body-container-content-bottom-group-line-right-item buy-button">
+                            <a th:href="@{/user/cart/add/{id}(id = ${bill.billItem.productId})}"
+                               class="person-body-container-content-bottom-group-line-right-item buy-button">
                                 Mua lại
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -40,4 +40,10 @@ public class SellerAddress {
     @ColumnDefault("false")
     private String default_address;
 
+    @Override
+    public String toString() {
+        return "Số điện thoại: " + phone_number + "," +
+                "Địa chỉ: " + apartment_number + ", Phường " + ward + ", " + district.toString() + ", thành phố " + city;
+    }
+
 }

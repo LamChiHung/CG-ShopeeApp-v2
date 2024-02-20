@@ -4,12 +4,14 @@ import com.cgshopeeappv2.dto.ChangePasswordDTO;
 import com.cgshopeeappv2.entity.Account;
 import com.cgshopeeappv2.entity.Bill;
 import com.cgshopeeappv2.entity.CartItem;
+import com.cgshopeeappv2.entity.Seller;
 import com.cgshopeeappv2.entity.TransactionInformation;
 import com.cgshopeeappv2.entity.User;
 import com.cgshopeeappv2.entity.UserAddress;
-import com.cgshopeeappv2.repository.AccountRepo;
 import com.cgshopeeappv2.entity.Wallet;
+import com.cgshopeeappv2.repository.AccountRepo;
 import com.cgshopeeappv2.repository.BillRepo;
+import com.cgshopeeappv2.repository.SellerRepo;
 import com.cgshopeeappv2.repository.TransactionInformationRepo;
 import com.cgshopeeappv2.repository.UserAddressRepo;
 import com.cgshopeeappv2.repository.UserRepo;
@@ -22,6 +24,7 @@ import com.cgshopeeappv2.service.implement.TransactionInformationService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,7 +36,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,6 +72,8 @@ public class UserController {
     private AccountRepo accountRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private SellerRepo sellerRepo;
 
 //    @Autowired
 //    private IAccountService iAccountService;
@@ -154,9 +158,12 @@ public class UserController {
             HttpServletRequest request
 
     ) {
-        System.out.println(user.toString());
-        iUserService.save(user);
-        request.getSession().setAttribute("user", user);
+        User user1 = userRepo.getReferenceById(user.getId());
+        user1.setName(user.getName());
+        user1.setGender(user.getGender());
+        user1.setDateOfBirth(user.getDateOfBirth());
+        iUserService.save(user1);
+        request.getSession().setAttribute("user", user1);
         ModelAndView modelAndView = new ModelAndView("redirect:/user/information");
         return modelAndView;
     }
@@ -272,6 +279,21 @@ public class UserController {
         } else {
             ModelAndView modelAndView = new ModelAndView("redirect:/user/information");
             return modelAndView;
+        }
+    }
+
+    @RequestMapping("/seller-home")
+    public String seller(
+            @AuthenticationPrincipal Account account,
+            HttpServletRequest request
+    ) {
+        Seller seller = sellerRepo.findByAccount_Username(account.getUsername());
+        if (seller != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("seller", seller);
+            return "redirect:/seller/product";
+        } else {
+            return "redirect:/seller/register";
         }
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,9 +51,17 @@ public class SearchController {
             search = keyword.replaceAll(" ", "-") + "." + keyword.replaceAll(" ", "-");
         } else {
             String[] searchs = search.split("\\.");
-            searchs[1] = searchs[0];
-            searchs[0] = keyword.replaceAll(" ", "-");
-            search = searchs[0] + "." + searchs[1];
+            List <String> searchKeywords = new ArrayList <>();
+            if (searchs.length < 2) {
+                searchKeywords.add(searchs[0]);
+                searchKeywords.add(searchs[0]);
+            } else {
+                searchKeywords.add(searchs[0]);
+                searchKeywords.add(searchs[1]);
+            }
+            searchKeywords.set(1, searchs[0]);
+            searchKeywords.set(0, keyword.replaceAll(" ", "-"));
+            search = searchKeywords.get(0) + "." + searchKeywords.get(0);
         }
         Cookie cookie = new Cookie("search", search);
         response.addCookie(cookie);
