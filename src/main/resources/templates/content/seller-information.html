@@ -85,33 +85,33 @@
                 </div>
             </div>
 
-            <div class="row space-position">
-                <div class="col-3 d-flex justify-content-end">
-                    <h3>Địa chỉ cửa hàng :</h3>
-                </div>
-                <div class="col-9">
-                    <h3 class="word-wrap"
-                        th:text="*{address}">
-                    </h3>
-                </div>
-            </div>
-            <div class="row space-position">
-                <div class="col-3 d-flex justify-content-end">
-                    <h3>Số điện thoại :</h3>
-                </div>
-                <div class="col-9">
-                    <h3 class="word-wrap"
-                        th:text="*{phoneNumber}"></h3>
-                </div>
-            </div>
-            <div class="row space-position">
-                <div class="col-3 d-flex justify-content-end">
-                    <h3>Link Facebook</h3>
-                </div>
-                <div class="col-9">
-                    <h3 class="word-wrap"
-                        th:text="*{linkFacebook}"></h3>
-                </div>
+<!--            <div class="row space-position">-->
+<!--                <div class="col-3 d-flex justify-content-end">-->
+<!--                    <h3>Địa chỉ cửa hàng :</h3>-->
+<!--                </div>-->
+<!--                <div class="col-9">-->
+<!--                    <h3 class="word-wrap"-->
+<!--                        th:text="*{address}">-->
+<!--                    </h3>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row space-position">-->
+<!--                <div class="col-3 d-flex justify-content-end">-->
+<!--                    <h3>Số điện thoại :</h3>-->
+<!--                </div>-->
+<!--                <div class="col-9">-->
+<!--                    <h3 class="word-wrap"-->
+<!--                        th:text="*{phoneNumber}"></h3>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row space-position">-->
+<!--                <div class="col-3 d-flex justify-content-end">-->
+<!--                    <h3>Link Facebook</h3>-->
+<!--                </div>-->
+<!--                <div class="col-9">-->
+<!--                    <h3 class="word-wrap"-->
+<!--                        th:text="*{linkFacebook}"></h3>-->
+<!--                </div>-->
             </div>
             <div class="row space-position">
                 <div class="col-3 d-flex justify-content-end"></div>
@@ -207,30 +207,30 @@
                th:field="*{name}">
         <p th:if="${#fields.hasErrors('name')}"
            th:errors="*{name}"></p>
-        <div class="mb-3">
-            <label class="form-label">Địa chỉ cửa
-                hàng</label>
-            <input type="text"
-                   class="form-control "
-                   id="address-seller-information"
-                   th:field="*{address}">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Số điện
-                thoại</label>
-            <input type="text"
-                   class="form-control "
-                   id="phone-number-seller-information"
-                   th:field="*{phoneNumber}">
-        </div>
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label">Địa chỉ cửa-->
+<!--                hàng</label>-->
+<!--            <input type="text"-->
+<!--                   class="form-control "-->
+<!--                   id="address-seller-information"-->
+<!--                   th:field="*{address}">-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label">Số điện-->
+<!--                thoại</label>-->
+<!--            <input type="text"-->
+<!--                   class="form-control "-->
+<!--                   id="phone-number-seller-information"-->
+<!--                   th:field="*{phoneNumber}">-->
+<!--        </div>-->
 
-        <div class="mb-3">
-            <label class="form-label">Link
-                facebook </label>
-            <input type="text"
-                   class="form-control "
-                   th:field="*{linkFacebook}">
-        </div>
+<!--        <div class="mb-3">-->
+<!--            <label class="form-label">Link-->
+<!--                facebook </label>-->
+<!--            <input type="text"-->
+<!--                   class="form-control "-->
+<!--                   th:field="*{linkFacebook}">-->
+<!--        </div>-->
         <div class="submit-and-cancel-button">
             <button type="submit"
                     class="btn btn-primary">Xác
