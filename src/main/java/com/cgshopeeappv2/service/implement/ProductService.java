@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ProductService implements IProductService {
             String username = account.getUsername();
             Seller seller = sellerRepo.findByAccount_Username(username);
             product.setSeller(seller);
+            product.setDateTime(LocalDateTime.now());
             product.setStar(5F);
             productRepo.saveAndFlush(product);
         } else {
@@ -39,6 +41,7 @@ public class ProductService implements IProductService {
             product1.setSellPrice(product.getSellPrice());
             product1.setImg(product.getImg());
             product1.setQuantity(product.getQuantity());
+            product1.setDateTime(LocalDateTime.now());
             productRepo.save(product1);
         }
 
@@ -94,4 +97,23 @@ public class ProductService implements IProductService {
         Pageable pageable = PageRequest.of(page, 10, sortToFind);
         return productRepo.findBySearch(keyword, categoryListId, from, to, star, pageable);
     }
+
+//    @Override
+//    public Page<Product> findAllBySellerId(Integer id, Pageable pageable) {
+//        return productRepo.findAllBySellerId(id,pageable);
+//    }
+
+
+    @Override
+    public Page<Product> findAllBySellerIdOrderByDate_timeDesc(Integer id, Pageable pageable) {
+        return productRepo.findAllBySellerIdOrderByDateTimeDesc(id,pageable);
+    }
+
+    @Override
+    public Page<Product> findSimilarProductsBySellerId(Integer sellerId, String searchTerm, Pageable pageable) {
+        return productRepo.findSimilarProductsBySellerId(sellerId,searchTerm,pageable);
+    }
+
+
+
 }

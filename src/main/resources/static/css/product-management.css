@@ -252,3 +252,43 @@
 #deleteLink {
     /* Add your styles for the delete link here */
 }
+
+.button-tag-a-Next{
+    padding: 5px;
+    margin-left: 2px;
+}
+
+.button-tag-a-Previous{
+    padding: 5px;
+    margin-right: 6px;
+}
+.content-container-sort-page-button-disable-tag-a-Previous {
+    cursor: not-allowed;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 5px;
+    margin-right: 6px;
+}
+.content-container-sort-page-button-disable-tag-a-Next{
+    cursor: not-allowed;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 5px;
+    margin-left: 2px;
+}
+
+.product-container-row3{
+    height: 3.438rem;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 10px;
+    font-size: 0.875rem;
+    margin-bottom: 20px;
+}
+.input-product-search{
+    padding: 5px;
+    display: flex;
+}
+.input-product-search > input{
+    width: 300px;
+}

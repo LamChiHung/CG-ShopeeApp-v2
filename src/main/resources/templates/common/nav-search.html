@@ -37,9 +37,9 @@
                 KHOẢNG GIÁ:
             </p>
             <p class="nav-bg-item-header-money"><span
-                    th:text="${#numbers.formatDecimal(from,3,'POINT',0,'POINT') + 'đ'}"></span>
+                    th:text="${#numbers.formatDecimal(from,0,'POINT',0,'POINT') + 'đ'}"></span>
                 <span> - </span>
-                <span th:text="${#numbers.formatDecimal(to,3,'POINT',0,'POINT') + 'đ'}"></span>
+                <span th:text="${#numbers.formatDecimal(to,0,'POINT',0,'POINT') + 'đ'}"></span>
             </p>
             <input
                     class="input-money"
