@@ -1,4 +1,4 @@
-setInterval(function () {
+let id = setInterval(function () {
     let count = 0;
     let radio1 = document.querySelector("#radio1");
     let radio2 = document.querySelector("#radio2");
@@ -21,12 +21,12 @@ setInterval(function () {
     if (count < 4) {
         count++;
         document.querySelector(`#radio${count}`).checked = true;
+
     } else {
         count = 1;
         document.querySelector(`#radio${count}`).checked = true;
     }
-    
-
+    return()=>clearInterval(id)
 }, 3000);
 
 var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;

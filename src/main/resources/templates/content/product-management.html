@@ -18,6 +18,7 @@
           href="/css/nav-seller.css">
     <link rel="stylesheet"
           href="/css/message-popup.css">
+    <link rel="stylesheet" href="/css/nav-search.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
@@ -69,6 +70,52 @@
                 </button>
             </div>
 
+
+            <div class="product-container-row3">
+                <form th:action="@{/seller/product-search}" method="get">
+                    <div class="input-product-search">
+                        <input placeholder="Nhập từ khóa bạn cần" name="findProduct">
+                        <button class="input-product-search" type="submit">Xác nhận</button>
+                    </div>
+                </form>
+
+
+                <div class="content-container-sort-page">
+
+
+                   <span>
+                        <a class="content-container-sort-page-button button-tag-a-Previous"
+                           th:if="${products.hasPrevious()}"
+                           th:href="@{/seller/product(page = ${products.number - 1})}">Trang trước</a>
+                       <a class="content-container-sort-page-button-disable-tag-a-Previous"
+                          th:if="${not products.hasPrevious()}">Trang trước</a>
+                   </span>
+
+
+                    <span th:text="${products.number + 1}"
+                          class="content-container-sort-page-current">1</span>
+                    <span>/</span>
+                    <span th:text="${products.totalPages}"
+                          class="content-container-sort-page-total">4</span>
+                    <span>
+                          <input hidden="hidden"
+                                 id="page"
+                                 type="text" name="page"
+                                 th:value="${products.number}">
+                    </span>
+
+                    <span>
+                    <a class="content-container-sort-page-button button-tag-a-Next"
+                       th:if="${products.number < products.totalPages - 1}"
+                       th:href="@{/seller/product(page = ${products.number + 1})}">Trang sau</a>
+                       <a class="content-container-sort-page-button-disable-tag-a-Next"
+                            th:if="${not products.hasNext()}">Trang trước</a>
+                    </span>
+
+                </div>
+            </div>
+
+
             <div
                     class="product-container-row2">
                 <!--Bắt đầu sản phẩm-->
@@ -93,11 +140,11 @@
                          class="product-container-row2-item-information">
                         Điện thoại
                     </div>
-                    <div th:text="${product.getOriginPrice()}"
+                    <div th:text="${#numbers.formatDecimal(product.getOriginPrice(),0,'POINT',0,'POINT')}"
                          class="product-container-row2-item-information">
                         14.000.000
                     </div>
-                    <div th:text="${product.getSellPrice()}"
+                    <div th:text="${ #numbers.formatDecimal(product.getSellPrice(),0,'POINT',0,'POINT')}"
                          class="product-container-row2-item-information">
                         10.000.000
                     </div>
@@ -200,12 +247,15 @@
             >Giá gốc* (VNĐ)</label>
             <input
                     th:field="*{originPrice}"
-                    class="addProduct-container-form-item-input"
+                    class="addProduct-container-form-item-input isValid-input-OriginPrice"
                     type="text"
                     name="product-originPrice"
                     id="product-originPrice-form"
                     required
             />
+            <div class="invalidRegexSellPrice-announce" style="color: red; display: none;">
+                * Vui lòng nhập giá là một số nguyên dương
+            </div>
         </div>
         <div class="addProduct-container-form-item">
             <label
@@ -215,10 +265,12 @@
             >
             <input
                     th:field="*{sellPrice}"
-                    class="addProduct-container-form-item-input"
+                    class="addProduct-container-form-item-input isValid-input-Sell-Price"
                     type="text"
                     name="product-sellPrice"
                     id="product-sellPrice-form"
+                    pattern="^\d+$"
+                    title="Vui lòng nhập giá là một số nguyên dương"
                     required
             />
         </div>
@@ -230,12 +282,15 @@
             >
             <input
                     th:field="*{quantity}"
-                    class="addProduct-container-form-item-input"
+                    class="addProduct-container-form-item-input isValid-input-quantity"
                     type="text"
                     name="product-quantity"
                     id="product-quantity-form"
+                    pattern="[0-9]+"
+                    title="Vui lòng nhập giá là một số nguyên dương"
                     required
             />
+
         </div>
         <div class="addProduct-container-form-item">
             <label class="addProduct-container-form-item-label"
@@ -292,6 +347,8 @@
         })
     })
 </script>
+
+
 </body>
 </html>
 
