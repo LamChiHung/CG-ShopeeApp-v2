@@ -19,6 +19,7 @@ let id = setInterval(function () {
     if (count < 4) {
         count = count + 1;
         document.querySelector(`#radio${count}`).checked = true;
+
     } else {
         count = 1;
         document.querySelector(`#radio${count}`).checked = true;

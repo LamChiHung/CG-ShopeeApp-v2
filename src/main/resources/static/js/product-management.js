@@ -39,3 +39,37 @@ document.querySelectorAll(".product-container-row2-item-information-delete").for
         });
     });
 });
+
+let inputOriginPrice = document.querySelector(".isValid-input-OriginPrice")
+inputOriginPrice.addEventListener("keyup", function () {
+    checkRegexOriginPrice();
+});
+function checkRegexOriginPrice() {
+    let sellPriceInput = document.querySelector(".isValid-input-OriginPrice");
+    sellPriceInput.value= sellPriceInput.value.replace(/[^0-9\\.]+/g, '')
+}
+
+
+
+let inputSellPrice = document.querySelector(".isValid-input-Sell-Price")
+inputSellPrice.addEventListener("keyup", function () {
+    checkRegexSellPrice();
+});
+function checkRegexSellPrice() {
+    let sellPriceInput = document.querySelector(".isValid-input-Sell-Price");
+    sellPriceInput.value= sellPriceInput.value.replace(/[^0-9\\.]+/g, '')
+}
+
+
+
+let inputQuantity = document.querySelector(".isValid-input-quantity")
+inputQuantity.addEventListener("keyup", function () {
+    checkRegexQuantity();
+});
+function checkRegexQuantity() {
+    let sellPriceInput = document.querySelector(".isValid-input-quantity");
+    sellPriceInput.value= sellPriceInput.value.replace(/[^0-9\\.]+/g, '')
+}
+
+
+

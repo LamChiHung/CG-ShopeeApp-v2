@@ -252,26 +252,6 @@ public class UserController {
         return "redirect:/user/cart";
     }
 
-//    @PostMapping("/upload-image")
-//    public ModelAndView create(@RequestParam MultipartFile image, @AuthenticationPrincipal Account account) throws IOException {
-//        Path staticPath = Paths.get("static");
-//        Path imagePath = Paths.get("images");
-//        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
-//            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath));
-//        }
-//        Path file = CURRENT_FOLDER.resolve(staticPath)
-//                .resolve(imagePath).resolve(image.getOriginalFilename());
-//        try (OutputStream os = Files.newOutputStream(file)) {
-//            os.write(image.getBytes());
-//        }
-//        User user = iUserService.getUserByAccount(account.getUsername());
-//        String img = "http://localhost:8080/" + imagePath.resolve(image.getOriginalFilename()).toString();
-//        user.setImg(img);
-//        iUserService.save(user);
-//        System.out.println(user);
-//        ModelAndView modelAndView = new ModelAndView("redirect:/user/information");
-//        return modelAndView;
-//    }
 
     @PostMapping("/upload-image")
     public ModelAndView create(@RequestParam MultipartFile image, @AuthenticationPrincipal Account account) throws IOException {

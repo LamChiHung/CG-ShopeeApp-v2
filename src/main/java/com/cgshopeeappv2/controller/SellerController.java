@@ -29,8 +29,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,6 +49,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -89,15 +93,19 @@ public class SellerController {
     private SellerRepo sellerRepo;
 
     @GetMapping("/product")
-    public ModelAndView product(@AuthenticationPrincipal Account account) {
+    public ModelAndView product(@AuthenticationPrincipal Account account, @RequestParam(value = "page", defaultValue = "0") int page) {
+
         String username = account.getUsername();
         Seller seller = sellerService.getByAccountUsername(username);
-        List <Product> products = productService.getAllBySellerId(seller.getId());
+        Page<Product> listProduct = productService.findAllBySellerIdOrderByDate_timeDesc(seller.getId(), PageRequest.of(page, 5));
+
+
+
         ModelAndView modelAndView = new ModelAndView("content/product-management");
-        modelAndView.addObject("products", products);
+        modelAndView.addObject("products", listProduct);
         Product product = new Product();
         modelAndView.addObject("product", product);
-        List <Category> categories = categoryService.getAll();
+        List<Category> categories = categoryService.getAll();
         modelAndView.addObject("categories", categories);
         return modelAndView;
     }
@@ -108,7 +116,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account,
             @Validated @ModelAttribute("product") Product product, BindingResult bindingResult,
             @RequestParam MultipartFile img) throws IOException {
-        if (! img.isEmpty()) {
+        if (!img.isEmpty()) {
             Map uploadResult = cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap());
             String imageUrl = (String) uploadResult.get("url");
             product.setImg(imageUrl);
@@ -118,6 +126,7 @@ public class SellerController {
             product.setImg(oldProduct.getImg());
         }
         product.setStar(5.0f);
+        product.setDateTime(LocalDateTime.now());
         product.setStarNumber(10);
         productService.save(product, account);
         redirectAttributes.addFlashAttribute("message", "Lưu sản phẩm thành công");
@@ -205,7 +214,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account
     ) {
         Seller seller = sellerService.getByAccountUsername(account.getUsername());
-        List <Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 1);
+        List<Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 1);
         ModelAndView modelAndView = new ModelAndView("content/bill-management");
         modelAndView.addObject("bills", bills);
 
@@ -243,7 +252,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account
     ) {
         Seller seller = sellerService.getByAccountUsername(account.getUsername());
-        List <Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 2);
+        List<Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 2);
         ModelAndView modelAndView = new ModelAndView("content/seller-history");
         modelAndView.addObject("bills", bills);
         return modelAndView;
@@ -289,5 +298,22 @@ public class SellerController {
         return "redirect:/seller/information";
     }
 
+
+    @RequestMapping("/product-search")
+    public ModelAndView demo(@AuthenticationPrincipal Account account, @RequestParam(name="findProduct")String nameProduct,@RequestParam(value = "page", defaultValue = "0") int page){
+        Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
+        if (nameProduct != null){
+            Page<Product> ListProductNeedFind = productService.findSimilarProductsBySellerId(seller.getId(),nameProduct,PageRequest.of(page, 5));
+            ModelAndView modelAndView = new ModelAndView("content/product-management");
+            modelAndView.addObject("products", ListProductNeedFind);
+            Product product = new Product();
+            modelAndView.addObject("product", product);
+            List<Category> categories = categoryService.getAll();
+            modelAndView.addObject("categories", categories);
+            return modelAndView;
+        }
+        ModelAndView modelAndView = new ModelAndView("redirect:/seller/product");
+        return modelAndView;
+    }
 
 }
