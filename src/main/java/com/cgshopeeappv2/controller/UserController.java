@@ -26,12 +26,15 @@ import com.cgshopeeappv2.service.implement.TransactionInformationService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +47,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -82,6 +84,8 @@ public class UserController {
     private SellerRepo sellerRepo;
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
 //    @Autowired
 //    private IAccountService iAccountService;
@@ -102,8 +106,9 @@ public class UserController {
     ) {
         Seller seller = sellerRepo.findByAccount_Username(account.getUsername());
         if (seller != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("seller", seller);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(account.getUsername());
+            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             return "redirect:/seller/product";
         } else {
             return "content/seller-register-form";
