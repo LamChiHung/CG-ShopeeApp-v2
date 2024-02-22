@@ -188,13 +188,15 @@ public class SellerController {
     }
 
     @RequestMapping("/statistics")
-    public String statistics(Model model, @AuthenticationPrincipal Account account, @RequestParam(name = "month", defaultValue = "1") int monthly) {
+    public String statistics(Model model, @AuthenticationPrincipal Account account, @RequestParam(name = "month", defaultValue = "1") int monthly, @RequestParam(name="year",defaultValue = "2023") int year) {
         Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
         model.addAttribute("listMonth",
-                billService.getTotalMoneyByMonthInYearAndSeller(2024, seller.getId()));
+                billService.getTotalMoneyByMonthInYearAndSeller(year, seller.getId()));
         model.addAttribute("listQuantity", billService.findTop5ProductQuantitiesByMonth(monthly));
         model.addAttribute("listName", billService.findTop5ProductNamesByMonthAndStatus(monthly));
         model.addAttribute("TotalQuantity", billService.getTotalQuantityByMonthAndSeller(monthly, seller.getId()));
+        model.addAttribute("month",monthly);
+        model.addAttribute("year",year);
         return "content/seller-statistics";
     }
 

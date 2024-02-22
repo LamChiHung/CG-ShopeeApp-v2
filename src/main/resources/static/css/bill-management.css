@@ -104,6 +104,9 @@
     border: 1px;
     font-size: 20px;
 }
+.submit-bill-button :hover{
+    background-color: orange;
+}
 
 .bill-text-content {
     text-align: center;
