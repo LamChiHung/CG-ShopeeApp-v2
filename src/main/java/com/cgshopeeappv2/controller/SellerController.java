@@ -33,7 +33,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -97,15 +96,14 @@ public class SellerController {
 
         String username = account.getUsername();
         Seller seller = sellerService.getByAccountUsername(username);
-        Page<Product> listProduct = productService.findAllBySellerIdOrderByDate_timeDesc(seller.getId(), PageRequest.of(page, 5));
-
+        Page <Product> listProduct = productService.findAllBySellerIdOrderByDate_timeDesc(seller.getId(), PageRequest.of(page, 5));
 
 
         ModelAndView modelAndView = new ModelAndView("content/product-management");
         modelAndView.addObject("products", listProduct);
         Product product = new Product();
         modelAndView.addObject("product", product);
-        List<Category> categories = categoryService.getAll();
+        List <Category> categories = categoryService.getAll();
         modelAndView.addObject("categories", categories);
         return modelAndView;
     }
@@ -116,7 +114,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account,
             @Validated @ModelAttribute("product") Product product, BindingResult bindingResult,
             @RequestParam MultipartFile img) throws IOException {
-        if (!img.isEmpty()) {
+        if (! img.isEmpty()) {
             Map uploadResult = cloudinary.uploader().upload(img.getBytes(), ObjectUtils.emptyMap());
             String imageUrl = (String) uploadResult.get("url");
             product.setImg(imageUrl);
@@ -144,12 +142,14 @@ public class SellerController {
         return "redirect:/seller/product";
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @GetMapping("/register")
     public ModelAndView register() {
         ModelAndView modelAndView = new ModelAndView("content/seller-register-form");
         return modelAndView;
     }
 
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     @PostMapping("/register")
     public String sellerRegister(
             @AuthenticationPrincipal Account account,
@@ -159,7 +159,8 @@ public class SellerController {
             @RequestParam(name = "district", defaultValue = "") String district,
             @RequestParam(name = "ward", defaultValue = "") String ward,
             @RequestParam(name = "apartment_number", defaultValue = "") String apartment,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            HttpServletRequest request
     ) {
         if (name.isEmpty() || phoneNumber.isEmpty() || city.isEmpty() || district.isEmpty() || ward.isEmpty() || apartment.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Vui lòng điền đầy đủ thông tin");
@@ -173,6 +174,8 @@ public class SellerController {
             seller.setAccount(account);
             seller.setName(name);
             sellerRepo.saveAndFlush(seller);
+            HttpSession session = request.getSession();
+            session.setAttribute("seller", seller);
             SellerAddress sellerAddress = new SellerAddress();
             sellerAddress.setName(name);
             sellerAddress.setIP(sellerService.getByAccountUsername(account.getUsername()));
@@ -188,15 +191,15 @@ public class SellerController {
     }
 
     @RequestMapping("/statistics")
-    public String statistics(Model model, @AuthenticationPrincipal Account account, @RequestParam(name = "month", defaultValue = "1") int monthly, @RequestParam(name="year",defaultValue = "2023") int year) {
+    public String statistics(Model model, @AuthenticationPrincipal Account account, @RequestParam(name = "month", defaultValue = "1") int monthly, @RequestParam(name = "year", defaultValue = "2023") int year) {
         Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
         model.addAttribute("listMonth",
                 billService.getTotalMoneyByMonthInYearAndSeller(year, seller.getId()));
         model.addAttribute("listQuantity", billService.findTop5ProductQuantitiesByMonth(monthly));
         model.addAttribute("listName", billService.findTop5ProductNamesByMonthAndStatus(monthly));
         model.addAttribute("TotalQuantity", billService.getTotalQuantityByMonthAndSeller(monthly, seller.getId()));
-        model.addAttribute("month",monthly);
-        model.addAttribute("year",year);
+        model.addAttribute("month", monthly);
+        model.addAttribute("year", year);
         return "content/seller-statistics";
     }
 
@@ -216,7 +219,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account
     ) {
         Seller seller = sellerService.getByAccountUsername(account.getUsername());
-        List<Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 1);
+        List <Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 1);
         ModelAndView modelAndView = new ModelAndView("content/bill-management");
         modelAndView.addObject("bills", bills);
 
@@ -254,7 +257,7 @@ public class SellerController {
             @AuthenticationPrincipal Account account
     ) {
         Seller seller = sellerService.getByAccountUsername(account.getUsername());
-        List<Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 2);
+        List <Bill> bills = billRepo.findAllBySellerIdAndStatusId(seller.getId(), 2);
         ModelAndView modelAndView = new ModelAndView("content/seller-history");
         modelAndView.addObject("bills", bills);
         return modelAndView;
@@ -302,15 +305,15 @@ public class SellerController {
 
 
     @RequestMapping("/product-search")
-    public ModelAndView demo(@AuthenticationPrincipal Account account, @RequestParam(name="findProduct")String nameProduct,@RequestParam(value = "page", defaultValue = "0") int page){
+    public ModelAndView demo(@AuthenticationPrincipal Account account, @RequestParam(name = "findProduct") String nameProduct, @RequestParam(value = "page", defaultValue = "0") int page) {
         Seller seller = iSellerService.getSellerByAccount_username(account.getUsername());
-        if (nameProduct != null){
-            Page<Product> ListProductNeedFind = productService.findSimilarProductsBySellerId(seller.getId(),nameProduct,PageRequest.of(page, 5));
+        if (nameProduct != null) {
+            Page <Product> ListProductNeedFind = productService.findSimilarProductsBySellerId(seller.getId(), nameProduct, PageRequest.of(page, 5));
             ModelAndView modelAndView = new ModelAndView("content/product-management");
             modelAndView.addObject("products", ListProductNeedFind);
             Product product = new Product();
             modelAndView.addObject("product", product);
-            List<Category> categories = categoryService.getAll();
+            List <Category> categories = categoryService.getAll();
             modelAndView.addObject("categories", categories);
             return modelAndView;
         }
