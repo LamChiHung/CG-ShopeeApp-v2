@@ -42,3 +42,14 @@
     width: 100%;
     height: 80%;
 }
+.hover-button-submit{
+    padding: 2px;
+}
+.hover-button-submit:hover{
+    background-color: #ee4d2d;
+}
+
+.select-form-statistics{
+    width: 100px;
+    height: 26px;
+}
