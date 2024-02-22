@@ -104,27 +104,27 @@
         <div id="Dev">Tháng 12</div>
         <div id="value-12" th:text="${listMonth[11]}"></div>
     </div>
-    <div class="product-body">
+    <div class="product-body" >
         <div class="product-container">
-            <div class="statistics-container-row1">
+            <div class="statistics-container-row1" >
                 <h4 id="title-1">Tỉ trọng của 5 sản phẩm bán chạy nhất trong tháng</h4>
                 <span>
                <form id="monthForm" action="/seller/statistics" method="get">
-                 <select id="month" name="month">
-                 <option value="1"> Tháng 1 </option>
-                 <option value="2"> Tháng 2 </option>
-                 <option value="3"> Tháng 3 </option>
-                 <option value="4"> Tháng 4 </option>
-                 <option value="5"> Tháng 5 </option>
-                 <option value="6"> Tháng 6 </option>
-                 <option value="7"> Tháng 7 </option>
-                 <option value="8"> Tháng 8 </option>
-                 <option value="9"> Tháng 9 </option>
-                 <option value="10"> Tháng 10 </option>
-                 <option value="11"> Tháng 11 </option>
-                 <option value="12"> Tháng 12 </option>
+                 <select id="month" name="month" class="select-form-statistics"  >
+                 <option value="1" th:selected="${month == 1}"> Tháng 1 </option>
+                 <option value="2" th:selected="${month == 2}"> Tháng 2 </option>
+                 <option value="3" th:selected="${month == 3}"> Tháng 3 </option>
+                 <option value="4" th:selected="${month == 4}"> Tháng 4 </option>
+                 <option value="5" th:selected="${month == 5}"> Tháng 5 </option>
+                 <option value="6" th:selected="${month == 6}"> Tháng 6 </option>
+                 <option value="7" th:selected="${month == 7}"> Tháng 7 </option>
+                 <option value="8" th:selected="${month == 8}"> Tháng 8 </option>
+                 <option value="9" th:selected="${month == 9}"> Tháng 9 </option>
+                 <option value="10" th:selected="${month == 10}"> Tháng 10 </option>
+                 <option value="11" th:selected="${month == 11}"> Tháng 11 </option>
+                 <option value="12" th:selected="${month == 12}"> Tháng 12 </option>
                  </select>
-                 <button type="submit">Xác nhận</button>
+                 <button class="hover-button-submit" type="submit" style="border: 1px solid;">Xác nhận</button>
                </form>
 
                 </span>
@@ -134,6 +134,16 @@
             <div class="statistics-container-row1">
                 <h4 id="title-2">Doanh số qua các
                     tháng</h4>
+                <div>
+                    <form action="/seller/statistics" method="post" >
+                        <select name="year" id="year" class="select-form-statistics">
+                            <option value="2023" th:selected="${year==2023}">2023</option>
+                            <option value="2024" th:selected="${year==2024}">2024</option>
+                        </select>
+                        <button class="hover-button-submit" type="submit" style="border: 1px solid;">Xác nhận</button>
+                    </form>
+
+                </div>
                 <div id="chart_div"></div>
             </div>
         </div>
